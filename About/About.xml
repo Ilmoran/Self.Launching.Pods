@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>WM Self launching pods</name>
+  <author>Wishmaster</author>
+  <targetversion>0.17.1546</targetversion>
+  <description>
+&lt;size=18&gt;&lt;color=orange&gt;&lt;b&gt;Requires HugsLib.&lt;/b&gt;&lt;/color&gt;&lt;/size&gt;
+
+&lt;b&gt;Adds a new self launching pod.&lt;/b&gt;
+This pod does not need its own launcher, has a fuel tank and can take off from anywhere !
+Useful to travel to a nearby village trade and come back quick.
+
+&lt;b&gt;Also allows you to reuse vanilla pods.&lt;/b&gt;
+Target your pods within 20 tiles of a Pod Launcher. 
+One pod launcher is required for every arriving pods. Remaining pods drop elsewhere nearby and vanish.
+
+The beacon has been removed in the A17 version.
+  </description>
+	<url>https://ludeon.com/forums/index.php?topic=27315.0</url>
+</ModMetaData>

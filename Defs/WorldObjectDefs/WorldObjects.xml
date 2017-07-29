@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<WorldObjectDef>
+		<defName>WM_TravelingTransportPods</defName>
+		<label>transport pods +</label>
+		<description>Self lauching pods fleet.</description>
+		<worldObjectClass>WM.ReusePods.WorldHopper</worldObjectClass>
+		<texture>World/WorldObjects/TravelingTransportPods</texture>
+		<useDynamicDrawer>true</useDynamicDrawer>
+		<expandingIcon>true</expandingIcon>
+		<expandingIconTexture>Things/MK1Pod</expandingIconTexture>
+		<expandingIconPriority>60</expandingIconPriority>
+		<allowCaravanIncidentsWhichGenerateMap>true</allowCaravanIncidentsWhichGenerateMap>
+		<inspectorTabs>
+			<li>WITab_Caravan_Health</li>
+			<li>WITab_Caravan_Needs</li>
+			<li>WITab_Caravan_Gear</li>
+			<li>WITab_Caravan_Social</li>
+			<li>WM.ReusePods.WITab_LandedShip_Cargo</li>
+		</inspectorTabs>
+	</WorldObjectDef>
+</Defs>
