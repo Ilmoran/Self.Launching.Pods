@@ -85,7 +85,7 @@
 		</costList>
 		<comps>
 			<li Class="CompProperties_Transporter" />
-			<li Class="WM.ReusePods.CompProperties_SelfLaunchable">
+			<li Class="WM.SelfLaunchingPods.CompProperties_SelfLaunchable">
 				<fuelUsePerTile>3</fuelUsePerTile>
 				<fuelUsePerLaunch>10</fuelUsePerLaunch>
 			</li>

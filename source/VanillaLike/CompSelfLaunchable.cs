@@ -181,7 +181,7 @@ namespace WM.SelfLaunchingPods
 			}
 			this.Transporter.TryRemoveLord(map);
 			int groupID = this.Transporter.groupID;
-			float amount = Mathf.Max(TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, 1));
+			float amount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, 1);
 			for (int i = 0; i < transportersInGroup.Count; i++)
 			{
 				CompTransporter compTransporter = transportersInGroup[i];
@@ -202,6 +202,10 @@ namespace WM.SelfLaunchingPods
 
 				dropPodLeaving.Contents = new ActiveDropPodInfo();
 				dropPodLeaving.Contents.innerContainer.TryAddRange(directlyHeldThings, true);
+
+				var compRefuelable = this.parent.TryGetComp<CompRefuelable>();
+				//dropPodLeaving.FuelQuantity = compRefuelable.Fuel;
+				//compRefuelable.ConsumeFuel(compRefuelable.Fuel);
 
 				directlyHeldThings.Clear();
 

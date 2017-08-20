@@ -16,11 +16,11 @@ namespace WM.SelfLaunchingPods
 
 		private List<Thing> items = new List<Thing>();
 
-		public WorldHopper Hopper
+		public WorldTraveler Hopper
 		{
 			get
 			{
-				return (base.SelObject as WorldHopper);
+				return (base.SelObject as WorldTraveler);
 			}
 		}
 		public WITab_LandedShip_Cargo()

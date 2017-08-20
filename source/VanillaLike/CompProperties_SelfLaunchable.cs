@@ -1,7 +1,7 @@
 using System;
 using Verse;
 
-namespace WM.ReusePods
+namespace WM.SelfLaunchingPods
 {
 	public class CompProperties_SelfLaunchable : CompProperties
 	{

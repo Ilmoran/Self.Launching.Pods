@@ -1,24 +1,23 @@
-﻿using System;
+using System;
 using Verse;
 
-namespace WM.ReusePods
+namespace WM.SelfLaunchingPods
 {
 	public class Command_Launch_FromWorld : Command_Launch
 	{
-		public Command_Launch_FromWorld()
+		public Command_Launch_FromWorld(WorldTraveler traveler) : base()
 		{
+			Traveler = traveler;
 		}
 
-		private WorldHopper Hopper
+		private WorldTraveler Traveler
 		{
-			get
-			{
-				return (WorldHopper)Find.WorldSelector.SingleSelectedObject;
-			}
+			get;
+			set;
 		}
 		internal override void Launch(int tile, IntVec3 cell)
 		{
-			throw new NotImplementedException();
+			Traveler.Launch(tile, cell);
 		}
 
 		public override ThingWithComps Parent
@@ -33,7 +32,8 @@ namespace WM.ReusePods
 		{
 			get
 			{
-				return Hopper.Tile;
+				//this.
+				return Traveler.Tile;
 			}
 		}
 
@@ -41,7 +41,7 @@ namespace WM.ReusePods
 		{
 			get
 			{
-				return Hopper.MaxLaunchDistance;
+				return Traveler.MaxLaunchDistance;
 			}
 		}
 	}

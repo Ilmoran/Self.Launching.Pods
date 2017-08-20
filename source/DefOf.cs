@@ -30,7 +30,7 @@ namespace WM.SelfLaunchingPods
 
 		public static ThingDef WM_TransportPod;
 		public static WorldObjectDef WM_TravelingTransportPods;
-		public static WorldObjectDef WM_TravelingTransportPods_Landed;
+		//public static WorldObjectDef WM_TravelingTransportPods_Landed;
 
 		public static ThingDef Chemfuel;
 	}

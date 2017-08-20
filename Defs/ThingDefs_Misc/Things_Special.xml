@@ -4,7 +4,7 @@
 		<defName>WM_DropPodIncoming</defName>
 		<label>drop pod (incoming)</label>
 		<category>Skyfaller</category>
-		<thingClass>WM.ReusePods.DropPodIncoming</thingClass>
+		<thingClass>WM.SelfLaunchingPods.DropPodIncoming</thingClass>
 		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/MK1Pod</texPath>
@@ -20,7 +20,7 @@
 		<defName>WM_DropPodLeaving</defName>
 		<label>drop pod (leaving)</label>
 		<category>Skyfaller</category>
-		<thingClass>WM.ReusePods.DropPodLeaving</thingClass>
+		<thingClass>WM.SelfLaunchingPods.DropPodLeaving</thingClass>
 		<tickerType>Normal</tickerType>
 		<graphicData>
 			<texPath>Things/MK1Pod</texPath>

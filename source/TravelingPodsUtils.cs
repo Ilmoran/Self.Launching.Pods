@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
-namespace WM.ReusePods
+namespace WM.SelfLaunchingPods
 {
 	public static class TravelingPodsUtils
 	{
@@ -30,9 +31,13 @@ namespace WM.ReusePods
 		//}
 
 		// RimWorld.CompLaunchable
-		public static float FuelNeededToLaunchAtDistance(float dist, int podsAmount)
+		public static float FuelNeededToLaunchAtDistance(int dist, int podsCount)
 		{
-			return Config.PodFuelUsePerTile * dist + Config.PodFuelUsePerLaunch * podsAmount;
+			return (Config.PodFuelUsePerLaunch + Config.PodFuelUsePerTile * dist) * podsCount;
+		}
+		public static int MaxLaunchDistance(float fuelAmount, int podsCount)
+		{
+			return Mathf.FloorToInt(((fuelAmount - podsCount * Config.PodFuelUsePerLaunch) / podsCount) / Config.PodFuelUsePerTile);
 		}
 
 		public static void RemoveAllPawnsFromWorldPawns(IEnumerable<Pawn> pawns)
@@ -46,27 +51,9 @@ namespace WM.ReusePods
 			}
 		}
 
-
-		//internal static void SpawnLandedFleetAtTile(PodsFleet fleet, int tile)
-		//{
-		//	int startingTile;
-		//	if (!GenWorldClosest.TryFindClosestPassableTile(tile, out startingTile))
-		//	{
-		//		startingTile = tile;
-		//	}
-
-
-		//	var wo = (TravelingTransportPods_MK_Landed)WorldObjectMaker.MakeWorldObject(DefOf.WM_TravelingTransportPods_Landed);
-
-		//	wo.Tile = tile;
-		//	wo.Fleet = fleet;
-
-		//	Find.WorldObjects.Add(wo);
-		//}
-
-		internal static WorldHopper CreateWorldHopper(int tile, IEnumerable<ActiveDropPodInfo> podsInfo, IEnumerable<Thing> podsLandedThings)
+		internal static WorldTraveler CreateWorldTraveler(int tile, IEnumerable<ActiveDropPodInfo> podsInfo, IEnumerable<Thing> podsLandedThings)
 		{
-			var hopper = (WorldHopper)WorldObjectMaker.MakeWorldObject(DefOf.WM_TravelingTransportPods);
+			var hopper = (WorldTraveler)WorldObjectMaker.MakeWorldObject(DefOf.WM_TravelingTransportPods);
 
 			hopper.Tile = tile;
 			hopper.SetFaction(Faction.OfPlayer);

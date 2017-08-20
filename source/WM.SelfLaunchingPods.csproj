@@ -101,8 +101,9 @@
     <Compile Include="Resources.cs" />
     <Compile Include="UI\WITab_LandedShip_Cargo.cs" />
     <Compile Include="VanillaLike\Command_Launch.cs" />
-    <Compile Include="VanillaLike\WorldHopper.cs" />
+    <Compile Include="VanillaLike\WorldTraveler.cs" />
     <Compile Include="VanillaLike\Command_Launch_FromWorld.cs" />
+    <Compile Include="VanillaLike\Command_Launch_FromMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

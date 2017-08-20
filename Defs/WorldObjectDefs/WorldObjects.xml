@@ -4,7 +4,7 @@
 		<defName>WM_TravelingTransportPods</defName>
 		<label>transport pods +</label>
 		<description>Self lauching pods fleet.</description>
-		<worldObjectClass>WM.ReusePods.WorldHopper</worldObjectClass>
+		<worldObjectClass>WM.SelfLaunchingPods.WorldTraveler</worldObjectClass>
 		<texture>World/WorldObjects/TravelingTransportPods</texture>
 		<useDynamicDrawer>true</useDynamicDrawer>
 		<expandingIcon>true</expandingIcon>
@@ -16,7 +16,7 @@
 			<li>WITab_Caravan_Needs</li>
 			<li>WITab_Caravan_Gear</li>
 			<li>WITab_Caravan_Social</li>
-			<li>WM.ReusePods.WITab_LandedShip_Cargo</li>
+			<li>WM.SelfLaunchingPods.WITab_LandedShip_Cargo</li>
 		</inspectorTabs>
 	</WorldObjectDef>
 </Defs>

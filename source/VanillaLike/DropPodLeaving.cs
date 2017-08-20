@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Harmony;
@@ -8,7 +8,7 @@ using Verse;
 using Verse.AI.Group;
 using Verse.Sound;
 
-namespace WM.ReusePods
+namespace WM.SelfLaunchingPods
 {
 	public class DropPodLeaving : RimWorld.DropPodLeaving
 	{
@@ -128,7 +128,7 @@ namespace WM.ReusePods
 			var podsInfo = (DropPodLeaving.tmpActiveDropPods).Select(arg => (arg as DropPodLeaving).Contents);
 			var podsLandedThings = (DropPodLeaving.tmpActiveDropPods).Select(arg => (arg as DropPodLeaving).landedThing);
 
-			var worldobject = TravelingPodsUtils.CreateWorldHopper(this.Map.Tile, podsInfo, podsLandedThings);
+			var worldobject = TravelingPodsUtils.CreateWorldTraveler(this.Map.Tile, podsInfo, podsLandedThings);
 
 			worldobject.Launch(this.destinationTile, this.destinationCell);
 

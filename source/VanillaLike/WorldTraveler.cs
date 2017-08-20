@@ -8,7 +8,7 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
-	public class WorldHopper : WorldObject
+	public class WorldTraveler : WorldObject
 	{
 		// RimWorld.Planet.TravelingTransportPods
 		public override Vector3 DrawPos
@@ -69,7 +69,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return Mathf.FloorToInt(FuelLevelPerPod / Config.PodFuelUsePerTile);
+				return TravelingPodsUtils.MaxLaunchDistance(this.FuelLevel, this.PodsCount);
 			}
 		}
 		public int PodsCount
@@ -189,7 +189,7 @@ namespace WM.SelfLaunchingPods
 
 			if (!Traveling)
 			{
-				Gizmo LaunchGizmo = new Command_Launch();
+				Gizmo LaunchGizmo = new Command_Launch_FromWorld(this);
 				yield return LaunchGizmo;
 			}
 		}
@@ -201,9 +201,23 @@ namespace WM.SelfLaunchingPods
 			this.destinationCell = destinationCell;
 
 			this.traveledPct = 0f;
+
+			int distance = Find.WorldGrid.TraversalDistanceBetween(this.Tile, destinationTile);
+			float fuelAmount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(distance, this.PodsCount);
+
+			Consume(fuelAmount);
 		}
 		private void Consume(float amount)
 		{
+			float newFuelAmountPerPod = (this.FuelLevel - amount) / this.PodsCount;
+			//newFuelAmountPerPod = Mathf.Ceil(newFuelAmountPerPod);
+
+			foreach (var item in this.pods)
+			{
+				var compRefuelable = item.PodThing.TryGetComp<CompRefuelable>();
+
+				compRefuelable.ConsumeFuel(Mathf.Ceil(compRefuelable.Fuel - newFuelAmountPerPod));
+			}
 		}
 
 		// RimWorld.Planet.TravelingTransportPods
@@ -278,6 +292,9 @@ namespace WM.SelfLaunchingPods
 			IntVec3 intVec;
 			if (destinationCell != null && destinationCell.IsValid && destinationCell.InBounds(map))
 			{
+#if DEBUG
+				Log.Message("dropping at targeted cell: " + destinationCell);
+#endif
 				intVec = destinationCell;
 			}
 			else if (arriveMode == PawnsArriveMode.CenterDrop)
@@ -353,7 +370,7 @@ namespace WM.SelfLaunchingPods
 
 			v += "\r\n";
 
-			v += string.Format("WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity);
+			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity);
 
 			return v;
 		}
