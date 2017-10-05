@@ -7,10 +7,8 @@ namespace WM.SelfLaunchingPods
 {
 	public class Config : HugsLib.ModBase
 	{
-		internal static float controlerRange = 20;
-		internal static float LandingDesignatorRange = 20;
-
-		private string modName = "WM_Reuse_pods";
+		private static readonly string	modName = "WM_Self_Launching_Pods";
+		internal static readonly float	LandingSpotMaxRange = 7f;
 
 		public override string ModIdentifier
 		{
@@ -29,6 +27,7 @@ namespace WM.SelfLaunchingPods
 				return (t.fuelUsePerTile);
 			}
 		}
+
 		public static float PodFuelUsePerLaunch
 		{
 			get
@@ -43,6 +42,7 @@ namespace WM.SelfLaunchingPods
 		{
 			base.WorldLoaded();
 		}
+
 		public override void DefsLoaded()
 		{
 			DefOf.LoadDefs();
