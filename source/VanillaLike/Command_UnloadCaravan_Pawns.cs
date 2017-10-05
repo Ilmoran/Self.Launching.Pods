@@ -9,6 +9,7 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_UnloadCaravan_Pawns(WorldTraveler parent) : base(parent)
 		{
+            this.icon = Resources.GizmoUnloadPawns;
 		}
 
 		public override string Label

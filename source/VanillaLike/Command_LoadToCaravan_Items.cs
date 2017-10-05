@@ -9,6 +9,7 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_LoadToCaravan_Items(Caravan parent) : base(parent)
 		{
+			this.icon = Resources.GizmoLoadItems;
 		}
 
 		public override IEnumerable<Thing> ThingsToLoad

@@ -6,7 +6,7 @@
     <ProjectGuid>{577D7B11-1A40-4D8F-BAEC-DE9C6A27FB3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>WM.SelfLaunchingPods</RootNamespace>
-    <AssemblyName>WM Reuse pods</AssemblyName>
+    <AssemblyName>wmselflaunchingpods</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BaseDirectory>..</BaseDirectory>
     <BaseIntermediateOutputPath>obj</BaseIntermediateOutputPath>
@@ -89,6 +89,12 @@
     <None Include="..\Languages\English\Keyed\Keys.xml" />
     <None Include="..\Textures\Things\MK1Pod.png" />
     <None Include="..\Textures\Things\LandingSpot.png" />
+    <None Include="..\Assemblies\wmselflaunchingpods.dll" />
+    <None Include="..\Textures\UI\LoadEverything.png" />
+    <None Include="..\Textures\UI\LoadItems.png" />
+    <None Include="..\Textures\UI\UnloadEverything.png" />
+    <None Include="..\Textures\UI\UnloadItems.png" />
+    <None Include="..\Textures\UI\UnloadPawns.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
