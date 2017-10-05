@@ -23,7 +23,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return Parent.AllCarriedPawns.Cast<Thing>();
+				return (Parent.AllCarriedPawns.Cast<Thing>());
 			}
 		}
 
@@ -31,7 +31,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return Parent.AllCarriedPawns.Any();
+				return (Parent.AllCarriedPawns.Any());
 			}
 		}
 
@@ -40,9 +40,9 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				if (!CanDoNow)
-					return "WM.MessageNoPawnsToUnload".Translate();
+					return ("WM.MessageNoPawnsToUnload".Translate());
 				else
-					return base.FailMessage;
+					return (base.FailMessage);
 			}
 		}
 	}

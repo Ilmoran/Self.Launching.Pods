@@ -14,7 +14,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return ThingOwner.First();
+				return (ThingOwner.First());
 			}
 		}
 

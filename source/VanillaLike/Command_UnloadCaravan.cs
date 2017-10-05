@@ -52,7 +52,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return "WM.UnloadCaravanGizmo".Translate();
+				return ("WM.UnloadCaravanGizmo".Translate());
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace WM.SelfLaunchingPods
 				if (!CanDoNow)
 					return ("WM.MessageCaravanNeeded".Translate());
 				else
-					return "WM.MessageCannotUnload".Translate();
+					return ("WM.MessageCannotUnload".Translate());
 			}
 		}
 

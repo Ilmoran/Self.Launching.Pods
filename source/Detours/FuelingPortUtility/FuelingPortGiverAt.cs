@@ -16,9 +16,9 @@ namespace WM.SelfLaunchingPods.Detours.FuelingPortUtility
 			if (t != null)
 			{
 				__result = (Verse.Building)t;
-				return false;
+				return (false);
 			}
 
-			return true;
+			return (true);
 		}	}
 }

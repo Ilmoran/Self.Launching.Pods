@@ -39,7 +39,7 @@ namespace WM.SelfLaunchingPods
 					list.Add(current);
 			}
 
-			return list;
+			return (list);
 		}
 
 		internal static bool CanLandAt(Map map, IntVec3 pos)
@@ -50,7 +50,7 @@ namespace WM.SelfLaunchingPods
 		internal static bool IsAtPad(Map map, IntVec3 pos)
 		{
 			return (RimWorld.FuelingPortUtility.FuelingPortGiverAtFuelingPortCell(pos, map) != null);
-			//return true;
+			//return (true)
 		}
 
 		internal static float CaravanWeight(Caravan caravan)

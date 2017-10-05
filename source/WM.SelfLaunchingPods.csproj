@@ -38,6 +38,15 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>AfterBuild</type>
+          <command>deploy.cmd</command>
+          <externalConsole>True</externalConsole>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -79,6 +88,7 @@
     <None Include="..\Defs\WorldObjectDefs\WorldObjects.xml" />
     <None Include="..\Languages\English\Keyed\Keys.xml" />
     <None Include="..\Textures\Things\MK1Pod.png" />
+    <None Include="..\Textures\Things\LandingSpot.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />

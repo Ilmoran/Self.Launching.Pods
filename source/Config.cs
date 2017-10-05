@@ -16,7 +16,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return modName;
+				return (modName);
 			}
 		}
 
@@ -26,7 +26,7 @@ namespace WM.SelfLaunchingPods
 			{
 				var t = DefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
 
-				return t.fuelUsePerTile;
+				return (t.fuelUsePerTile);
 			}
 		}
 		public static float PodFuelUsePerLaunch
@@ -35,7 +35,7 @@ namespace WM.SelfLaunchingPods
 			{
 				var t = DefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
 
-				return t.fuelUsePerLaunch;
+				return (t.fuelUsePerLaunch);
 			}
 		}
 

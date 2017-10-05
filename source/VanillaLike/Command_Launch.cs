@@ -16,7 +16,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return "WM.LaunchCaravanGizmo".Translate();
+				return ("WM.LaunchCaravanGizmo".Translate());
 			}
 		}
 
@@ -70,15 +70,15 @@ namespace WM.SelfLaunchingPods
 									 {
 										 if (!target.IsValid)
 										 {
-											 return null;
+											 return (null);
 										 }
 										 int num = Find.WorldGrid.TraversalDistanceBetween(ParentTile, target.Tile);
 
 										 if (num <= MaxLaunchDistanceOneWay)
 										 {
-											 return null;
+											 return (null);
 										 }
-										 return "TransportPodNotEnoughFuel".Translate();
+										 return ("TransportPodNotEnoughFuel".Translate());
 									 });
 				}
 				catch (Exception ex)
@@ -95,7 +95,7 @@ namespace WM.SelfLaunchingPods
 			if (!target.IsValid)
 			{
 				Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(), MessageSound.RejectInput);
-				return false;
+				return (false);
 			}
 			int num = Find.WorldGrid.TraversalDistanceBetween(this.ParentTile, target.Tile);
 
@@ -107,7 +107,7 @@ namespace WM.SelfLaunchingPods
 									TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, this.ParentPodsCount)),
 							MessageSound.RejectInput);
 				
-				return false;
+				return (false);
 			}
 			MapParent mapParent = target.WorldObject as MapParent;
 
@@ -124,7 +124,7 @@ namespace WM.SelfLaunchingPods
 				Launch(target.Tile, target.Cell);
 			}
 
-			return true;
+			return (true);
 		}
 	}
 }

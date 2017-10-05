@@ -26,7 +26,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return this.parent.TryGetComp<CompTransporter>().TransportersInGroup(this.parent.Map).Count;
+				return (this.parent.TryGetComp<CompTransporter>().TransportersInGroup(this.parent.Map).Count);
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return parent.Tile;
+				return (parent.Tile);
 			}
 		}
 

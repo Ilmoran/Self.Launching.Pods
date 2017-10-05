@@ -40,9 +40,9 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				if (!CanDoNow)
-					return "WM.MessageNothingToUnload".Translate();
+					return ("WM.MessageNothingToUnload".Translate());
 				else
-					return base.FailMessage;
+					return (base.FailMessage);
 			}
 		}
 	}

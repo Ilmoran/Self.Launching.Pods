@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return parent.FuelLevelPerPod;
+				return (parent.FuelLevelPerPod);
 			}
 		}
 
@@ -26,7 +26,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return parent.PodsCount;
+				return (parent.PodsCount);
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return parent.Tile;
+				return (parent.Tile);
 			}
 		}
 

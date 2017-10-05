@@ -15,7 +15,7 @@
 //		{
 //			get
 //			{
-//				return (List<Pawn>)Traverse.Create(typeof(RimWorld.Planet.CaravanMaker)).Field("tmpPawns").GetValue();
+//				return ((List<Pawn>)Traverse.Create(typeof(RimWorld.Planet.CaravanMaker)).Field("tmpPawns").GetValue());
 
 //			}
 //		}
@@ -44,9 +44,9 @@
 //			{
 //				flag = false;
 //				__result = Internal(pawns, faction, startingTile, addToWorldPawnsIfNotAlready);
-//				return false;
+//				return (false)
 //			}
-//			return true;
+//			return (true)
 //		}
 //		// RimWorld.Planet.CaravanMaker
 //		internal static Caravan Internal(IEnumerable<Pawn> pawns, Faction faction, int startingTile, bool addToWorldPawnsIfNotAlready)
@@ -96,7 +96,7 @@
 //					}
 //				}
 //			}
-//			return caravan;
+//			return (caravan)
 //		}
 
 //	}

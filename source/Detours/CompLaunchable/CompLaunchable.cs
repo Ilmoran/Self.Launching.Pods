@@ -19,10 +19,10 @@ namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 	//		{
 	//			//__result = null;
 	//			__result = (Building)__instance.parent;
-	//			return false;
+	//			return (false)
 	//		}
 
-	//		return true;
+	//		return (true)
 	//	}
 
 	//	//static void Postfix(RimWorld.CompLaunchable __instance, ref Building __result)
@@ -54,10 +54,10 @@ namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 	//				__result = compRefuelable.Fuel;
 	//			else
 	//				__result = 0f;
-	//			return false;
+	//			return (false)
 	//		}
 
-	//		return true;
+	//		return (true)
 	//	}
 	//}
 
@@ -77,10 +77,10 @@ namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 	//			else
 	//				__result = false;
 
-	//			return false;
+	//			return (false)
 	//		}
 
-	//		return true;
+	//		return (true)
 	//	}
 	//}
 
@@ -95,10 +95,10 @@ namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 	//		if (Utils.IsMyClass(__instance))
 	//		{
 	//			__result = true;
-	//			return false;
+	//			return (false)
 	//		}
 
-	//		return true;
+	//		return (true)
 	//	}
 	//}
 
@@ -117,9 +117,9 @@ namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 	//			{
 	//				Log.Error("Exception when lauching " + __instance + ". " + ex + " " + ex.StackTrace);
 	//			}
-	//			return false;
+	//			return (false)
 	//		}
-	//		return true;
+	//		return (true)
 	//	}	//}
 
 	//[HarmonyPatch(typeof(RimWorld.CompLaunchable))]

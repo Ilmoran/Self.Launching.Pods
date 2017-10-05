@@ -15,7 +15,7 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 		{
 			get
 			{
-				return (List<CompTransporter>)Traverse.Create(this).Field("transporters").GetValue();
+				return ((List<CompTransporter>)Traverse.Create(this).Field("transporters").GetValue());
 			}
 			set
 			{
@@ -45,9 +45,9 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 			if (Find.Selector.SelectedObjects.All((arg) => Utils.IsMyClass(arg)))
 			{
 				Internal(__instance);
-				return false;
+				return (false);
 			}
-			return true;
+			return (true);
 
 		}
 		// RimWorld.Command_LoadToTransporter

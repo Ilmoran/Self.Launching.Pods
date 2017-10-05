@@ -48,7 +48,7 @@ namespace WM.SelfLaunchingPods
 
 			Find.WorldObjects.Add(hopper);
 
-			return hopper;
+			return (hopper);
 		}
 
 		internal static void ToCaravan(WorldTraveler traveler, Caravan caravan, IEnumerable<Thing> thingsToTransfer)
@@ -71,7 +71,7 @@ namespace WM.SelfLaunchingPods
 		{
 			if (MissingMassCapacity(traveler, caravan) > 0)
 			{
-				return false;
+				return (false);
 			}
 
 			var		list = thingsToTransfer.ToList();
@@ -103,7 +103,7 @@ namespace WM.SelfLaunchingPods
 				Find.WorldObjects.Remove(caravan);
 			}
 
-			return true;
+			return (true);
 		}
 
 		internal static float MissingMassCapacity(WorldTraveler traveler, Caravan caravan)

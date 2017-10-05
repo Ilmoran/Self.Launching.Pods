@@ -32,7 +32,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (bool)Traverse.Create(this).Field("alreadyLeft").GetValue();
+				return ((bool)Traverse.Create(this).Field("alreadyLeft").GetValue());
 			}
 			set
 			{
@@ -44,7 +44,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (ActiveDropPodInfo)Traverse.Create(this).Field("contents").GetValue();
+				return ((ActiveDropPodInfo)Traverse.Create(this).Field("contents").GetValue());
 			}
 			set
 			{
@@ -56,7 +56,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (List<Thing>)Traverse.Create(typeof(RimWorld.DropPodLeaving)).Field("tmpActiveDropPods").GetValue();
+				return ((List<Thing>)Traverse.Create(typeof(RimWorld.DropPodLeaving)).Field("tmpActiveDropPods").GetValue());
 			}
 		}
 
@@ -64,7 +64,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (bool)Traverse.Create(this).Field("soundPlayed").GetValue();
+				return ((bool)Traverse.Create(this).Field("soundPlayed").GetValue());
 			}
 			set
 			{
@@ -75,7 +75,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (int)Traverse.Create(this).Field("ticksSinceStart").GetValue();
+				return ((int)Traverse.Create(this).Field("ticksSinceStart").GetValue());
 			}
 			set
 			{

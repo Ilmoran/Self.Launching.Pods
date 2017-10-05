@@ -8,6 +8,10 @@ using Verse;
 namespace WM.SelfLaunchingPods
 {
 	//TODO: tick pawns
+	//TODO: allow manual refueling from inventory BUT not the direct fuel use from.
+	//TODO: remote trading
+	//TODO: selection on unload / load
+	//TODO: fix prisoners fleeing after landing
 	public class WorldTraveler : WorldObject
 	{
 		// RimWorld.Planet.TravelingTransportPods
@@ -18,7 +22,7 @@ namespace WM.SelfLaunchingPods
 				if (Traveling)
 					return Vector3.Slerp(this.Start, this.End, this.traveledPct);
 				else
-					return base.DrawPos;
+					return (base.DrawPos);
 			}
 		}
 
@@ -27,7 +31,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return Find.WorldGrid.GetTileCenter(this.departTile);
+				return (Find.WorldGrid.GetTileCenter(this.departTile));
 			}
 		}
 
@@ -36,7 +40,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return Find.WorldGrid.GetTileCenter(this.destinationTile);
+				return (Find.WorldGrid.GetTileCenter(this.destinationTile));
 			}
 		}
 
@@ -44,7 +48,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return this.destinationTile > 0;
+				return (this.destinationTile > 0);
 			}
 		}
 
@@ -69,7 +73,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return this.pods.Count;
+				return (this.pods.Count);
 			}
 		}
 
@@ -109,7 +113,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return AllCarriedPawns.Any();
+				return (AllCarriedPawns.Any());
 			}
 		}
 
@@ -154,12 +158,12 @@ namespace WM.SelfLaunchingPods
 				Vector3 end = this.End;
 				if (start == end)
 				{
-					return 1f;
+					return (1f);
 				}
 				float num = GenMath.SphericalDistance(start.normalized, end.normalized);
 				if (num == 0f)
 				{
-					return 1f;
+					return (1f);
 				}
 				return 0.00025f / num;
 			}
@@ -211,7 +215,7 @@ namespace WM.SelfLaunchingPods
 		public override IEnumerable<Gizmo> GetGizmos()
 		{
 			foreach (var item in base.GetGizmos())
-				yield return item;
+				yield return (item);
 
 			if (!Traveling)
 			{
@@ -387,7 +391,7 @@ namespace WM.SelfLaunchingPods
 
 			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity);
 
-			return v;
+			return (v);
 		}
 
 	}

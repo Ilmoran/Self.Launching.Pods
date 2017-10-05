@@ -31,7 +31,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (float)Traverse.Create(this as RimWorld.CompLaunchable).Property("FuelInLeastFueledFuelingPortSource").GetValue();
+				return ((float)Traverse.Create(this as RimWorld.CompLaunchable).Property("FuelInLeastFueledFuelingPortSource").GetValue());
 			}
 		}
 
@@ -43,8 +43,8 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public new bool ConnectedToFuelingPort { get { return true; } }
-		public new bool AllInGroupConnectedToFuelingPort { get { return true; } }
+		public new bool ConnectedToFuelingPort { get { return (true); } }
+		public new bool AllInGroupConnectedToFuelingPort { get { return (true); } }
 
 		// RimWorld.CompLaunchable
 		public new bool FuelingPortSourceHasAnyFuel
@@ -52,7 +52,7 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
-				return compRefuelable.Fuel > 0f;
+				return (compRefuelable.Fuel > 0f);
 			}
 		}
 		// RimWorld.CompLaunchable
@@ -62,9 +62,9 @@ namespace WM.SelfLaunchingPods
 			{
 				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
 				if (compRefuelable != null)
-					return compRefuelable.Fuel;
+					return (compRefuelable.Fuel);
 				else
-					return 0f;
+					return (0f);
 			}
 		}
 		// RimWorld.CompLaunchable
@@ -72,7 +72,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (Building)parent;
+				return ((Building)parent);
 			}
 		}
 
@@ -98,7 +98,9 @@ namespace WM.SelfLaunchingPods
 		public override void CompTick()
 		{
 			base.CompTick();
+			#if DEBUG
 			Log.Message("CompTick()");
+			#endif
 
 			if (podInfo == null)
 				return;
@@ -236,11 +238,11 @@ namespace WM.SelfLaunchingPods
 		//	{
 		//		Harmony.Traverse.Create(this.Transporter).Method("StartChoosingDestination").GetValue();
 		//	};
-		//	yield return launchgizmo;
+		//	yield return (launchgizmo)
 		//	//var baseenum = base.CompGetGizmosExtra();
 		//	//var hookenum = new CompLaunchGizmoHook(baseenum.GetEnumerator());
 
-		//	//return hookenum;
+		//	//return (hookenum)
 		//}
 
 		//public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -251,7 +253,7 @@ namespace WM.SelfLaunchingPods
 		//		{
 		//			((Command_Action)item).defaultLabel = "test";
 		//		}
-		//		yield return item;
+		//		yield return (item)
 		//	}
 		//}
 	}
@@ -292,7 +294,7 @@ namespace WM.SelfLaunchingPods
 	//				};
 	//			}
 	//		}
-	//		return base.Hook(current);
+	//		return (base.Hook(current))
 	//	}
 
 	//	void StartChoosingDestination()

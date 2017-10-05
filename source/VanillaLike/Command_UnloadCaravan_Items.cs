@@ -25,7 +25,7 @@ namespace WM.SelfLaunchingPods
 			{
 				if (Utils.FindCaravanAt(Parent.Tile) == null)
 					return ("WM.MessageCaravanNeeded".Translate());
-				return base.FailMessage;
+				return (base.FailMessage);
 			}
 		}
 

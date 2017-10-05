@@ -23,7 +23,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return "WM.LoadCaravanItemsGizmo".Translate();
+				return ("WM.LoadCaravanItemsGizmo".Translate());
 			}
 		}
 	}

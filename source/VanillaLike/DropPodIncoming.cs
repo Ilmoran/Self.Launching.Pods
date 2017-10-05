@@ -25,7 +25,7 @@ namespace WM.SelfLaunchingPods
 
 			get
 			{
-				return (bool)Traverse.Create(this as RimWorld.DropPodIncoming).Field("soundPlayed").GetValue();
+				return ((bool)Traverse.Create(this as RimWorld.DropPodIncoming).Field("soundPlayed").GetValue());
 			}
 			set
 			{
