@@ -10,34 +10,15 @@ namespace WM.SelfLaunchingPods
 {
 	public static class TravelingPodsUtils
 	{
-		//public static void CreateTravelingPodsWorldObject(int startTile, int targetTile, IntVec3 targetCell, PawnsArriveMode arriveMode, bool attackOnArrival, PodsFleet fleet)
-		//{
-		//	// ============== mod ============== 
-
-		//	var travelingTransportPods = (TravelingTransportPods_MK)WorldObjectMaker.MakeWorldObject(DefOf.WM_TravelingTransportPods);
-
-		//	// ============== /mod ============== 
-
-		//	travelingTransportPods.Tile = startTile;
-		//	travelingTransportPods.SetFaction(Faction.OfPlayer);
-		//	travelingTransportPods.destinationTile = targetTile;
-		//	travelingTransportPods.destinationCell = targetCell;
-		//	travelingTransportPods.arriveMode = arriveMode;
-		//	travelingTransportPods.attackOnArrival = attackOnArrival;
-
-		//	travelingTransportPods.Fleet = fleet;
-
-		//	Find.WorldObjects.Add(travelingTransportPods);
-		//}
-
 		// RimWorld.CompLaunchable
 		public static float FuelNeededToLaunchAtDistance(int dist, int podsCount)
 		{
 			return (Config.PodFuelUsePerLaunch + Config.PodFuelUsePerTile * dist) * podsCount;
 		}
-		public static int MaxLaunchDistance(float fuelAmount, int podsCount)
+
+		public static int MaxLaunchDistance(float fuelAmount, int podsCount, bool oneway)
 		{
-			return Mathf.FloorToInt(((fuelAmount - podsCount * Config.PodFuelUsePerLaunch) / podsCount) / Config.PodFuelUsePerTile);
+			return Mathf.FloorToInt(((fuelAmount - podsCount * Config.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (Config.PodFuelUsePerTile * (oneway ? 1 : 2)));
 		}
 
 		public static void RemoveAllPawnsFromWorldPawns(IEnumerable<Pawn> pawns)
@@ -68,6 +49,66 @@ namespace WM.SelfLaunchingPods
 			Find.WorldObjects.Add(hopper);
 
 			return hopper;
+		}
+
+		internal static void ToCaravan(WorldTraveler traveler, Caravan caravan, IEnumerable<Thing> thingsToTransfer)
+		{
+			var list = thingsToTransfer.ToList();
+
+			foreach (var item in list)
+			{
+				item.holdingOwner.Remove(item);
+				CaravanInventoryUtility.GiveThing(caravan, item);
+				if (item is Pawn)
+				{
+					//Find.WorldPawns.PassToWorld((Verse.Pawn)item);
+					item.holdingOwner.Remove(item);
+				}
+			}
+		}
+
+		internal static bool FromCaravan(WorldTraveler traveler, Caravan caravan, IEnumerable<Thing> thingsToTransfer)
+		{
+			if (MissingMassCapacity(traveler, caravan) > 0)
+			{
+				return false;
+			}
+
+			var		list = thingsToTransfer.ToList();
+			int		i = 0;
+			float	usedMass = 0;
+
+			list.SortByDescending((Thing arg) => arg.GetStatValue(StatDefOf.Mass) * arg.stackCount);
+			foreach (var item in list)
+			{
+				var	info = traveler.PodsInfo.ElementAt(i);
+				var	podThing = traveler.PodsAsThing.ElementAt(i);
+
+				usedMass += item.GetStatValue(StatDefOf.Mass) * item.stackCount;
+				if (item is Pawn)
+					usedMass += MassUtility.GearAndInventoryMass(item as Pawn);
+				if (item.holdingOwner != null)
+					item.holdingOwner.TryTransferToContainer(item, info.innerContainer);
+				else
+					info.innerContainer.TryAdd(item, item.stackCount);
+				if (usedMass > podThing.TryGetComp<CompTransporter>().Props.massCapacity && traveler.PodsCount < i)
+				{
+					usedMass = 0;
+					i++;
+				}
+			}
+
+			if (!caravan.pawns.Any)
+			{
+				Find.WorldObjects.Remove(caravan);
+			}
+
+			return true;
+		}
+
+		internal static float MissingMassCapacity(WorldTraveler traveler, Caravan caravan)
+		{
+			return (Utils.CaravanWeight(caravan)) - (traveler.MaxCapacity - traveler.MassUsage);
 		}
 	}
 }

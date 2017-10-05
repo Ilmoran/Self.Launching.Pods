@@ -106,11 +106,32 @@
 			</li>
 		</comps>
 		<placeWorkers>
-			<!--      <li>PlaceWorker_NeedsFuelingPort</li>-->
 			<li>PlaceWorker_NotUnderRoof</li>
 		</placeWorkers>
 		<researchPrerequisites>
 			<li>TransportPod</li>
 		</researchPrerequisites>
+	</ThingDef>
+	<ThingDef ParentName="BuildingBase">
+		<defName>WM_LandingSpot</defName>
+		<label>landing spot</label>
+		<Description>Advanced pods will lands here when targeted closeby.</Description>
+		<graphicData>
+			<texPath>Things/LandingSpot</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<!--		
+		<AltitudeLayer>FloorEmplacement</AltitudeLayer>
+		-->
+		<statBases>
+			<WorkToBuild>0</WorkToBuild>
+		</statBases>
+		<scatterableOnMapGen>false</scatterableOnMapGen>
+		<useHitPoints>False</useHitPoints>
+		<DesignationCategory>Misc</DesignationCategory>
+		<Passability>Standable</Passability>
+		<building>
+			<canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+		</building>
 	</ThingDef>
 </Buildings>

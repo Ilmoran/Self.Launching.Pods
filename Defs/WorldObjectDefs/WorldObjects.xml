@@ -12,11 +12,13 @@
 		<expandingIconPriority>60</expandingIconPriority>
 		<allowCaravanIncidentsWhichGenerateMap>true</allowCaravanIncidentsWhichGenerateMap>
 		<inspectorTabs>
+			<!--
 			<li>WITab_Caravan_Health</li>
 			<li>WITab_Caravan_Needs</li>
 			<li>WITab_Caravan_Gear</li>
 			<li>WITab_Caravan_Social</li>
-			<li>WM.SelfLaunchingPods.WITab_LandedShip_Cargo</li>
+			-->
+			<li>WM.SelfLaunchingPods.WITab_PodsFleet</li>
 		</inspectorTabs>
 	</WorldObjectDef>
 </Defs>

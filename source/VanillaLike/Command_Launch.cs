@@ -10,99 +10,85 @@ using Verse.Sound;
 namespace WM.SelfLaunchingPods
 {
 
-	public abstract class Command_Launch : Command
+	public abstract class Command_Launch : Command_Action
 	{
-		// RimWorld.CompLaunchable
-		private static readonly Texture2D TargeterMouseAttachment = ContentFinder<Texture2D>.Get("UI/Overlays/LaunchableMouseAttachment", true);
-
-		public Command_Launch()
-		{
-			this.icon = Resources.LaunchCommandTex;
-			this.hotKey = KeyBindingDefOf.Misc1;
-		}
-
 		public override string Label
 		{
 			get
 			{
-				return "LaunchCaravanGizmo".Translate();
+				return "WM.LaunchCaravanGizmo".Translate();
 			}
 		}
 
-		public virtual int MaxLaunchDistance
+		public int MaxLaunchDistanceOneWay
 		{
 			get
 			{
-				return 0;
-			}
-		}
-		public virtual int Tile
-		{
-			get
-			{
-				return 0;
+				return (TravelingPodsUtils.MaxLaunchDistance(ParentLeastFueledPodFuelLevel, 1, true));
 			}
 		}
 
-		public virtual ThingWithComps Parent
+		public int MaxLaunchDistanceRoundTrip
 		{
 			get
 			{
-				return null;
+				return (TravelingPodsUtils.MaxLaunchDistance(ParentLeastFueledPodFuelLevel, 1, false));
 			}
+		}
+
+		public abstract float ParentLeastFueledPodFuelLevel
+		{
+			get;
+		}
+
+		public abstract int ParentTile
+		{
+			get;
+		}
+
+		public abstract int ParentPodsCount
+		{
+			get;
+		}
+
+		public Command_Launch()
+		{
+			this.icon = Resources.LaunchCommandTex;
+
+			action = delegate
+			{
+				try
+				{
+					CameraJumper.TryJump(CameraJumper.GetWorldTarget(new GlobalTargetInfo(ParentTile)));
+					Find.WorldSelector.ClearSelection();
+
+					Find.WorldTargeter.BeginTargeting(new Func<GlobalTargetInfo, bool>(this.ChoseWorldTarget), true, Resources.LaunchCommandTex, false, delegate
+									  {
+										  GenDraw.DrawWorldRadiusRing(ParentTile, MaxLaunchDistanceOneWay);
+										  GenDraw.DrawWorldRadiusRing(ParentTile, MaxLaunchDistanceRoundTrip);
+									  }, delegate (GlobalTargetInfo target)
+									 {
+										 if (!target.IsValid)
+										 {
+											 return null;
+										 }
+										 int num = Find.WorldGrid.TraversalDistanceBetween(ParentTile, target.Tile);
+
+										 if (num <= MaxLaunchDistanceOneWay)
+										 {
+											 return null;
+										 }
+										 return "TransportPodNotEnoughFuel".Translate();
+									 });
+				}
+				catch (Exception ex)
+				{
+					Log.Error("Error while trying to target destination: " + ex.Message + "\n" + ex.StackTrace);
+				}
+			};
 		}
 
 		internal abstract void Launch(int tile, IntVec3 cell);
-
-		public WorldTraveler Traveler
-		{
-			get
-			{
-				return (WorldTraveler)Find.WorldSelector.SingleSelectedObject;
-			}
-		}
-
-
-		//bool targetIsMap = false;
-
-		public override void ProcessInput(UnityEngine.Event ev)
-		{
-			base.ProcessInput(ev);
-
-			try
-			{
-
-				CameraJumper.TryJump(CameraJumper.GetWorldTarget(this.Parent));
-				Find.WorldSelector.ClearSelection();
-				//int tile = this.parent.Map.Tile;
-
-				Find.WorldTargeter.BeginTargeting(new Func<GlobalTargetInfo, bool>(this.ChoseWorldTarget), true, TargeterMouseAttachment, false, delegate
-				  {
-					  GenDraw.DrawWorldRadiusRing(Tile, MaxLaunchDistance);
-					  GenDraw.DrawWorldRadiusRing(Tile, MaxLaunchDistance / 2);
-				  }, delegate (GlobalTargetInfo target)
-				 {
-					 if (!target.IsValid)
-					 {
-						 return null;
-					 }
-					 int num = Find.WorldGrid.TraversalDistanceBetween(Tile, target.Tile);
-					 if (num <= MaxLaunchDistance)
-					 {
-						 return null;
-					 }
-					 //if (num > worldLandedPods.MaxLaunchDistanceEverPossible)
-					 //{
-					 // return "TransportPodDestinationBeyondMaximumRange".Translate();
-					 //}
-					 return "TransportPodNotEnoughFuel".Translate();
-				 });
-			}
-			catch (Exception ex)
-			{
-				Log.Error("Error while trying to target destination: " + ex.Message + "\n" + ex.StackTrace);
-			}
-		}
 
 		bool ChoseWorldTarget(GlobalTargetInfo target)
 		{
@@ -111,35 +97,34 @@ namespace WM.SelfLaunchingPods
 				Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(), MessageSound.RejectInput);
 				return false;
 			}
-			int num = Find.WorldGrid.TraversalDistanceBetween(this.Tile, target.Tile);
-			if (num > this.MaxLaunchDistance)
+			int num = Find.WorldGrid.TraversalDistanceBetween(this.ParentTile, target.Tile);
+
+			if (num > this.MaxLaunchDistanceOneWay)
 			{
-				Messages.Message("MessageTransportPodsDestinationIsTooFar".Translate(new object[]
-				{
-					TravelingPodsUtils.FuelNeededToLaunchAtDistance(num,this.Traveler.PodsCount).ToString("0.#")
-				}), MessageSound.RejectInput);
+				Messages.Message(
+							string.Format(
+									"MessageTransportPodsDestinationIsTooFar".Translate(),
+									TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, this.ParentPodsCount)),
+							MessageSound.RejectInput);
+				
 				return false;
 			}
-
 			MapParent mapParent = target.WorldObject as MapParent;
+
 			if (mapParent != null && mapParent.HasMap)
 			{
 				if (!CameraJumper.TryHideWorld())
-					throw new Exception("Could not hide world()");
+					throw new Exception("CameraJumper.TryHideWorld() failed.");
 
-				//Verse.CameraJumper.TryJump(target);
 				Current.Game.VisibleMap = mapParent.Map;
-
-				Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), (LocalTargetInfo obj) => Launch(target.Tile, obj.Cell), null, null, TargeterMouseAttachment);
+				Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), (LocalTargetInfo obj) => Launch(target.Tile, obj.Cell), null, null, Resources.LaunchCommandTex);
 			}
 			else
 			{
 				Launch(target.Tile, target.Cell);
 			}
 
-
 			return true;
 		}
-
 	}
 }

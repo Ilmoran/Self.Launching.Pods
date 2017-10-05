@@ -95,6 +95,5 @@ namespace WM.SelfLaunchingPods
 			}
 			this.Destroy(DestroyMode.Vanish);
 		}
-
 	}
 }

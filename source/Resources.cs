@@ -4,6 +4,7 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
+    [StaticConstructorOnStartup]
 	public static class Resources
 	{
 		//public static readonly Texture2D MK1Pod = ContentFinder<Texture2D>.Get("Things/MK1pod");

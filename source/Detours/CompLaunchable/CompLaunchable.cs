@@ -5,7 +5,7 @@ using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 
-// Can't find why I did this at first.
+// Can't find out why I did this at first.
 
 namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 {
@@ -102,27 +102,25 @@ namespace WM.SelfLaunchingPods.Detours.CompLaunchable
 	//	}
 	//}
 
-	[HarmonyPatch(typeof(RimWorld.CompLaunchable), "TryLaunch")]
-	public static class TryLaunch
-	{
-		static bool Prefix(RimWorld.CompLaunchable __instance, GlobalTargetInfo target, PawnsArriveMode arriveMode, bool attackOnArrival)
-		{
-			if (Utils.IsMyClass(__instance))
-			{
-				try
-				{
-					(__instance as CompSelfLaunchable).TryLaunch(target, arriveMode, attackOnArrival);
-				}
-				catch (Exception ex)
-				{
-					Log.Error("Exception when lauching " + __instance + ". " + ex + " " + ex.StackTrace);
-				}
-				return false;
-			}
-
-			return true;
-		}
-	}
+	//[HarmonyPatch(typeof(RimWorld.CompLaunchable), "TryLaunch")]
+	//public static class TryLaunch
+	//{
+	//	static bool Prefix(RimWorld.CompLaunchable __instance, GlobalTargetInfo target, PawnsArriveMode arriveMode, bool attackOnArrival)
+	//	{
+	//		if (Utils.IsMyClass(__instance))
+	//		{
+	//			try
+	//			{
+	//				(__instance as CompSelfLaunchable).TryLaunch(target, arriveMode, attackOnArrival);
+	//			}
+	//			catch (Exception ex)
+	//			{
+	//				Log.Error("Exception when lauching " + __instance + ". " + ex + " " + ex.StackTrace);
+	//			}
+	//			return false;
+	//		}
+	//		return true;
+	//	}	//}
 
 	//[HarmonyPatch(typeof(RimWorld.CompLaunchable))]
 	//[HarmonyPatch("AllInGroupConnectedToFuelingPort", PropertyMethod.Getter)]

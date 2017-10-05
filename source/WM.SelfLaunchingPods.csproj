@@ -20,7 +20,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CustomCommands>
       <CustomCommands>
         <Command>
@@ -37,7 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,17 +61,15 @@
   <ItemGroup>
     <Folder Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\" />
     <Folder Include="Detours\" />
-    <Folder Include="Detours\TravelingTransportPods\" />
     <Folder Include="Detours\ActiveDropPod\" />
     <Folder Include="Detours\FuelingPortUtility\" />
     <Folder Include="Detours\Command_LoadToTransporter\" />
-    <Folder Include="Detours\CompLaunchable\" />
     <Folder Include="VanillaLike\" />
     <Folder Include="..\Languages\" />
-    <Folder Include="Detours\CaravanMaker\" />
     <Folder Include="..\Textures\" />
     <Folder Include="..\Textures\Things\" />
     <Folder Include="UI\" />
+    <Folder Include="Detours\Caravan\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -89,21 +87,29 @@
     <Compile Include="Detours\FuelingPortUtility\FuelingPortGiverAt.cs" />
     <Compile Include="Detours\Command_LoadToTransporter\ProcessInput.cs" />
     <Compile Include="DefOf.cs" />
-    <Compile Include="Detours\CompLaunchable\CompLaunchable.cs" />
     <Compile Include="VanillaLike\DropPodUtility.cs" />
     <Compile Include="VanillaLike\DropPodLeaving.cs" />
     <Compile Include="VanillaLike\CompSelfLaunchable.cs" />
     <Compile Include="VanillaLike\CompProperties_SelfLaunchable.cs" />
     <Compile Include="VanillaLike\DropPodIncoming.cs" />
-    <Compile Include="Detours\CaravanMaker\MakeCaravan.cs" />
     <Compile Include="TravelingPodsUtils.cs" />
     <Compile Include="PodPair.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="UI\WITab_LandedShip_Cargo.cs" />
+    <Compile Include="UI\WITab_PodsFleet.cs" />
     <Compile Include="VanillaLike\Command_Launch.cs" />
-    <Compile Include="VanillaLike\WorldTraveler.cs" />
     <Compile Include="VanillaLike\Command_Launch_FromWorld.cs" />
+    <Compile Include="VanillaLike\Command_UnloadCaravan.cs" />
+    <Compile Include="VanillaLike\Command_Traveler.cs" />
+    <Compile Include="Detours\Caravan\GetGizmos.cs" />
+    <Compile Include="VanillaLike\Command_LoadToCaravan.cs" />
     <Compile Include="VanillaLike\Command_Launch_FromMap.cs" />
+    <Compile Include="VanillaLike\Command_LoadToCaravan_PawnsAndItems.cs" />
+    <Compile Include="VanillaLike\Command_LoadToCaravan_Items.cs" />
+    <Compile Include="VanillaLike\Command_LoadToCaravan_Pawns.cs" />
+    <Compile Include="VanillaLike\Command_UnloadCaravan_Items.cs" />
+    <Compile Include="VanillaLike\Command_UnloadCaravan_PawnsAndItems.cs" />
+    <Compile Include="VanillaLike\Command_UnloadCaravan_Pawns.cs" />
+    <Compile Include="WorldTraveler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

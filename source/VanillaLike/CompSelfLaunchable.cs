@@ -23,7 +23,15 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (int)Traverse.Create(this as RimWorld.CompLaunchable).Property("MaxLaunchDistance").GetValue();
+				return TravelingPodsUtils.MaxLaunchDistance(this._FuelInLeastFueledFuelingPortSource, 1, true);
+			}
+		}
+
+		public float _FuelInLeastFueledFuelingPortSource
+		{
+			get
+			{
+				return (float)Traverse.Create(this as RimWorld.CompLaunchable).Property("FuelInLeastFueledFuelingPortSource").GetValue();
 			}
 		}
 
@@ -31,7 +39,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return this.props as CompProperties_SelfLaunchable;
+				return props as CompProperties_SelfLaunchable;
 			}
 		}
 
@@ -43,7 +51,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				var compRefuelable = ((Building)this.parent).TryGetComp<CompRefuelable>();
+				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
 				return compRefuelable.Fuel > 0f;
 			}
 		}
@@ -52,7 +60,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				var compRefuelable = ((Building)this.parent).TryGetComp<CompRefuelable>();
+				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
 				if (compRefuelable != null)
 					return compRefuelable.Fuel;
 				else
@@ -64,7 +72,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (Building)this.parent;
+				return (Building)parent;
 			}
 		}
 
@@ -72,8 +80,8 @@ namespace WM.SelfLaunchingPods
 		{
 			base.PostExposeData();
 
-			Scribe_Values.Look<int>(ref ticksUntilOpen, "ticksUntilOpen");
-			Scribe_Deep.Look<ActiveDropPodInfo>(ref podInfo, "podInfo");
+			Scribe_Values.Look(ref ticksUntilOpen, "ticksUntilOpen");
+			Scribe_Deep.Look(ref podInfo, "podInfo");
 		}
 
 		public override void PostSpawnSetup(bool respawningAfterLoad)
@@ -86,7 +94,7 @@ namespace WM.SelfLaunchingPods
 			PodOpen();
 		}
 
-		//TODO: CompTick() does not work
+		//TODO: CompTick() does not work (see tick type)
 		public override void CompTick()
 		{
 			base.CompTick();
@@ -102,11 +110,15 @@ namespace WM.SelfLaunchingPods
 			ticksUntilOpen--;
 		}
 
+		public override IEnumerable<Gizmo> CompGetGizmosExtra()
+		{
+			if (this.parent.TryGetComp<CompTransporter>().LoadingInProgressOrReadyToLaunch)
+				yield return new Command_Launch_FromMap(this.parent);
+		}
+
 		// RimWorld.ActiveDropPod
 		private void PodOpen()
 		{
-			Log.Message("PodOpen()");
-
 			if (podInfo == null)
 				return;
 
@@ -131,7 +143,7 @@ namespace WM.SelfLaunchingPods
 					pawn
 						});
 					}
-					if (pawn.IsColonist && pawn.Spawned && !this.parent.Map.IsPlayerHome)
+					if (pawn.IsColonist && pawn.Spawned && !parent.Map.IsPlayerHome)
 					{
 						pawn.drafter.Drafted = true;
 					}
@@ -143,10 +155,10 @@ namespace WM.SelfLaunchingPods
 				for (int j = 0; j < 1; j++)
 				{
 					Thing thing3 = ThingMaker.MakeThing(ThingDefOf.ChunkSlagSteel, null);
-					GenPlace.TryPlaceThing(thing3, this.parent.Position, this.parent.Map, ThingPlaceMode.Near, null);
+					GenPlace.TryPlaceThing(thing3, parent.Position, parent.Map, ThingPlaceMode.Near, null);
 				}
 			}
-			SoundDef.Named("DropPodOpen").PlayOneShot(new TargetInfo(this.parent.Position, this.parent.Map, false));
+			SoundDef.Named("DropPodOpen").PlayOneShot(new TargetInfo(parent.Position, parent.Map, false));
 			//this.Destroy(DestroyMode.Vanish);
 
 			podInfo = null;
@@ -155,15 +167,14 @@ namespace WM.SelfLaunchingPods
 		// RimWorld.CompLaunchable
 		internal void TryLaunch(GlobalTargetInfo target, PawnsArriveMode arriveMode, bool attackOnArrival)
 		{
-#if DEBUG
-			Log.Message("TryLaunch()");
-#endif
 			if (!this.parent.Spawned)
 			{
 				Log.Error("Tried to launch " + this.parent + ", but it's unspawned.");
 				return;
 			}
+
 			List<CompTransporter> transportersInGroup = this.TransportersInGroup;
+
 			if (transportersInGroup == null)
 			{
 				Log.Error("Tried to launch " + this.parent + ", but it's not in any group.");
@@ -173,24 +184,23 @@ namespace WM.SelfLaunchingPods
 			{
 				return;
 			}
+
 			Map map = this.parent.Map;
 			int num = Find.WorldGrid.TraversalDistanceBetween(map.Tile, target.Tile);
+
 			if (num > this._MaxLaunchDistance)
 			{
 				return;
 			}
 			this.Transporter.TryRemoveLord(map);
+
 			int groupID = this.Transporter.groupID;
 			float amount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, 1);
+
 			for (int i = 0; i < transportersInGroup.Count; i++)
 			{
-				CompTransporter compTransporter = transportersInGroup[i];
-				Building fuelingPortSource = compTransporter.Launchable.FuelingPortSource;
-				if (fuelingPortSource != null)
-				{
-					fuelingPortSource.TryGetComp<CompRefuelable>().ConsumeFuel(amount);
-				}
-				var dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(DefOf.WM_DropPodLeaving, null);
+				CompTransporter	compTransporter = transportersInGroup[i];
+				var				dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(DefOf.WM_DropPodLeaving, null);
 
 				dropPodLeaving.groupID = groupID;
 				dropPodLeaving.destinationTile = target.Tile;
@@ -198,12 +208,12 @@ namespace WM.SelfLaunchingPods
 				dropPodLeaving.arriveMode = arriveMode;
 				dropPodLeaving.attackOnArrival = attackOnArrival;
 
-				ThingOwner directlyHeldThings = compTransporter.GetDirectlyHeldThings();
+				ThingOwner		directlyHeldThings = compTransporter.GetDirectlyHeldThings();
 
 				dropPodLeaving.Contents = new ActiveDropPodInfo();
 				dropPodLeaving.Contents.innerContainer.TryAddRange(directlyHeldThings, true);
 
-				var compRefuelable = this.parent.TryGetComp<CompRefuelable>();
+				var				compRefuelable = this.parent.TryGetComp<CompRefuelable>();
 				//dropPodLeaving.FuelQuantity = compRefuelable.Fuel;
 				//compRefuelable.ConsumeFuel(compRefuelable.Fuel);
 
@@ -215,8 +225,6 @@ namespace WM.SelfLaunchingPods
 
 				GenSpawn.Spawn(dropPodLeaving, compTransporter.parent.Position, map);
 			}
-
-			//throw new NotImplementedException();
 		}
 
 
@@ -247,7 +255,6 @@ namespace WM.SelfLaunchingPods
 		//	}
 		//}
 	}
-
 
 	//public class CompLaunchGizmoHook : EnumeratorHook<Gizmo>
 	//{

@@ -1,48 +1,47 @@
 using System;
+using RimWorld;
 using Verse;
+using Verse.Sound;
 
 namespace WM.SelfLaunchingPods
 {
 	public class Command_Launch_FromWorld : Command_Launch
 	{
-		public Command_Launch_FromWorld(WorldTraveler traveler) : base()
+		readonly WorldTraveler parent;
+
+		public Command_Launch_FromWorld(WorldTraveler parent)
 		{
-			Traveler = traveler;
+			this.parent = parent;
 		}
 
-		private WorldTraveler Traveler
+		public override float ParentLeastFueledPodFuelLevel
 		{
-			get;
-			set;
+			get
+			{
+				return parent.FuelLevelPerPod;
+			}
 		}
+
+		public override int ParentPodsCount
+		{
+			get
+			{
+				return parent.PodsCount;
+			}
+		}
+
+		public override int ParentTile
+		{
+			get
+			{
+				return parent.Tile;
+			}
+		}
+
 		internal override void Launch(int tile, IntVec3 cell)
 		{
-			Traveler.Launch(tile, cell);
-		}
-
-		public override ThingWithComps Parent
-		{
-			get
-			{
-				return base.Parent;
-			}
-		}
-
-		public override int Tile
-		{
-			get
-			{
-				//this.
-				return Traveler.Tile;
-			}
-		}
-
-		public override int MaxLaunchDistance
-		{
-			get
-			{
-				return Traveler.MaxLaunchDistance;
-			}
+			parent.Launch(tile, cell);
+			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
 		}
 	}
 }

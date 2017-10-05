@@ -34,11 +34,6 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 				Traverse.Create(typeof(RimWorld.Command_LoadToTransporter)).Field("tmpFuelingPortGivers").SetValue(value);
 			}
 		}
-		//// RimWorld.Command_LoadToTransporter
-		//public override void ProcessInput(Event ev)
-		//{
-		//}
-
 	}
 
 	[HarmonyPatch(typeof(RimWorld.Command_LoadToTransporter), "ProcessInput")]
@@ -49,16 +44,15 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 			Log.Message("RimWorld.Command_LoadToTransporter.ProcessInput()");
 			if (Find.Selector.SelectedObjects.All((arg) => Utils.IsMyClass(arg)))
 			{
-				Internal(__instance, ev);
+				Internal(__instance);
 				return false;
 			}
 			return true;
 
 		}
 		// RimWorld.Command_LoadToTransporter
-		public static void Internal(Command_LoadToTransporter __instance, Event ev)
+		static void Internal(Command_LoadToTransporter __instance)
 		{
-			//instance.ProcessInput(ev);
 			if (__instance.transporters == null)
 			{
 				__instance.transporters = new List<CompTransporter>();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace WM.SelfLaunchingPods
@@ -13,26 +14,18 @@ namespace WM.SelfLaunchingPods
 			var t = instance as Thing;
 			return instance is CompSelfLaunchable || t != null && (t.TryGetComp<CompSelfLaunchable>() != null || t.def == DefOf.WM_TransportPod);
 		}
-		internal static List<IntVec3> FindLandingPads(Map map, IntVec3 intVec)
+
+		internal static IEnumerable<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
 		{
-			List<Building> launchers = FindBuildingsWithinRadius(map, intVec, 20f, ThingDef.Named("PodLauncher"));
+			List<Building>	launchers = FindBuildingsWithinRadius(map, intVec, 7f, DefOf.WM_LandingSpot);
 
-			List<IntVec3> padsPos = new List<IntVec3>();
-
-			//Predicate<Building> isOccupied = FindPod;
-
-			foreach (Building current in launchers)
-			{
-				IntVec3 pos = RimWorld.FuelingPortUtility.GetFuelingPortCell(current);
-
-				if (CanLandAt(map, pos) && pos.Standable(map))
-
-					padsPos.Add(pos);
-			}
-
-			return padsPos;
+			return launchers.Select((Building arg) => arg.Position);
 		}
 
+		internal static Caravan FindCaravanAt(int tile)
+		{
+			return ((Caravan)Find.WorldObjects.ObjectsAt(tile).FirstOrDefault((WorldObject arg) => arg is Caravan));
+		}
 
 		internal static List<Building> FindBuildingsWithinRadius(Map map, IntVec3 center, float radius, ThingDef def)
 		{
@@ -58,6 +51,11 @@ namespace WM.SelfLaunchingPods
 		{
 			return (RimWorld.FuelingPortUtility.FuelingPortGiverAtFuelingPortCell(pos, map) != null);
 			//return true;
+		}
+
+		internal static float CaravanWeight(Caravan caravan)
+		{
+			return (CollectionsMassCalculator.MassUsage<Pawn>(caravan.pawns.InnerListForReading, IgnorePawnsInventoryMode.DontIgnore, true, false));
 		}
 	}
 }

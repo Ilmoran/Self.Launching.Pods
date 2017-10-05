@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
-	<!-- ================ World inspector ================ -->
+	<!-- ================ World view ================ -->
+
 	<WM.WorldObjectLandedPodsInspectString>Number of pods: {0}\nFuel amount: {1} ({2} per pod).\nCapacity: {3} / {4} kg.</WM.WorldObjectLandedPodsInspectString>
+	<WM.LaunchCaravanGizmo>Launch pods</WM.LaunchCaravanGizmo>
+	<WM.UnloadCaravanGizmo>Unload pawns and items</WM.UnloadCaravanGizmo>
+	<WM.UnloadCaravanItemsGizmo>Unload items only</WM.UnloadCaravanItemsGizmo>
+	<WM.UnloadCaravanPawnsGizmo>Unload pawns only</WM.UnloadCaravanPawnsGizmo>
+	<WM.LoadCaravanPawnsAndItemsGizmo>Load items and pawns</WM.LoadCaravanPawnsAndItemsGizmo>
+	<WM.LoadCaravanItemsGizmo>Load items only</WM.LoadCaravanItemsGizmo>
+	<WM.LoadCaravanPawnsGizmo>Load pawns only</WM.LoadCaravanPawnsGizmo>
+	<WM.FleetInventoryWITab>Content</WM.FleetInventoryWITab>
+
+	<!-- ================ Message ================ -->
+	
+	<WM.MessageCaravanUnloadedFromPods>Successfully unloaded caravan from pods.</WM.MessageCaravanUnloadedFromPods>
+	<WM.MessageCaravanNeeded>Caravan needed on location.</WM.MessageCaravanNeeded>
+	<WM.MessageCaravanLoadedToPods>Caravan loaded to pods.</WM.MessageCaravanLoadedToPods>
+	<WM.MessageCaravanPodsFleetCapacityTooLow>Pods fleet capacity too low: can not load. ({0} more kg needed).</WM.MessageCaravanPodsFleetCapacityTooLow>
+	<WM.MessageNoPodsToLoad>No pods to load in.</WM.MessageNoPodsToLoad>
+	<WM.MessageNoPawnsToUnload>No pawns to unload.</WM.MessageNoPawnsToUnload>
+	<WM.MessageNothingToUnload>Nothing to unload.</WM.MessageNothingToUnload>
+	<WM.MessageNothingToLoad>Nothing to load.</WM.MessageNothingToLoad>
+	<WM.MessageCannotUnload>Cannot unload.</WM.MessageCannotUnload>
 </LanguageData>

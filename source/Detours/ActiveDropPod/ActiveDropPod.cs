@@ -22,7 +22,7 @@ namespace WM.SelfLaunchingPods.Detours.ActiveDropPod
 			__state.map = __instance.Map;
 			__state.position = __instance.Position;
 		}
-		static void Postfix(ref state __state, RimWorld.ActiveDropPod __instance)
+		static void Postfix(ref state __state)
 		{
 			if (Utils.IsAtPad(__state.map, __state.position))
 			{

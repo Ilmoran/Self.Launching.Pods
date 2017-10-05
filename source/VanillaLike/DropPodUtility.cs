@@ -14,6 +14,5 @@ namespace WM.SelfLaunchingPods
 			dropPodIncoming.landedThing = landedThing;
 			GenSpawn.Spawn(dropPodIncoming, c, map);
 		}
-
 	}
 }

@@ -6,26 +6,23 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
-	public class WITab_LandedShip_Cargo : WITab
+	public class WITab_PodsFleet : WITab
 	{
-		private const float MassCarriedLineHeight = 22f;
+		private const float				MassCarriedLineHeight = 22f;
+		private Vector2					scrollPosition;
+		private float					scrollViewHeight;
+		private readonly List<Thing>	items = new List<Thing>();
 
-		private Vector2 scrollPosition;
-
-		private float scrollViewHeight;
-
-		private List<Thing> items = new List<Thing>();
-
-		public WorldTraveler Hopper
+		public WorldTraveler Instance
 		{
 			get
 			{
 				return (base.SelObject as WorldTraveler);
 			}
 		}
-		public WITab_LandedShip_Cargo()
+		public WITab_PodsFleet()
 		{
-			this.labelKey = "FleetInventory";
+			this.labelKey = "WM.FleetInventoryWITab";
 		}
 
 		protected override void FillTab()
@@ -52,8 +49,8 @@ namespace WM.SelfLaunchingPods
 		{
 			curY += 10f;
 			Rect rect = new Rect(10f, curY, this.size.x - 10f, 100f);
-			float massUsage = Hopper.MassUsage;
-			float allLandedShipMassCapacity = this.Hopper.MaxCapacity;
+			float massUsage = Instance.MassUsage;
+			float allLandedShipMassCapacity = this.Instance.MaxCapacity;
 			bool flag = massUsage > allLandedShipMassCapacity;
 			if (flag)
 			{
@@ -72,7 +69,7 @@ namespace WM.SelfLaunchingPods
 		private void UpdateItemsList()
 		{
 			this.items.Clear();
-			this.items.AddRange(this.Hopper.AllCarriedThings);
+			this.items.AddRange(this.Instance.AllCarriedThings);
 		}
 	}
 }
