@@ -2,7 +2,7 @@
 <Defs>
 	<WorldObjectDef>
 		<defName>WM_TravelingTransportPods</defName>
-		<label>transport pods +</label>
+		<label>advanced transport pods</label>
 		<description>Self lauching pods fleet.</description>
 		<worldObjectClass>WM.SelfLaunchingPods.WorldTraveler</worldObjectClass>
 		<texture>World/WorldObjects/TravelingTransportPods</texture>

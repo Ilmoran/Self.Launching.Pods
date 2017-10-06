@@ -58,8 +58,8 @@
 	</ThingDef>
 	<ThingDef ParentName="BuildingBase">
 		<defName>WM_TransportPod</defName>
-		<label>transport pod mk1</label>
-		<description>A launchable suborbital-travel cargo pod capable of carrying people, items, or animals. Can be used for transport, surprise attacks, or reinforcing battles.</description>
+		<label>advanced transport pod</label>
+		<description>This advanced version of the drop pod does not need a pod launcher.</description>
 		<graphicData>
 			<texPath>Things/MK1Pod</texPath>
 			<graphicClass>Graphic_Single</graphicClass>

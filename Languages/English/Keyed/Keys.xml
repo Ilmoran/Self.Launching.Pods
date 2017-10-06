@@ -4,12 +4,12 @@
 
 	<WM.WorldObjectLandedPodsInspectString>Number of pods: {0}\nFuel amount: {1} ({2} per pod).\nCapacity: {3} / {4} kg.</WM.WorldObjectLandedPodsInspectString>
 	<WM.LaunchCaravanGizmo>Launch pods</WM.LaunchCaravanGizmo>
-	<WM.UnloadCaravanGizmo>Unload pawns and items</WM.UnloadCaravanGizmo>
-	<WM.UnloadCaravanItemsGizmo>Unload items only</WM.UnloadCaravanItemsGizmo>
-	<WM.UnloadCaravanPawnsGizmo>Unload pawns only</WM.UnloadCaravanPawnsGizmo>
-	<WM.LoadCaravanPawnsAndItemsGizmo>Load items and pawns</WM.LoadCaravanPawnsAndItemsGizmo>
-	<WM.LoadCaravanItemsGizmo>Load items only</WM.LoadCaravanItemsGizmo>
-	<WM.LoadCaravanPawnsGizmo>Load pawns only</WM.LoadCaravanPawnsGizmo>
+	<WM.UnloadCaravanGizmo>Unload everything</WM.UnloadCaravanGizmo>
+	<WM.UnloadCaravanItemsGizmo>Unload items</WM.UnloadCaravanItemsGizmo>
+	<WM.UnloadCaravanPawnsGizmo>Unload pawns</WM.UnloadCaravanPawnsGizmo>
+	<WM.LoadCaravanPawnsAndItemsGizmo>Load everything</WM.LoadCaravanPawnsAndItemsGizmo>
+	<WM.LoadCaravanItemsGizmo>Load items</WM.LoadCaravanItemsGizmo>
+	<WM.LoadCaravanPawnsGizmo>Load pawns</WM.LoadCaravanPawnsGizmo>
 	<WM.FleetInventoryWITab>Content</WM.FleetInventoryWITab>
 
 	<!-- ================ Message ================ -->
