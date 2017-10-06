@@ -7,10 +7,10 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
+	//TODO: map generation
 	//TODO: tick pawns
-	//TODO: allow manual refueling from inventory BUT not the direct fuel use from.
+	//TODO: allow manual refueling from inventory
 	//TODO: remote trading
-	//TODO: selection on unload / load
 	//TODO: fix prisoners fleeing after landing
 	public class WorldTraveler : WorldObject
 	{
@@ -56,8 +56,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return AllCarriedThings.Where((Thing arg) => arg.def == DefOf.Chemfuel).Sum(arg => arg.stackCount) +
-					   PodsAsThing.Sum(arg => arg.TryGetComp<CompRefuelable>().Fuel);
+				return (PodsAsThing.Sum(arg => arg.TryGetComp<CompRefuelable>().Fuel));
 			}
 		}
 
