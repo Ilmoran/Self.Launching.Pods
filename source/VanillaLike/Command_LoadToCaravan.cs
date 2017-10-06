@@ -25,6 +25,12 @@ namespace WM.SelfLaunchingPods
 				{
 					if (TravelingPodsUtils.FromCaravan((WorldTraveler)traveler, parent, ThingsToLoad))
 					{
+						if (!parent.pawns.Any)
+						{
+							Find.WorldSelector.ClearSelection();
+							Find.WorldSelector.Select(traveler);
+						}
+
 						Messages.Message("WM.MessageCaravanLoadedToPods".Translate(), MessageSound.Benefit);
 					}
 					else

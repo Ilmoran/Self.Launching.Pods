@@ -12,7 +12,6 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_UnloadCaravan(WorldTraveler parent) : base(parent)
 		{
-			//this.icon = Icon;
 			this.action = delegate
 			{
 				if (CanDoNow)
@@ -26,7 +25,7 @@ namespace WM.SelfLaunchingPods
 
 						if (!pawns.Any())
 							throw new Exception("Caravan creation needed but no pawns available");
-						
+
 						foreach (var item in pawns)
 						{
 							var holdingOwner = item.holdingOwner;
@@ -38,6 +37,8 @@ namespace WM.SelfLaunchingPods
 					}
 
 					TravelingPodsUtils.ToCaravan(this.Parent, caravan, ThingsToUnload);
+					Find.WorldSelector.ClearSelection();
+					Find.WorldSelector.Select(caravan);
 					Messages.Message(SuccessMessage, MessageSound.Benefit);
 				}
 				else
