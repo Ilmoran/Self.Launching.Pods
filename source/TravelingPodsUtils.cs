@@ -21,6 +21,14 @@ namespace WM.SelfLaunchingPods
 			return Mathf.FloorToInt(((fuelAmount - podsCount * Config.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (Config.PodFuelUsePerTile * (oneway ? 1 : 2)));
 		}
 
+		internal static IEnumerable<WorldTraveler> GetRemoteTradable()
+		{
+			var list = Find.WorldObjects.AllWorldObjects.Where((WorldObject arg) => arg is WorldTraveler).Cast<WorldTraveler>();
+
+			return	(list
+					.Where((WorldTraveler arg) => arg.remoteTrader.CanRemoteTradeNow));
+		}
+
 		public static void RemoveAllPawnsFromWorldPawns(IEnumerable<Pawn> pawns)
 		{
 			foreach (var item in pawns)
@@ -51,46 +59,55 @@ namespace WM.SelfLaunchingPods
 			return (hopper);
 		}
 
-		internal static void ToCaravan(WorldTraveler traveler, Caravan caravan, IEnumerable<Thing> thingsToTransfer)
+		internal static void ToCaravan(Caravan caravan, IEnumerable<Thing> thingsToTransfer)
 		{
 			var list = thingsToTransfer.ToList();
 
 			foreach (var item in list)
 			{
 				item.holdingOwner.Remove(item);
-				CaravanInventoryUtility.GiveThing(caravan, item);
-				if (item is Pawn)
+				var pawn = item as Pawn;
+				if (pawn != null)
 				{
-					//Find.WorldPawns.PassToWorld((Verse.Pawn)item);
-					item.holdingOwner.Remove(item);
+					caravan.AddPawn(pawn, true);
+					if (!pawn.IsWorldPawn())
+						Find.WorldPawns.PassToWorld(pawn);
 				}
+				else
+					CaravanInventoryUtility.GiveThing(caravan, item);
 			}
 		}
 
 		internal static bool FromCaravan(WorldTraveler traveler, Caravan caravan, IEnumerable<Thing> thingsToTransfer)
 		{
-			if (MissingMassCapacity(traveler, caravan) > 0)
+			if (MissingMassCapacity(traveler, thingsToTransfer.ToList()) > 0)
 			{
 				return (false);
 			}
 
-			var		list = thingsToTransfer.ToList();
-			int		i = 0;
-			float	usedMass = 0;
+			var list = thingsToTransfer.ToList();
+			int i = 0;
+			float usedMass = 0;
 
 			list.SortByDescending((Thing arg) => arg.GetStatValue(StatDefOf.Mass) * arg.stackCount);
 			foreach (var item in list)
 			{
-				var	info = traveler.PodsInfo.ElementAt(i);
-				var	podThing = traveler.PodsAsThing.ElementAt(i);
+				var info = traveler.PodsInfo.ElementAt(i);
+				var podThing = traveler.PodsAsThing.ElementAt(i);
 
 				usedMass += item.GetStatValue(StatDefOf.Mass) * item.stackCount;
 				if (item is Pawn)
+				{
+					if (Find.WorldPawns.Contains((Pawn)item))
+						Find.WorldPawns.RemovePawn((Pawn)item);
 					usedMass += MassUtility.GearAndInventoryMass(item as Pawn);
+				}
+
 				if (item.holdingOwner != null)
 					item.holdingOwner.TryTransferToContainer(item, info.innerContainer);
 				else
 					info.innerContainer.TryAdd(item, item.stackCount);
+
 				if (usedMass > podThing.TryGetComp<CompTransporter>().Props.massCapacity && traveler.PodsCount < i)
 				{
 					usedMass = 0;
@@ -106,9 +123,9 @@ namespace WM.SelfLaunchingPods
 			return (true);
 		}
 
-		internal static float MissingMassCapacity(WorldTraveler traveler, Caravan caravan)
+		internal static float MissingMassCapacity(WorldTraveler traveler, List<Thing> thingsToLoad)
 		{
-			return (Utils.CaravanWeight(caravan)) - (traveler.MaxCapacity - traveler.MassUsage);
+			return (CollectionsMassCalculator.MassUsage<Thing>(thingsToLoad, IgnorePawnsInventoryMode.Ignore, true) - (traveler.MaxCapacity - traveler.MassUsage));
 		}
 	}
 }

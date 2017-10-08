@@ -1,5 +1,5 @@
-using System;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using Verse.Sound;
 
@@ -40,7 +40,18 @@ namespace WM.SelfLaunchingPods
 
 		internal override void Launch(int tile, IntVec3 cell)
 		{
-			parent.TryGetComp<CompSelfLaunchable>().TryLaunch(new RimWorld.Planet.GlobalTargetInfo(tile), PawnsArriveMode.Undecided, false); 
+			GlobalTargetInfo globalTargetInfo;
+			var globalTargetInfo2 = new GlobalTargetInfo(tile);
+			var targetMap = Find.WorldObjects.MapParentAt(tile);
+
+			if (targetMap != null)
+			{
+				globalTargetInfo = new GlobalTargetInfo(cell, targetMap.Map);
+			}
+			else
+				globalTargetInfo = globalTargetInfo2;
+
+			parent.TryGetComp<CompSelfLaunchable>().TryLaunch(globalTargetInfo, PawnsArriveMode.Undecided, false);
 			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
 		}
 	}

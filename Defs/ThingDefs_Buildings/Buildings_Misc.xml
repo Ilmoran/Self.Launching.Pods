@@ -59,7 +59,7 @@
 	<ThingDef ParentName="BuildingBase">
 		<defName>WM_TransportPod</defName>
 		<label>advanced transport pod</label>
-		<description>This advanced version of the drop pod does not need a pod launcher.</description>
+		<description>This advanced version of the drop pod does not need a pod launcher to launch.</description>
 		<graphicData>
 			<texPath>Things/MK1Pod</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -109,7 +109,7 @@
 			<li>PlaceWorker_NotUnderRoof</li>
 		</placeWorkers>
 		<researchPrerequisites>
-			<li>TransportPod</li>
+			<li>WM_AdvancedTransportPod</li>
 		</researchPrerequisites>
 	</ThingDef>
 	<ThingDef ParentName="BuildingBase">
@@ -120,9 +120,7 @@
 			<texPath>Things/LandingSpot</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
-		<!--		
 		<AltitudeLayer>FloorEmplacement</AltitudeLayer>
-		-->
 		<statBases>
 			<WorkToBuild>0</WorkToBuild>
 		</statBases>
@@ -130,8 +128,13 @@
 		<useHitPoints>False</useHitPoints>
 		<DesignationCategory>Misc</DesignationCategory>
 		<Passability>Standable</Passability>
+		<interactionCellOffset>(0,0,1)</interactionCellOffset>
+		<hasInteractionCell>true</hasInteractionCell>
 		<building>
 			<canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
 		</building>
+		<placeWorkers>
+			<li>WM.SelfLaunchingPods.PlaceWorker_LandingSpot</li>
+		</placeWorkers>
 	</ThingDef>
 </Buildings>

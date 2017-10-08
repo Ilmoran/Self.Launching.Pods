@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Harmony;
 using RimWorld;
-using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -39,10 +37,10 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 	[HarmonyPatch(typeof(RimWorld.Command_LoadToTransporter), "ProcessInput")]
 	public static class ProcessInput
 	{
-		static bool Prefix(Command_LoadToTransporter __instance, Event ev)
+		static bool Prefix(Command_LoadToTransporter __instance)
 		{
 			Log.Message("RimWorld.Command_LoadToTransporter.ProcessInput()");
-			if (Find.Selector.SelectedObjects.All((arg) => Utils.IsMyClass(arg)))
+			if (Find.Selector.SelectedObjects.All(Utils.IsMyClass))
 			{
 				Internal(__instance);
 				return (false);

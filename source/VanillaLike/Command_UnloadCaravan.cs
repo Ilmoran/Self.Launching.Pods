@@ -1,50 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
-using UnityEngine;
 using Verse;
 
 namespace WM.SelfLaunchingPods
 {
 	public abstract class Command_UnloadCaravan : Command_Traveler
 	{
-		public Command_UnloadCaravan(WorldTraveler parent) : base(parent)
+		internal Command_UnloadCaravan(WorldTraveler parent) : base(parent)
 		{
 			this.action = delegate
 			{
-				if (CanDoNow)
+				var thingsToUnload = ThingsToUnload.ToList();
+
+				if (!thingsToUnload.Any())
 				{
-					Caravan caravan;
+					Messages.Message("WM.MessageNothingToUnload".Translate(), MessageSound.RejectInput);
+					return;
+				}
+				Caravan caravan;
 
-					caravan = Utils.FindCaravanAt(Parent.Tile);
-					if (caravan == null)
+				caravan = Utils.FindCaravanAt(Parent.Tile);
+				if (caravan == null)
+				{
+					var pawns = InventoryUtils.GetPawnsFrom(thingsToUnload);
+
+					if (!pawns.Any())
 					{
-						IEnumerable<Pawn> pawns = ThingsToUnload.Where((Thing arg) => arg is Pawn).Cast<Pawn>().ToList();
-
-						if (!pawns.Any())
-							throw new Exception("Caravan creation needed but no pawns available");
-
-						foreach (var item in pawns)
-						{
-							var holdingOwner = item.holdingOwner;
-							if (holdingOwner != null)
-								holdingOwner.Remove(item);
-						}
-
-						caravan = CaravanMaker.MakeCaravan(pawns, Faction.OfPlayer, Parent.Tile, true);
+						Messages.Message("WM.MessageCaravanNeeded".Translate(), MessageSound.RejectInput);
+						return;
 					}
 
-					TravelingPodsUtils.ToCaravan(this.Parent, caravan, ThingsToUnload);
-					Find.WorldSelector.ClearSelection();
-					Find.WorldSelector.Select(caravan);
-					Messages.Message(SuccessMessage, MessageSound.Benefit);
+					foreach (var item in pawns)
+					{
+						var holdingOwner = item.holdingOwner;
+						if (holdingOwner != null)
+						{
+							holdingOwner.Remove(item);
+						}
+					}
+
+					caravan = CaravanMaker.MakeCaravan(pawns, Faction.OfPlayer, Parent.Tile, true);
 				}
-				else
-				{
-					Messages.Message(FailMessage, MessageSound.RejectInput);
-				}
+
+				TravelingPodsUtils.ToCaravan(caravan, thingsToUnload);
+				Find.WorldSelector.ClearSelection();
+				Find.WorldSelector.Select(caravan);
+				Messages.Message(SuccessMessage, MessageSound.Benefit);
 
 			};
 		}
@@ -57,36 +60,12 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public abstract IEnumerable<Thing> ThingsToUnload
+		protected abstract IEnumerable<Thing> ThingsToUnload
 		{
 			get;
 		}
 
-		//public abstract Texture2D Icon
-		//{ 
-		//	get;
-		//}
-
-		public virtual bool CanDoNow
-		{
-			get
-			{
-				return (Utils.FindCaravanAt(Parent.Tile) != null);
-			}
-		}
-
-		public virtual string FailMessage
-		{
-			get
-			{
-				if (!CanDoNow)
-					return ("WM.MessageCaravanNeeded".Translate());
-				else
-					return ("WM.MessageCannotUnload".Translate());
-			}
-		}
-
-		public virtual string SuccessMessage
+		protected virtual string SuccessMessage
 		{
 			get
 			{

@@ -9,16 +9,16 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_LoadToCaravan_PawnsAndItems(Caravan parent) : base(parent)
 		{
-            this.icon = Resources.GizmoLoadEverything;
+			this.icon = Resources.GizmoLoadEverything;
 		}
 
-		public override IEnumerable<Thing> ThingsToLoad
+		protected override IEnumerable<Thing> ThingsToLoad
 		{
 			get
 			{
 				var list = Parent.pawns.Cast<Thing>().ToList();
 
-				list.AddRange(Parent.Goods);
+				list.AddRange(InventoryUtils.GetItemsFrom(Parent.Goods));
 				return (list);
 			}
 		}

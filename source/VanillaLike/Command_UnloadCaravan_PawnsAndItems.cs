@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -20,30 +19,11 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public override IEnumerable<Thing> ThingsToUnload
+		protected override IEnumerable<Thing> ThingsToUnload
 		{
 			get
 			{
 				return (Parent.AllCarriedThings);
-			}
-		}
-
-		public override bool CanDoNow
-		{
-			get
-			{
-				return Parent.AllCarriedPawns.Any() && Parent.AllCarriedThings.Any();
-			}
-		}
-
-		public override string FailMessage
-		{
-			get
-			{
-				if (!CanDoNow)
-					return ("WM.MessageNothingToUnload".Translate());
-				else
-					return (base.FailMessage);
 			}
 		}
 	}

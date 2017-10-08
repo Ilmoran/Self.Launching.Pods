@@ -1,7 +1,4 @@
-using System;
 using System.Linq;
-using HugsLib.Settings;
-using Verse;
 
 namespace WM.SelfLaunchingPods
 {

@@ -7,11 +7,15 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
+	//TODO: fix bug when targeting faction base directly from map
+	//TODO: fix pawn saving issue
 	//TODO: map generation
+	//TODO: allow discarding from WITab
 	//TODO: tick pawns
 	//TODO: allow manual refueling from inventory
 	//TODO: remote trading
-	//TODO: fix prisoners fleeing after landing
+	//TODO: pod opening delay (like vanilla)
+	//TODO: fix prisoners fleeing after landing (vanilla issue)
 	public class WorldTraveler : WorldObject
 	{
 		// RimWorld.Planet.TravelingTransportPods
@@ -20,14 +24,14 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				if (Traveling)
-					return Vector3.Slerp(this.Start, this.End, this.traveledPct);
-				else
-					return (base.DrawPos);
+					return (Vector3.Slerp(this.Start, this.End, this.traveledPct));
+
+				return (base.DrawPos);
 			}
 		}
 
 		// RimWorld.Planet.TravelingTransportPods
-		private Vector3 Start
+		public Vector3 Start
 		{
 			get
 			{
@@ -36,7 +40,7 @@ namespace WM.SelfLaunchingPods
 		}
 
 		// RimWorld.Planet.TravelingTransportPods
-		private Vector3 End
+		public Vector3 End
 		{
 			get
 			{
@@ -88,7 +92,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return AllCarriedThings.Where(arg => arg is Pawn).Cast<Pawn>();
+				return InventoryUtils.GetPawnsFrom(AllCarriedThings);
 			}
 		}
 
@@ -96,15 +100,15 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return AllCarriedPawns.Where(arg => arg.IsColonist);
+				return InventoryUtils.GetColonistsFrom(AllCarriedThings);
 			}
 		}
 
-		public IEnumerable<Thing> AllCarriedNonPawnThings
+		public IEnumerable<Thing> AllCarriedItems
 		{
 			get
 			{
-				return AllCarriedThings.Where((Thing arg) => !(arg is Pawn));
+				return InventoryUtils.GetItemsFrom(AllCarriedThings);
 			}
 		}
 
@@ -160,7 +164,7 @@ namespace WM.SelfLaunchingPods
 					return (1f);
 				}
 				float num = GenMath.SphericalDistance(start.normalized, end.normalized);
-				if (num == 0f)
+				if (System.Math.Abs(num) < float.Epsilon)
 				{
 					return (1f);
 				}
@@ -173,21 +177,27 @@ namespace WM.SelfLaunchingPods
 		float traveledPct;
 
 		int departTile;
-		internal int destinationTile;
-		internal IntVec3 destinationCell;
-		internal PawnsArriveMode arriveMode;
-		internal bool attackOnArrival;
+		int destinationTile;
+		IntVec3 destinationCell;
+		PawnsArriveMode arriveMode;
+		bool attackOnArrival;
+		internal readonly RemoteTrader remoteTrader;
+
+		public WorldTraveler()
+		{
+			remoteTrader = new RemoteTrader(this);
+		}
 
 		public override void ExposeData()
 		{
 			base.ExposeData();
-			Scribe_Values.Look<float>			(ref traveledPct, 		"traveledPct");
-			Scribe_Values.Look<int>				(ref departTile, 		"departTile");
-			Scribe_Values.Look<int>				(ref destinationTile, 	"destinationTile");
-			Scribe_Values.Look<IntVec3>			(ref destinationCell, 	"destinationCell");
-			Scribe_Values.Look<PawnsArriveMode>	(ref arriveMode, 		"arriveMode");
-			Scribe_Values.Look<bool>			(ref attackOnArrival, 	"attackOnArrival");
-			Scribe_Collections.Look<PodPair>	(ref pods, 				"pods", LookMode.Deep);
+			Scribe_Values.Look<float>(ref traveledPct, "traveledPct");
+			Scribe_Values.Look<int>(ref departTile, "departTile");
+			Scribe_Values.Look<int>(ref destinationTile, "destinationTile");
+			Scribe_Values.Look<IntVec3>(ref destinationCell, "destinationCell");
+			Scribe_Values.Look<PawnsArriveMode>(ref arriveMode, "arriveMode");
+			Scribe_Values.Look<bool>(ref attackOnArrival, "attackOnArrival");
+			Scribe_Collections.Look<PodPair>(ref pods, "pods", LookMode.Deep);
 		}
 
 		public override void Tick()
@@ -225,7 +235,7 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public virtual void Launch(int destinationTile, IntVec3 destinationCell)
+		public void Launch(int destinationTile, IntVec3 destinationCell)
 		{
 			this.departTile = this.Tile;
 			this.destinationTile = destinationTile;
@@ -237,6 +247,7 @@ namespace WM.SelfLaunchingPods
 
 			Consume(fuelAmount);
 		}
+
 		private void Consume(float amount)
 		{
 			float newFuelAmountPerPod = (this.FuelLevel - amount) / this.PodsCount;
@@ -250,7 +261,7 @@ namespace WM.SelfLaunchingPods
 		}
 
 		// RimWorld.Planet.TravelingTransportPods
-		protected virtual void Arrived()
+		protected void Arrived()
 		{
 			this.Tile = destinationTile;
 			this.departTile = -1;
@@ -262,27 +273,8 @@ namespace WM.SelfLaunchingPods
 			if (map != null)
 			{
 				this.SpawnDropPodsInMap(map, this.destinationCell, this.arriveMode);
-
 				Find.WorldObjects.Remove(this);
 			}
-			//else if (!this.PodsHaveAnyPotentialCaravanOwner)
-			//{
-			//	Caravan caravan = Find.WorldObjects.PlayerControlledCaravanAt(this.destinationTile);
-			//	if (caravan != null)
-			//	{
-			//		this.GivePodContentsToCaravan(caravan);
-			//	}
-			//	else
-			//	{
-			//		for (int i = 0; i < this.pods.Count; i++)
-			//		{
-			//			this.pods[i].innerContainer.ClearAndDestroyContentsOrPassToWorld(DestroyMode.Vanish);
-			//		}
-			//		this.RemoveAllPods();
-			//		Find.WorldObjects.Remove(this);
-			//		Messages.Message("MessageTransportPodsArrivedAndLost".Translate(), new GlobalTargetInfo(this.destinationTile), MessageSound.Negative);
-			//	}
-			//}
 			else if (mapParent != null && mapParent.TransportPodsCanLandAndGenerateMap && this.attackOnArrival)
 			{
 				LongEventHandler.QueueLongEvent(delegate
@@ -323,20 +315,17 @@ namespace WM.SelfLaunchingPods
 			IntVec3 intVec;
 
 			intVec = destinationCell;
-			if (destinationCell != null && destinationCell.IsValid && destinationCell.InBounds(map))
+			if (destinationCell.IsValid && destinationCell.InBounds(map))
 			{
-#if DEBUG
-				Log.Message("dropping at targeted cell: " + destinationCell);
-#endif
 				intVec = destinationCell;
 			}
-//			else if (arriveMode == PawnsArriveMode.CenterDrop)
-//			{
-//				if (!DropCellFinder.TryFindRaidDropCenterClose(out intVec, map))
-//				{
-//					intVec = DropCellFinder.FindRaidDropCenterDistant(map);
-//				}
-//			}
+			//			else if (arriveMode == PawnsArriveMode.CenterDrop)
+			//			{
+			//				if (!DropCellFinder.TryFindRaidDropCenterClose(out intVec, map))
+			//				{
+			//					intVec = DropCellFinder.FindRaidDropCenterDistant(map);
+			//				}
+			//			}
 			else
 			{
 				if (arriveMode != PawnsArriveMode.EdgeDrop && arriveMode != PawnsArriveMode.Undecided)
@@ -346,20 +335,22 @@ namespace WM.SelfLaunchingPods
 				intVec = DropCellFinder.FindRaidDropCenterDistant(map);
 			}
 
-			var	landingSpots = Utils.FindLandingSpotsNear(map, intVec);
+			var landingSpots = Utils.FindLandingSpotsNear(map, intVec);
 
-#if DEBUG
-			Log.Message("landingSpots found in range = " + landingSpots.Count());
-#endif
 
 			for (int i = 0; i < this.PodsCount; i++)
 			{
 				IntVec3 c;
-
-				if (landingSpots.Count() > i)
+				if (landingSpots.Count > i)
+				{
 					c = landingSpots.ElementAt(i);
+					if (DebugViewSettings.drawDestSearch)
+					{
+						map.debugDrawer.FlashCell(c, 3f, "spot");
+					}
+				}
 				else
-					DropCellFinder.TryFindDropSpotNear(intVec, map, out c, false, true);
+					VanillaLikeUtils.TryFindDropSpotNear(intVec, map, out c, false, true);
 
 				// ---------- mod ----------------
 				//if (this.def == DefOf.WM_TravelingTransportPods)
@@ -387,11 +378,9 @@ namespace WM.SelfLaunchingPods
 			string v = base.GetInspectString();
 
 			v += "\r\n";
-
 			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity);
 
 			return (v);
 		}
-
 	}
 }

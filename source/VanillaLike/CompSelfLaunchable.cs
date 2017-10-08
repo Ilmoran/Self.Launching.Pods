@@ -1,21 +1,16 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Harmony;
 using RimWorld;
 using RimWorld.Planet;
-using UnityEngine;
 using Verse;
 using Verse.Sound;
 
 namespace WM.SelfLaunchingPods
 {
+	//TODO: CompTick() does not work (see tick type)
+	//TODO: Fix carried item spawning over pod.
 	public class CompSelfLaunchable : RimWorld.CompLaunchable
 	{
-		public CompSelfLaunchable()
-		{
-		}
-
 		public ActiveDropPodInfo podInfo;
 		int ticksUntilOpen = 100;
 
@@ -94,14 +89,12 @@ namespace WM.SelfLaunchingPods
 			PodOpen();
 		}
 
-		//TODO: CompTick() does not work (see tick type)
 		public override void CompTick()
 		{
 			base.CompTick();
-			#if DEBUG
+#if DEBUG
 			Log.Message("CompTick()");
-			#endif
-
+#endif
 			if (podInfo == null)
 				return;
 
@@ -114,8 +107,8 @@ namespace WM.SelfLaunchingPods
 
 		public override IEnumerable<Gizmo> CompGetGizmosExtra()
 		{
-			if (this.parent.TryGetComp<CompTransporter>().LoadingInProgressOrReadyToLaunch)
-				yield return new Command_Launch_FromMap(this.parent);
+			if (parent.TryGetComp<CompTransporter>().LoadingInProgressOrReadyToLaunch)
+				yield return new Command_Launch_FromMap(parent);
 		}
 
 		// RimWorld.ActiveDropPod
@@ -128,14 +121,20 @@ namespace WM.SelfLaunchingPods
 			{
 				Thing thing = podInfo.innerContainer[i];
 				Thing thing2;
-				GenPlace.TryPlaceThing(thing, this.parent.Position, this.parent.Map, ThingPlaceMode.Near, out thing2, delegate (Thing placedThing, int count)
-				{
-					if (Find.TickManager.TicksGame < 1200 && TutorSystem.TutorialMode && placedThing.def.category == ThingCategory.Item)
+
+				GenPlace.TryPlaceThing(thing, parent.Position, this.parent.Map, ThingPlaceMode.Near, out thing2,
+#pragma warning disable RECS0154 // Parameter is never used
+					delegate (Thing placedThing, int count)
+#pragma warning restore RECS0154 // Parameter is never used
 					{
-						Find.TutorialState.AddStartingItem(placedThing);
-					}
-				});
+						if (Find.TickManager.TicksGame < 1200 && TutorSystem.TutorialMode && placedThing.def.category == ThingCategory.Item)
+						{
+							Find.TutorialState.AddStartingItem(placedThing);
+						}
+					});
+				//GenPlace.TryPlaceThing(thing, this.parent.Position, this.parent.Map, ThingPlaceMode.Near, out thing2);
 				Pawn pawn = thing2 as Pawn;
+
 				if (pawn != null)
 				{
 					if (pawn.RaceProps.Humanlike)
@@ -151,17 +150,17 @@ namespace WM.SelfLaunchingPods
 					}
 				}
 			}
+
 			podInfo.innerContainer.ClearAndDestroyContents(DestroyMode.Vanish);
-			if (podInfo.leaveSlag)
-			{
-				for (int j = 0; j < 1; j++)
-				{
-					Thing thing3 = ThingMaker.MakeThing(ThingDefOf.ChunkSlagSteel, null);
-					GenPlace.TryPlaceThing(thing3, parent.Position, parent.Map, ThingPlaceMode.Near, null);
-				}
-			}
+			//if (podInfo.leaveSlag)
+			//{
+			//	for (int j = 0; j < 1; j++)
+			//	{
+			//		Thing thing3 = ThingMaker.MakeThing(ThingDefOf.ChunkSlagSteel, null);
+			//		GenPlace.TryPlaceThing(thing3, parent.Position, parent.Map, ThingPlaceMode.Near, null);
+			//	}
+			//}
 			SoundDef.Named("DropPodOpen").PlayOneShot(new TargetInfo(parent.Position, parent.Map, false));
-			//this.Destroy(DestroyMode.Vanish);
 
 			podInfo = null;
 		}
@@ -201,8 +200,8 @@ namespace WM.SelfLaunchingPods
 
 			for (int i = 0; i < transportersInGroup.Count; i++)
 			{
-				CompTransporter	compTransporter = transportersInGroup[i];
-				var				dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(DefOf.WM_DropPodLeaving, null);
+				CompTransporter compTransporter = transportersInGroup[i];
+				var dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(DefOf.WM_DropPodLeaving, null);
 
 				dropPodLeaving.groupID = groupID;
 				dropPodLeaving.destinationTile = target.Tile;
@@ -210,14 +209,10 @@ namespace WM.SelfLaunchingPods
 				dropPodLeaving.arriveMode = arriveMode;
 				dropPodLeaving.attackOnArrival = attackOnArrival;
 
-				ThingOwner		directlyHeldThings = compTransporter.GetDirectlyHeldThings();
+				ThingOwner directlyHeldThings = compTransporter.GetDirectlyHeldThings();
 
 				dropPodLeaving.Contents = new ActiveDropPodInfo();
 				dropPodLeaving.Contents.innerContainer.TryAddRange(directlyHeldThings, true);
-
-				var				compRefuelable = this.parent.TryGetComp<CompRefuelable>();
-				//dropPodLeaving.FuelQuantity = compRefuelable.Fuel;
-				//compRefuelable.ConsumeFuel(compRefuelable.Fuel);
 
 				directlyHeldThings.Clear();
 
@@ -228,78 +223,5 @@ namespace WM.SelfLaunchingPods
 				GenSpawn.Spawn(dropPodLeaving, compTransporter.parent.Position, map);
 			}
 		}
-
-
-		//public override IEnumerable<Gizmo> CompGetGizmosExtra()
-		//{
-		//	var launchgizmo = new Command_Action();
-		//	launchgizmo.defaultLabel = "Launch";
-		//	launchgizmo.action = delegate
-		//	{
-		//		Harmony.Traverse.Create(this.Transporter).Method("StartChoosingDestination").GetValue();
-		//	};
-		//	yield return (launchgizmo)
-		//	//var baseenum = base.CompGetGizmosExtra();
-		//	//var hookenum = new CompLaunchGizmoHook(baseenum.GetEnumerator());
-
-		//	//return (hookenum)
-		//}
-
-		//public override IEnumerable<Gizmo> CompGetGizmosExtra()
-		//{
-		//	foreach (var item in base.CompGetGizmosExtra())
-		//	{
-		//		if (item is Command_Action && ((Command_Action)item).Label == "CommandLaunchGroup".Translate())
-		//		{
-		//			((Command_Action)item).defaultLabel = "test";
-		//		}
-		//		yield return (item)
-		//	}
-		//}
 	}
-
-	//public class CompLaunchGizmoHook : EnumeratorHook<Gizmo>
-	//{
-	//	CompLaunchable compl;
-	//	CompTransporter compt;
-
-	//	public CompLaunchGizmoHook(IEnumerator<Gizmo> test)
-	//	{
-	//		this.baseenum = test;
-	//	}
-	//	protected override Gizmo Hook(Gizmo current)
-	//	{
-	//		if (current is Command_Action)
-	//		{
-	//			var command = (Command_Action)current;
-
-	//			if (command.Label == "CommandLaunchGroup".Translate())
-	//			{
-	//				command.action = delegate
-	//				{
-	//					if (compl.AnyInGroupHasAnythingLeftToLoad)
-	//					{
-	//						Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation("ConfirmSendNotCompletelyLoadedPods".Translate(new object[]
-	//						{
-	//				compl.FirstThingLeftToLoadInGroup.LabelCapNoCount
-	//						}), new Action(delegate
-	//						{
-	//							StartChoosingDestination();
-	//						}), false, null));
-	//					}
-	//					else
-	//					{
-	//						StartChoosingDestination();
-	//					}
-	//				};
-	//			}
-	//		}
-	//		return (base.Hook(current))
-	//	}
-
-	//	void StartChoosingDestination()
-	//	{
-	//		Harmony.Traverse.Create(compl).Method("StartChoosingDestination", null);
-	//	}
-	//}
 }

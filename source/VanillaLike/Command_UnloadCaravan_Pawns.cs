@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -9,7 +8,7 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_UnloadCaravan_Pawns(WorldTraveler parent) : base(parent)
 		{
-            this.icon = Resources.GizmoUnloadPawns;
+			this.icon = Resources.GizmoUnloadPawns;
 		}
 
 		public override string Label
@@ -20,7 +19,7 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public override IEnumerable<Thing> ThingsToUnload
+		protected override IEnumerable<Thing> ThingsToUnload
 		{
 			get
 			{
@@ -28,23 +27,15 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public override bool CanDoNow
-		{
-			get
-			{
-				return (Parent.AllCarriedPawns.Any());
-			}
-		}
+		//public override string FailMessage
+		//{
+		//	get
+		//	{
+		//		if (!CanDoNow)
+		//			return ("WM.MessageNoPawnsToUnload".Translate());
 
-		public override string FailMessage
-		{
-			get
-			{
-				if (!CanDoNow)
-					return ("WM.MessageNoPawnsToUnload".Translate());
-				else
-					return (base.FailMessage);
-			}
-		}
+		//		return (base.FailMessage);
+		//	}
+		//}
 	}
 }

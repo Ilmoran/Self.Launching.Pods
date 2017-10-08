@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld.Planet;
@@ -12,11 +13,11 @@ namespace WM.SelfLaunchingPods
 			this.icon = Resources.GizmoLoadItems;
 		}
 
-		public override IEnumerable<Thing> ThingsToLoad
+		protected override IEnumerable<Thing> ThingsToLoad
 		{
 			get
 			{
-				return (Parent.Goods);
+				return (InventoryUtils.GetItemsFrom(Parent.Goods));
 			}
 		}
 

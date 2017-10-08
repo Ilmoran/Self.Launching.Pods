@@ -79,6 +79,7 @@
     <Folder Include="..\Textures\Things\" />
     <Folder Include="UI\" />
     <Folder Include="Detours\Caravan\" />
+    <Folder Include="Detours\Building_CommsConsole\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -95,11 +96,12 @@
     <None Include="..\Textures\UI\UnloadEverything.png" />
     <None Include="..\Textures\UI\UnloadItems.png" />
     <None Include="..\Textures\UI\UnloadPawns.png" />
+    <None Include="..\Defs\ResearchProjectDefs\ResearchProjects_Tier3_Misc.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="Detours\ActiveDropPod\ActiveDropPod.cs" />
+    <Compile Include="Detours\ActiveDropPod\PodOpen.cs" />
     <Compile Include="Detours\FuelingPortUtility\FuelingPortGiverAt.cs" />
     <Compile Include="Detours\Command_LoadToTransporter\ProcessInput.cs" />
     <Compile Include="DefOf.cs" />
@@ -126,6 +128,12 @@
     <Compile Include="VanillaLike\Command_UnloadCaravan_PawnsAndItems.cs" />
     <Compile Include="VanillaLike\Command_UnloadCaravan_Pawns.cs" />
     <Compile Include="WorldTraveler.cs" />
+    <Compile Include="PlaceWorker_LandingSpot.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InventoryUtils.cs" />
+    <Compile Include="VanillaLike\VanillaLikeUtils.cs" />
+    <Compile Include="Detours\Building_CommsConsole\GetFloatMenuOptions.cs" />
+    <Compile Include="RemoteTrader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

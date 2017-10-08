@@ -1,4 +1,3 @@
-using System;
 using Harmony;
 using RimWorld;
 using UnityEngine;
@@ -9,10 +8,6 @@ namespace WM.SelfLaunchingPods
 {
 	public class DropPodIncoming : RimWorld.DropPodIncoming
 	{
-		public DropPodIncoming()
-		{
-		}
-
 		public Thing landedThing;
 
 		void _HitRoof()
@@ -58,6 +53,7 @@ namespace WM.SelfLaunchingPods
 				SoundDefOf.DropPodFall.PlayOneShot(new TargetInfo(base.Position, base.Map, false));
 			}
 		}
+
 		// RimWorld.DropPodIncoming
 		private void Impact()
 		{

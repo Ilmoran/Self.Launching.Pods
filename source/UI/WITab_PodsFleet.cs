@@ -1,6 +1,5 @@
-using RimWorld.Planet;
-using System;
 using System.Collections.Generic;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -8,10 +7,10 @@ namespace WM.SelfLaunchingPods
 {
 	public class WITab_PodsFleet : WITab
 	{
-		private const float				MassCarriedLineHeight = 22f;
-		private Vector2					scrollPosition;
-		private float					scrollViewHeight;
-		private readonly List<Thing>	items = new List<Thing>();
+		private const float MassCarriedLineHeight = 22f;
+		private Vector2 scrollPosition;
+		private float scrollViewHeight;
+		private readonly List<Thing> items = new List<Thing>();
 
 		public WorldTraveler Instance
 		{
@@ -57,7 +56,7 @@ namespace WM.SelfLaunchingPods
 				GUI.color = Color.red;
 			}
 			Text.Font = GameFont.Tiny;
-			Widgets.Label(rect, Translator.Translate("MassCarried", new object[]
+			Widgets.Label(rect, "MassCarried".Translate(new object[]
 			{
 				massUsage.ToString("0.##"),
 				allLandedShipMassCapacity.ToString("0.##")

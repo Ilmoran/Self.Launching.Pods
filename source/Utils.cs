@@ -15,11 +15,22 @@ namespace WM.SelfLaunchingPods
 			return instance is CompSelfLaunchable || t != null && (t.TryGetComp<CompSelfLaunchable>() != null || t.def == DefOf.WM_TransportPod);
 		}
 
-		internal static IEnumerable<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
+		internal static List<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
 		{
-			List<Building>	launchers = FindBuildingsWithinRadius(map, intVec, Config.LandingSpotMaxRange, DefOf.WM_LandingSpot);
+			List<Building> launchers = FindBuildingsWithinRadius(map, intVec, Config.LandingSpotMaxRange, DefOf.WM_LandingSpot);
 
-			return launchers.Select((Building arg) => arg.Position);
+			return
+				(launchers
+				.Select((Building arg) => new
+				{
+					map = arg.Map,
+					cell = arg.InteractionCell
+				})
+				 .Where((arg) =>
+						arg.cell.Standable(arg.map) &&
+						!arg.cell.GetThingList(map).Any((Thing arg2) => arg2.def == DefOf.WM_DropPodIncoming))
+				.Select((arg) => arg.cell)
+				 .Distinct().ToList());
 		}
 
 		internal static Caravan FindCaravanAt(int tile)
@@ -50,7 +61,6 @@ namespace WM.SelfLaunchingPods
 		internal static bool IsAtPad(Map map, IntVec3 pos)
 		{
 			return (RimWorld.FuelingPortUtility.FuelingPortGiverAtFuelingPortCell(pos, map) != null);
-			//return (true)
 		}
 
 		internal static float CaravanWeight(Caravan caravan)

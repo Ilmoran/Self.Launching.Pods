@@ -10,11 +10,11 @@
 	<WM.LoadCaravanPawnsAndItemsGizmo>Load everything</WM.LoadCaravanPawnsAndItemsGizmo>
 	<WM.LoadCaravanItemsGizmo>Load items</WM.LoadCaravanItemsGizmo>
 	<WM.LoadCaravanPawnsGizmo>Load pawns</WM.LoadCaravanPawnsGizmo>
-	<WM.FleetInventoryWITab>Content</WM.FleetInventoryWITab>
+	<WM.FleetInventoryWITab>Contents</WM.FleetInventoryWITab>
 
 	<!-- ================ Message ================ -->
 	
-	<WM.MessageCaravanUnloadedFromPods>Successfully unloaded caravan from pods.</WM.MessageCaravanUnloadedFromPods>
+	<WM.MessageCaravanUnloadedFromPods>Unloaded caravan from pods.</WM.MessageCaravanUnloadedFromPods>
 	<WM.MessageCaravanNeeded>Caravan needed on location.</WM.MessageCaravanNeeded>
 	<WM.MessageCaravanLoadedToPods>Caravan loaded to pods.</WM.MessageCaravanLoadedToPods>
 	<WM.MessageCaravanPodsFleetCapacityTooLow>Pods fleet capacity too low: can not load. ({0} more kg needed).</WM.MessageCaravanPodsFleetCapacityTooLow>
@@ -23,4 +23,9 @@
 	<WM.MessageNothingToUnload>Nothing to unload.</WM.MessageNothingToUnload>
 	<WM.MessageNothingToLoad>Nothing to load.</WM.MessageNothingToLoad>
 	<WM.MessageCannotUnload>Cannot unload.</WM.MessageCannotUnload>
+
+	<!-- ================ Remote trading ================ -->
+
+	<WM.RemoteTradeWith>Remotely trade with {0}</WM.RemoteTradeWith>
+	
 </LanguageData>

@@ -7,7 +7,7 @@ namespace WM.SelfLaunchingPods
 {
 	public abstract class Command_LoadToCaravan : Command_Action
 	{
-		public Command_LoadToCaravan(Caravan parent)
+		internal Command_LoadToCaravan(Caravan parent)
 		{
 			this.Parent = parent;
 			action = delegate
@@ -15,41 +15,38 @@ namespace WM.SelfLaunchingPods
 				var traveler = Find.WorldObjects.ObjectsAt(parent.Tile).FirstOrDefault(
 					(WorldObject arg) => arg.def == DefOf.WM_TravelingTransportPods);
 
+				if (traveler == null)
+				{
+					Messages.Message("WM.MessageNoPodsToLoad".Translate(), MessageSound.RejectInput);
+					return;
+				}
+				var missingMassCapacity = TravelingPodsUtils.MissingMassCapacity((WorldTraveler)traveler, ThingsToLoad.ToList());
+
 				if (!ThingsToLoad.Any())
 				{
-					Messages.Message(string.Format("WM.MessageNothingToLoad".Translate(), TravelingPodsUtils.MissingMassCapacity((WorldTraveler)traveler, parent)), MessageSound.RejectInput);
+					Messages.Message("WM.MessageNothingToLoad".Translate(), MessageSound.RejectInput);
 					return;
 				}
 
-				if (traveler != null)
+				if (TravelingPodsUtils.FromCaravan((WorldTraveler)traveler, parent, ThingsToLoad))
 				{
-					if (TravelingPodsUtils.FromCaravan((WorldTraveler)traveler, parent, ThingsToLoad))
+					if (!parent.pawns.Any)
 					{
-						if (!parent.pawns.Any)
-						{
-							Find.WorldSelector.ClearSelection();
-							Find.WorldSelector.Select(traveler);
-						}
+						Find.WorldSelector.ClearSelection();
+						Find.WorldSelector.Select(traveler);
+					}
 
-						Messages.Message("WM.MessageCaravanLoadedToPods".Translate(), MessageSound.Benefit);
-					}
-					else
-					{
-						Messages.Message(string.Format("WM.MessageCaravanPodsFleetCapacityTooLow".Translate(), TravelingPodsUtils.MissingMassCapacity((WorldTraveler)traveler, parent)), MessageSound.Negative);
-					}
+					Messages.Message("WM.MessageCaravanLoadedToPods".Translate(), MessageSound.Benefit);
 				}
 				else
 				{
-					Messages.Message("WM.MessageNoPodsToLoad".Translate(), MessageSound.RejectInput);
+					Messages.Message(string.Format("WM.MessageCaravanPodsFleetCapacityTooLow".Translate(), missingMassCapacity.ToStringMass()), MessageSound.Negative);
 				}
 			};
 		}
 
-		public Caravan Parent { get; private set; }
+		protected Caravan Parent { get; private set; }
 
-		public abstract IEnumerable<Thing> ThingsToLoad
-		{
-			get;
-		}
+		protected abstract IEnumerable<Thing> ThingsToLoad { get; }
 	}
 }

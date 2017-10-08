@@ -1,8 +1,5 @@
-using System;
-using System.Reflection;
 using RimWorld;
 using Verse;
-using Verse.Sound;
 using Harmony;
 
 namespace WM.SelfLaunchingPods.Detours.ActiveDropPod

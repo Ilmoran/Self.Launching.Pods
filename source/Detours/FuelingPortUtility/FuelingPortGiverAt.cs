@@ -12,7 +12,7 @@ namespace WM.SelfLaunchingPods.Detours.FuelingPortUtility
 		{
 			var thingList = c.GetThingList(map);
 
-			var t = thingList.FirstOrDefault((obj) => Utils.IsMyClass(obj));
+			var t = thingList.FirstOrDefault(Utils.IsMyClass);
 			if (t != null)
 			{
 				__result = (Verse.Building)t;

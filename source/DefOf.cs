@@ -1,13 +1,10 @@
-using System;
-using System.Linq;
+using Harmony;
 using RimWorld;
 using Verse;
-using Harmony;
-using UnityEngine;
 
 namespace WM.SelfLaunchingPods
 {
-    [StaticConstructorOnStartup]
+	[StaticConstructorOnStartup]
 	public static class DefOf
 	{
 		internal static void LoadDefs()
@@ -25,5 +22,6 @@ namespace WM.SelfLaunchingPods
 		public static WorldObjectDef	WM_TravelingTransportPods;
 		public static ThingDef			WM_LandingSpot;
 		public static ThingDef			Chemfuel;
+		public static ThingDef			DropPodIncoming;
 	}
 }

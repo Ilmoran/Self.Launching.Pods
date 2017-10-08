@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
-using UnityEngine;
 using Verse;
-using Verse.Sound;
 
 namespace WM.SelfLaunchingPods
 {
@@ -51,7 +47,7 @@ namespace WM.SelfLaunchingPods
 			get;
 		}
 
-		public Command_Launch()
+		internal Command_Launch()
 		{
 			this.icon = Resources.LaunchCommandTex;
 
@@ -106,7 +102,7 @@ namespace WM.SelfLaunchingPods
 									"MessageTransportPodsDestinationIsTooFar".Translate(),
 									TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, this.ParentPodsCount)),
 							MessageSound.RejectInput);
-				
+
 				return (false);
 			}
 			MapParent mapParent = target.WorldObject as MapParent;
@@ -117,7 +113,12 @@ namespace WM.SelfLaunchingPods
 					throw new Exception("CameraJumper.TryHideWorld() failed.");
 
 				Current.Game.VisibleMap = mapParent.Map;
-				Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), (LocalTargetInfo obj) => Launch(target.Tile, obj.Cell), null, null, Resources.LaunchCommandTex);
+				Action<LocalTargetInfo> targeter = delegate (LocalTargetInfo localTarget)
+				{
+					Launch(target.Tile, localTarget.Cell);
+				};
+
+				Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), targeter, null, null, Resources.LaunchCommandTex);
 			}
 			else
 			{

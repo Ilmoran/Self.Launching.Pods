@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -20,29 +19,11 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public override string FailMessage
+		protected override IEnumerable<Thing> ThingsToUnload
 		{
 			get
 			{
-				if (Utils.FindCaravanAt(Parent.Tile) == null)
-					return ("WM.MessageCaravanNeeded".Translate());
-				return (base.FailMessage);
-			}
-		}
-
-		public override bool CanDoNow
-		{
-			get
-			{
-				return Parent.AllCarriedNonPawnThings.Any() && (Utils.FindCaravanAt(Parent.Tile) != null);
-			}
-		}
-
-		public override IEnumerable<Thing> ThingsToUnload
-		{
-			get
-			{
-				return (Parent.AllCarriedNonPawnThings);
+				return (Parent.AllCarriedItems);
 			}
 		}
 	}
