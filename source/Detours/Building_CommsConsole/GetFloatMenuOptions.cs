@@ -1,10 +1,49 @@
 ﻿using System;
-namespace WM.SelfLaunchingPods
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Harmony;
+using RimWorld;
+using Verse;
+using Verse.AI;
+
+namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 {
-	public class GetFloatMenuOptions
+	[HarmonyPatch(typeof(RimWorld.Building_CommsConsole), "GetFloatMenuOptions")]
+	//public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn myPawn)
+	static class GetFloatMenuOptions
 	{
-		public GetFloatMenuOptions()
+		static void Postfix(RimWorld.Building_CommsConsole __instance, ref IEnumerable<FloatMenuOption> __result, Pawn myPawn)
 		{
+			if (!__instance.CanUseCommsNow)
+				return;
+
+			var travelers = TravelingPodsUtils.GetRemoteTradable();
+			if (!travelers.Any())
+				return;
+
+			var extraoptions = GetRemoteTradingMenuOptions(__instance, myPawn, travelers);
+
+			__result = __result.Concat(extraoptions);
+		}
+
+		static List<FloatMenuOption> GetRemoteTradingMenuOptions(RimWorld.Building_CommsConsole __instance, Pawn myPawn, IEnumerable<WorldTraveler> travelers)
+		{
+			List<FloatMenuOption> extraoptions = new List<FloatMenuOption>();
+			foreach (var item in travelers)
+			{
+				FloatMenuOption option = new FloatMenuOption(MenuOptionPriority.VeryLow);
+				option.Label = item.remoteTrader.GetCallLabel();
+				option.action = delegate
+				{
+					Job job = new Job(JobDefOf.UseCommsConsole, __instance);
+					job.commTarget = item.remoteTrader;
+					myPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+				};
+				extraoptions.Add(option);
+			}
+
+			return (extraoptions);
 		}
 	}
 }

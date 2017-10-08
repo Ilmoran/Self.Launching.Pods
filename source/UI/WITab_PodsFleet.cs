@@ -19,6 +19,7 @@ namespace WM.SelfLaunchingPods
 				return (base.SelObject as WorldTraveler);
 			}
 		}
+
 		public WITab_PodsFleet()
 		{
 			this.labelKey = "WM.FleetInventoryWITab";

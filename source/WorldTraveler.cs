@@ -84,7 +84,10 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return this.pods.SelectMany((arg) => arg.PodInfo.innerContainer);
+				return		
+					this.pods.SelectMany((arg) => arg.PodInfo.innerContainer)
+					//.Concat(AllCarriedPawns.SelectMany((Pawn arg) => arg.inventory.innerContainer))
+					    ;
 			}
 		}
 

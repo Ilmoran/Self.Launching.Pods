@@ -115,7 +115,7 @@ namespace WM.SelfLaunchingPods
 				}
 			}
 
-			if (!caravan.pawns.Any)
+			if (!caravan.pawns.Any && Find.WorldObjects.Contains(caravan))
 			{
 				Find.WorldObjects.Remove(caravan);
 			}
