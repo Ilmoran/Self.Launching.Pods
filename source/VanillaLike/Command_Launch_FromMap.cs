@@ -38,7 +38,7 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		internal override void Launch(int tile, IntVec3 cell)
+		internal override void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = PawnsArriveMode.Undecided, bool attackOnArrival = false)
 		{
 			GlobalTargetInfo globalTargetInfo;
 			var globalTargetInfo2 = new GlobalTargetInfo(tile);
@@ -59,7 +59,7 @@ namespace WM.SelfLaunchingPods
 				globalTargetInfo = globalTargetInfo2;
 			}
 
-			parent.TryGetComp<CompSelfLaunchable>().TryLaunch(globalTargetInfo, PawnsArriveMode.Undecided, false);
+			parent.TryGetComp<CompSelfLaunchable>().TryLaunch(globalTargetInfo, arriveMode, attackOnArrival);
 			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
 		}
 	}

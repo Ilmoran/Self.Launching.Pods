@@ -49,7 +49,6 @@ namespace WM.SelfLaunchingPods
 		}
 
 		protected Caravan Parent { get; private set; }
-
 		protected abstract IEnumerable<Thing> ThingsToLoad { get; }
 	}
 }

@@ -98,6 +98,7 @@
     <None Include="..\Textures\UI\UnloadPawns.png" />
     <None Include="..\Defs\ResearchProjectDefs\ResearchProjects_Tier3_Misc.xml" />
     <None Include="..\Textures\UI\MergeFleets.png" />
+    <None Include="..\Todo" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />

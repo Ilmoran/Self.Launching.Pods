@@ -124,7 +124,7 @@ namespace WM.SelfLaunchingPods
 
 			var worldobject = TravelingPodsUtils.CreateWorldTraveler(this.Map.Tile, podsInfo, podsLandedThings);
 
-			worldobject.Launch(this.destinationTile, this.destinationCell);
+			worldobject.Launch(this.destinationTile, this.destinationCell, this.arriveMode, this.attackOnArrival);
 
 			foreach (DropPodLeaving item in DropPodLeaving.tmpActiveDropPods)
 			{

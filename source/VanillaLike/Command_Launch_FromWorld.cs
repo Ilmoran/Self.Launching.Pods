@@ -37,9 +37,17 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		internal override void Launch(int tile, IntVec3 cell)
+		public override bool Visible
 		{
-			parent.Launch(tile, cell);
+			get
+			{
+				return (!parent.Traveling);
+			}
+		}
+
+		internal override void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = 0, bool attackOnArrival = false)
+		{
+			parent.Launch(tile, cell, arriveMode, attackOnArrival);
 			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
 		}
 	}

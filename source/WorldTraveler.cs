@@ -5,21 +5,6 @@ using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
-//TODO: fix. can created caravan with non colonist pawns only
-//TODO: fix. caravan reform
-//TODO: set target fuel to reach destination...
-//TODO: caravan weight
-//TODO: command: discard one pod
-//TODO: more efficient cargo splitting	
-//TODO: fix pawn saving issue
-//TODO: map generation
-//TODO: allow discarding from WITab
-//TODO: tick pawns
-//TODO: allow manual refueling from inventory
-//TODO: pod opening delay (like vanilla)
-//TODO: fix prisoners fleeing after landing (vanilla issue)
-//TODO: fix no pawn ticking in pods (vanilla issue)
-
 namespace WM.SelfLaunchingPods
 {
 	public class WorldTraveler : WorldObject
@@ -192,7 +177,6 @@ namespace WM.SelfLaunchingPods
 		List<PodPair> pods = new List<PodPair>();
 
 		float traveledPct;
-
 		int departTile;
 		int destinationTile;
 		IntVec3 destinationCell;
@@ -261,12 +245,14 @@ namespace WM.SelfLaunchingPods
 			yield return new Command_Merge_Travelers(this);
 		}
 
-		public void Launch(int destinationTile, IntVec3 destinationCell)
+		public void Launch(int destinationTile, IntVec3 destinationCell, PawnsArriveMode arriveMode, bool attackOnArrival)
 		{
 			this.departTile = this.Tile;
 			this.destinationTile = destinationTile;
 			this.destinationCell = destinationCell;
 			this.traveledPct = 0f;
+			this.arriveMode = arriveMode;
+			this.attackOnArrival = attackOnArrival;
 
 			int distance = Find.WorldGrid.TraversalDistanceBetween(this.Tile, destinationTile);
 			float fuelAmount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(distance, this.PodsCount);
@@ -299,40 +285,35 @@ namespace WM.SelfLaunchingPods
 			if (map != null)
 			{
 				this.SpawnDropPodsInMap(map, this.destinationCell, this.arriveMode);
-				Find.WorldObjects.Remove(this);
-			}
-			else if (mapParent != null && mapParent.TransportPodsCanLandAndGenerateMap && this.attackOnArrival)
-			{
-				LongEventHandler.QueueLongEvent(delegate
-				{
-					Map orGenerateMap = GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile, null);
-					string extraMessagePart = null;
-					if (mapParent.Faction != null && !mapParent.Faction.HostileTo(Faction.OfPlayer))
-					{
-						mapParent.Faction.SetHostileTo(Faction.OfPlayer, true);
-						extraMessagePart = "MessageTransportPodsArrived_BecameHostile".Translate(new object[]
-						{
-						mapParent.Faction.Name
-						}).CapitalizeFirst();
-					}
-					Find.TickManager.CurTimeSpeed = TimeSpeed.Paused;
-					this.SpawnDropPodsInMap(orGenerateMap, this.destinationCell, this.arriveMode);
-				}, "GeneratingMapForNewEncounter", false, null);
-
-				Find.WorldObjects.Remove(this);
 			}
 			else
 			{
-				string text = "MessageTransportPodsArrived".Translate();
-				//if (extraMessagePart != null)
-				//{
-				//	text = text + " " + extraMessagePart;
-				//}
-				Messages.Message(text, new GlobalTargetInfo(this.Tile), MessageSound.Benefit);
+				if (mapParent != null && mapParent.TransportPodsCanLandAndGenerateMap && this.attackOnArrival)
+				{
+					LongEventHandler.QueueLongEvent(delegate
+					{
+						Map orGenerateMap = GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile, null);
+						string extraMessagePart = null;
+						if (mapParent.Faction != null && !mapParent.Faction.HostileTo(Faction.OfPlayer))
+						{
+							mapParent.Faction.SetHostileTo(Faction.OfPlayer, true);
+							extraMessagePart = "MessageTransportPodsArrived_BecameHostile".Translate(new object[]
+							{
+								mapParent.Faction.Name
+							}).CapitalizeFirst();
+						}
+						Find.TickManager.CurTimeSpeed = TimeSpeed.Paused;
+						this.SpawnDropPodsInMap(orGenerateMap, this.destinationCell, this.arriveMode, extraMessagePart);
+					}, "GeneratingMapForNewEncounter", false, null);
+				}
+				else
+				{
+					string text = "MessageTransportPodsArrived".Translate();
+					Messages.Message(text, new GlobalTargetInfo(this.Tile), MessageSound.Benefit);
+				}
 			}
 		}
 
-		//TODO: fix bug when traveling inside a map. pods will land on edge.
 		public void SpawnDropPodsInMap(Map map, IntVec3 destinationCell, PawnsArriveMode arriveMode, string extraMessagePart = null)
 		{
 			//tmpFlagDroppedInMap = true;
@@ -345,13 +326,13 @@ namespace WM.SelfLaunchingPods
 			{
 				intVec = destinationCell;
 			}
-			//			else if (arriveMode == PawnsArriveMode.CenterDrop)
-			//			{
-			//				if (!DropCellFinder.TryFindRaidDropCenterClose(out intVec, map))
-			//				{
-			//					intVec = DropCellFinder.FindRaidDropCenterDistant(map);
-			//				}
-			//			}
+			else if (arriveMode == PawnsArriveMode.CenterDrop)
+			{
+				if (!DropCellFinder.TryFindRaidDropCenterClose(out intVec, map))
+				{
+					intVec = DropCellFinder.FindRaidDropCenterDistant(map);
+				}
+			}
 			else
 			{
 				if (arriveMode != PawnsArriveMode.EdgeDrop && arriveMode != PawnsArriveMode.Undecided)
@@ -395,6 +376,8 @@ namespace WM.SelfLaunchingPods
 				text = text + " " + extraMessagePart;
 			}
 			Messages.Message(text, new TargetInfo(intVec, map, false), MessageSound.Benefit);
+			 
+			Find.WorldObjects.Remove(this);
 
 			//TODO: dispose object
 		}
