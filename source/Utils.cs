@@ -17,7 +17,7 @@ namespace WM.SelfLaunchingPods
 
 		internal static List<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
 		{
-			List<Building> launchers = FindBuildingsWithinRadius(map, intVec, Config.LandingSpotMaxRange, DefOf.WM_LandingSpot);
+			var launchers = FindBuildingsWithinRadius(map, intVec, Config.LandingSpotMaxRange, DefOf.WM_LandingSpot);
 
 			return
 				(launchers
@@ -40,9 +40,9 @@ namespace WM.SelfLaunchingPods
 
 		internal static List<Building> FindBuildingsWithinRadius(Map map, IntVec3 center, float radius, ThingDef def)
 		{
-			List<Building> list = new List<Building>();
+			var list = new List<Building>();
 
-			List<Building> thingsList = map.listerBuildings.AllBuildingsColonistOfDef(def).ToList();
+			var thingsList = map.listerBuildings.AllBuildingsColonistOfDef(def).ToList();
 
 			foreach (Building current in thingsList)
 			{

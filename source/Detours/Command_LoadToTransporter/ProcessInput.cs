@@ -48,6 +48,7 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 			return (true);
 
 		}
+
 		// RimWorld.Command_LoadToTransporter
 		static void Internal(Command_LoadToTransporter __instance)
 		{
@@ -71,13 +72,6 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 					{
 						Command_LoadToTransporter.tmpFuelingPortGivers.Add(RimWorld.FuelingPortUtility.FuelingPortGiverAt(x, map));
 					}, false);
-
-#if DEBUG
-					foreach (var item in Command_LoadToTransporter.tmpFuelingPortGivers)
-					{
-						Log.Message(item.ToString());
-					}
-#endif
 
 					for (int i = 0; i < __instance.transporters.Count; i++)
 					{

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -9,7 +7,7 @@ namespace WM.SelfLaunchingPods
 {
 	internal class RemoteTrader : ICommunicable
 	{
-		WorldTraveler worldTraveler;
+		readonly WorldTraveler worldTraveler;
 
 		public RemoteTrader(WorldTraveler worldTraveler)
 		{
@@ -72,7 +70,6 @@ namespace WM.SelfLaunchingPods
 
 		internal static void InitTrade(Pawn arg_playerNegotiator, FactionBase arg_localFactionBase, WorldTraveler arg_worldTraveler)
 		{
-
 			negotiator = arg_playerNegotiator;
 			factionBase = arg_localFactionBase;
 			worldTraveler = arg_worldTraveler;
@@ -94,6 +91,5 @@ namespace WM.SelfLaunchingPods
 			tmpContainer.TryTransferAllToContainer(negotiator.inventory.innerContainer);
 			negotiator.SpawnSetup(Find.VisibleMap, false);
 		}
-
 	}
 }

@@ -101,7 +101,6 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="Detours\ActiveDropPod\PodOpen.cs" />
     <Compile Include="Detours\FuelingPortUtility\FuelingPortGiverAt.cs" />
     <Compile Include="Detours\Command_LoadToTransporter\ProcessInput.cs" />
     <Compile Include="DefOf.cs" />
@@ -128,12 +127,12 @@
     <Compile Include="VanillaLike\Command_UnloadCaravan_PawnsAndItems.cs" />
     <Compile Include="VanillaLike\Command_UnloadCaravan_Pawns.cs" />
     <Compile Include="WorldTraveler.cs" />
-    <Compile Include="PlaceWorker_LandingSpot.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InventoryUtils.cs" />
     <Compile Include="VanillaLike\VanillaLikeUtils.cs" />
     <Compile Include="Detours\Building_CommsConsole\GetFloatMenuOptions.cs" />
-    <Compile Include="RemoteTrader.cs" />
+    <Compile Include="UI\PlaceWorker_LandingSpot.cs" />
+    <Compile Include="UI\RemoteTrader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

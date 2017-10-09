@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Verse;
 
 namespace WM.SelfLaunchingPods
@@ -8,7 +7,7 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_UnloadCaravan_Items(WorldTraveler parent) : base(parent)
 		{
-            this.icon = Resources.GizmoUnloadItems;
+			this.icon = Resources.GizmoUnloadItems;
 		}
 
 		public override string Label

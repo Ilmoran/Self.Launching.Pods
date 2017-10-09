@@ -7,7 +7,8 @@ namespace WM.SelfLaunchingPods
 	[StaticConstructorOnStartup]
 	public static class DefOf
 	{
-		internal static void LoadDefs()
+		//internal static void LoadDefs()
+		static DefOf()
 		{
 			foreach (var item in typeof(DefOf).GetFields(AccessTools.all))
 			{

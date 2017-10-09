@@ -42,7 +42,13 @@ namespace WM.SelfLaunchingPods
 		{
 			GlobalTargetInfo globalTargetInfo;
 			var globalTargetInfo2 = new GlobalTargetInfo(tile);
-			var targetMap = Find.WorldObjects.MapParentAt(tile).Map;
+			var mapParent = Find.WorldObjects.MapParentAt(tile);
+			Map targetMap = null;
+
+			if (mapParent != null)
+			{
+				targetMap = mapParent.Map;
+			}
 
 			if (targetMap != null)
 			{

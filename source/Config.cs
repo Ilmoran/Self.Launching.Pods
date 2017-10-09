@@ -34,15 +34,5 @@ namespace WM.SelfLaunchingPods
 				return (t.fuelUsePerLaunch);
 			}
 		}
-
-		public override void WorldLoaded()
-		{
-			base.WorldLoaded();
-		}
-
-		public override void DefsLoaded()
-		{
-			DefOf.LoadDefs();
-		}
 	}
 }

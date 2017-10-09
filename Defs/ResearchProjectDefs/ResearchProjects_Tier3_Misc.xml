@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
 	<!--=============================== Tier 3: Hi-tech research bench ===================================-->
 
 	<ResearchProjectDef>
@@ -16,5 +15,4 @@
 		<researchViewX>6</researchViewX>
 		<researchViewY>1.6</researchViewY>
 	</ResearchProjectDef>
-
 </Defs>

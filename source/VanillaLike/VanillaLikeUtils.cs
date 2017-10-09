@@ -48,7 +48,7 @@ namespace WM.SelfLaunchingPods
 			{
 				return false;
 			}
-			List<Thing> thingList = c.GetThingList(map);
+			var thingList = c.GetThingList(map);
 			for (int i = 0; i < thingList.Count; i++)
 			{
 				Thing thing = thingList[i];

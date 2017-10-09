@@ -58,8 +58,7 @@ namespace WM.SelfLaunchingPods
 				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
 				if (compRefuelable != null)
 					return (compRefuelable.Fuel);
-				else
-					return (0f);
+				return (0f);
 			}
 		}
 		// RimWorld.CompLaunchable
@@ -92,9 +91,6 @@ namespace WM.SelfLaunchingPods
 		public override void CompTick()
 		{
 			base.CompTick();
-#if DEBUG
-			Log.Message("CompTick()");
-#endif
 			if (podInfo == null)
 				return;
 

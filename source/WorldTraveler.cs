@@ -7,13 +7,15 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
-	//TODO: fix bug when targeting faction base directly from map
+	//TODO: set target fuel to reach destination...
+	//TODO: command: merge fleets
+	//TODO: command: discard one pod
+	//TODO: more efficient cargo splitting	
 	//TODO: fix pawn saving issue
 	//TODO: map generation
 	//TODO: allow discarding from WITab
 	//TODO: tick pawns
 	//TODO: allow manual refueling from inventory
-	//TODO: remote trading
 	//TODO: pod opening delay (like vanilla)
 	//TODO: fix prisoners fleeing after landing (vanilla issue)
 	public class WorldTraveler : WorldObject
@@ -84,10 +86,10 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return		
+				return
 					this.pods.SelectMany((arg) => arg.PodInfo.innerContainer)
-					//.Concat(AllCarriedPawns.SelectMany((Pawn arg) => arg.inventory.innerContainer))
-					    ;
+						//.Concat(AllCarriedPawns.SelectMany((Pawn arg) => arg.inventory.innerContainer))
+						;
 			}
 		}
 
