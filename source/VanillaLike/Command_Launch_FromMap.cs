@@ -42,14 +42,16 @@ namespace WM.SelfLaunchingPods
 		{
 			GlobalTargetInfo globalTargetInfo;
 			var globalTargetInfo2 = new GlobalTargetInfo(tile);
-			var targetMap = Find.WorldObjects.MapParentAt(tile);
+			var targetMap = Find.WorldObjects.MapParentAt(tile).Map;
 
 			if (targetMap != null)
 			{
-				globalTargetInfo = new GlobalTargetInfo(cell, targetMap.Map);
+				globalTargetInfo = new GlobalTargetInfo(cell, targetMap);
 			}
 			else
+			{
 				globalTargetInfo = globalTargetInfo2;
+			}
 
 			parent.TryGetComp<CompSelfLaunchable>().TryLaunch(globalTargetInfo, PawnsArriveMode.Undecided, false);
 			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
