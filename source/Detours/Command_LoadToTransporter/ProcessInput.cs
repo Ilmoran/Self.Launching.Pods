@@ -39,7 +39,6 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 	{
 		static bool Prefix(Command_LoadToTransporter __instance)
 		{
-			Log.Message("RimWorld.Command_LoadToTransporter.ProcessInput()");
 			if (Find.Selector.SelectedObjects.All(Utils.IsMyClass))
 			{
 				Internal(__instance);

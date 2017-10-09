@@ -7,6 +7,7 @@ using Verse.AI;
 
 namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 {
+	//TODO: discard and use comp instead.
 	[HarmonyPatch(typeof(RimWorld.Building_CommsConsole), "GetFloatMenuOptions")]
 	static class GetFloatMenuOptions
 	{

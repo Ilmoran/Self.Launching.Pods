@@ -68,7 +68,7 @@ namespace WM.SelfLaunchingPods
 			return (CollectionsMassCalculator.MassUsage<Pawn>(caravan.pawns.InnerListForReading, IgnorePawnsInventoryMode.DontIgnore, true, false));
 		}
 
-		public static IEnumerable<T2> WhereCast<T1,T2>(this IEnumerable<T1> obj)
+		public static IEnumerable<T2> WhereCast<T1, T2>(this IEnumerable<T1> obj)
 		{
 			return (obj.Where((arg) => arg is T2).Cast<T2>());
 		}
