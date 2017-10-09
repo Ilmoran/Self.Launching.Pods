@@ -26,9 +26,7 @@ namespace WM.SelfLaunchingPods
 
 		public void TryOpenComms(Pawn negotiator)
 		{
-			Dialog_Trade_Remote.InitTrade(negotiator, LocalFactionBase, worldTraveler);
-			var dialog = new Dialog_Trade_Remote();
-			Find.WindowStack.Add(dialog);
+			TradeUtils.TradeFromTraveler(this.worldTraveler, negotiator);
 		}
 
 		public bool CanRemoteTradeNow
@@ -44,7 +42,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (Find.WorldObjects.FactionBaseAt(worldTraveler.Tile));
+				return (worldTraveler.LocalFactionBase);
 			}
 		}
 	}
@@ -55,8 +53,10 @@ namespace WM.SelfLaunchingPods
 		static Pawn negotiator;
 		static WorldTraveler worldTraveler;
 		static FactionBase factionBase;
+		static bool respawnNegociatorAfterTrade;
+		static ThingOwner tmpNegociatorContainer;
 
-		static ThingOwner tmpContainer;
+		static ThingOwner tmpInventoryContainer;
 		//static List<Thing> negocitorInventory;
 		internal Dialog_Trade_Remote() : base(negotiator, factionBase)
 		{
@@ -70,13 +70,26 @@ namespace WM.SelfLaunchingPods
 
 		internal static void InitTrade(Pawn arg_playerNegotiator, FactionBase arg_localFactionBase, WorldTraveler arg_worldTraveler)
 		{
+			respawnNegociatorAfterTrade = false;
+			tmpNegociatorContainer = null;
+
 			negotiator = arg_playerNegotiator;
 			factionBase = arg_localFactionBase;
 			worldTraveler = arg_worldTraveler;
 
-			negotiator.DeSpawn();
-			tmpContainer = new ThingOwner<Thing>();
-			negotiator.inventory.innerContainer.TryTransferAllToContainer(tmpContainer);
+			if (negotiator.Spawned)
+			{
+				respawnNegociatorAfterTrade = true;
+				negotiator.DeSpawn();
+			}
+			else if (negotiator.holdingOwner != null)
+			{
+				tmpNegociatorContainer = negotiator.holdingOwner;
+				tmpNegociatorContainer.Remove(negotiator);
+			}
+
+			tmpInventoryContainer = new ThingOwner<Thing>();
+			negotiator.inventory.innerContainer.TryTransferAllToContainer(tmpInventoryContainer);
 
 			dummyCaravan = CaravanMaker.MakeCaravan(new Pawn[] { negotiator }, negotiator.Faction, factionBase.Tile, true);
 			//Find.WorldObjects.Add(dummycaravan);
@@ -88,8 +101,18 @@ namespace WM.SelfLaunchingPods
 			TravelingPodsUtils.FromCaravan(worldTraveler, dummyCaravan, dummyCaravan.Goods);
 			dummyCaravan.RemovePawn(negotiator);
 			TravelingPodsUtils.FromCaravan(worldTraveler, dummyCaravan, dummyCaravan.pawns);
-			tmpContainer.TryTransferAllToContainer(negotiator.inventory.innerContainer);
-			negotiator.SpawnSetup(Find.VisibleMap, false);
+			tmpInventoryContainer.TryTransferAllToContainer(negotiator.inventory.innerContainer);
+			tmpInventoryContainer.ClearAndDestroyContents();
+			if (respawnNegociatorAfterTrade)
+			{
+				negotiator.SpawnSetup(Find.VisibleMap, false);
+			}
+			else if (tmpNegociatorContainer != null)
+			{
+				tmpNegociatorContainer.TryAdd(negotiator);
+			}
+			if (negotiator.IsWorldPawn())
+				Find.WorldPawns.RemovePawn(negotiator);
 		}
 	}
 }
