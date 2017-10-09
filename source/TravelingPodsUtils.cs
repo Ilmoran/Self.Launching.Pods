@@ -129,7 +129,6 @@ namespace WM.SelfLaunchingPods
 		{
 			var list = beta.Pods.ToList();
 
-			Log.Message("Adding " + list.Count + " pods to alpha");
 			foreach (var item in list)
 			{
 				beta.RemovePod(item);
