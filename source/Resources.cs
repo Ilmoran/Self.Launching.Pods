@@ -16,5 +16,6 @@ namespace WM.SelfLaunchingPods
 		public static readonly Texture2D GizmoUnloadItems = ContentFinder<Texture2D>.Get("UI/UnloadItems", true);
 		public static readonly Texture2D GizmoUnloadPawns = ContentFinder<Texture2D>.Get("UI/UnloadPawns", true);
 		public static readonly Texture2D GizmoMergeFleets = ContentFinder<Texture2D>.Get("UI/MergeFleets", true);
+		public static readonly Texture2D Trade = ContentFinder<Texture2D>.Get("UI/Commands/Trade", true);
 	}
 }

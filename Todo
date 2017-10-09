@@ -1,19 +1,23 @@
 ﻿
 
-TODO: Fix: can creatd caravan with non colonists pawns only
-TODO: Feature/fix: caravan reform
-TODO: Feature: set target fuel to reach destination...
-TODO: Feature: caravan weight
-TODO: Balance: chance or breaking down when attacking a base
-TODO: Feature: discard one pod
+TODO: Fix: mass limit after trade.
+TODO: Fix: no floating menu when targeting a faction base that has a fleet there.
 TODO: Fix: more efficient cargo splitting	
-TODO: Fix: pawn saving issue?
-TODO: Feature: map generation
-TODO: Feature: allow discarding from WITab
+TODO: Balance: chance of breaking down when attacking a base
+
 TODO: Feature/fix: tick pawns
+
+TODO: Feature/fix: caravan reform
+TODO: Feature: caravan weight
+TODO: Feature: set target fuel to reach destination...
+TODO: Feature: discard one pod
+TODO: Feature: allow discarding from WITab
 TODO: Feature: allow manual refueling from inventory
+TODO: Feature: planning route prints required fuel.
+
+TODO: Fix: pawn saving issue?
+
 TODO: Feature/Misc: pod opening delay (like vanilla)
 TODO: Feature/Misc: fix prisoners fleeing after landing (vanilla issue)
 TODO: Feature/Misc: fix no pawn ticking in pods (vanilla issue)
 TODO: Feature/Misc: fix "story is over" when all pawns are traveling aboard pods.
-TODO: Feature: planning route prints required fuel.

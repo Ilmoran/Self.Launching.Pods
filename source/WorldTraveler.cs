@@ -154,6 +154,14 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public FactionBase LocalFactionBase
+		{
+			get
+			{
+				return (Find.WorldObjects.FactionBaseAt(this.Tile));
+			}
+		}
+
 		// RimWorld.Planet.TravelingTransportPods
 		private float TraveledPctStepPerTick
 		{
@@ -239,6 +247,7 @@ namespace WM.SelfLaunchingPods
 				yield return (item);
 
 			yield return new Command_Launch_FromWorld(this);
+			yield return new Command_Trade(this);
 			yield return new Command_UnloadCaravan_PawnsAndItems(this);
 			yield return new Command_UnloadCaravan_Pawns(this);
 			yield return new Command_UnloadCaravan_Items(this);
@@ -376,7 +385,7 @@ namespace WM.SelfLaunchingPods
 				text = text + " " + extraMessagePart;
 			}
 			Messages.Message(text, new TargetInfo(intVec, map, false), MessageSound.Benefit);
-			 
+
 			Find.WorldObjects.Remove(this);
 
 			//TODO: dispose object

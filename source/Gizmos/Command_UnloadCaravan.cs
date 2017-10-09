@@ -32,6 +32,14 @@ namespace WM.SelfLaunchingPods
 						return;
 					}
 
+					var colonists = InventoryUtils.GetColonistsFrom(thingsToUnload);
+
+					if (!colonists.Any())
+					{
+						Messages.Message("WM.MessageColonistsNeeded".Translate(), MessageSound.RejectInput);
+						return;
+					}
+
 					foreach (var item in pawns)
 					{
 						var holdingOwner = item.holdingOwner;
@@ -48,7 +56,6 @@ namespace WM.SelfLaunchingPods
 				Find.WorldSelector.ClearSelection();
 				Find.WorldSelector.Select(caravan);
 				Messages.Message(SuccessMessage, MessageSound.Benefit);
-
 			};
 		}
 
