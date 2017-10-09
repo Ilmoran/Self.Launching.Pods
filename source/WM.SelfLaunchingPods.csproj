@@ -97,6 +97,7 @@
     <None Include="..\Textures\UI\UnloadItems.png" />
     <None Include="..\Textures\UI\UnloadPawns.png" />
     <None Include="..\Defs\ResearchProjectDefs\ResearchProjects_Tier3_Misc.xml" />
+    <None Include="..\Textures\UI\MergeFleets.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Detours\Building_CommsConsole\GetFloatMenuOptions.cs" />
     <Compile Include="UI\PlaceWorker_LandingSpot.cs" />
     <Compile Include="UI\RemoteTrader.cs" />
+    <Compile Include="VanillaLike\Command_Merge_Travelers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

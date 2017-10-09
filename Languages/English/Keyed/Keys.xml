@@ -10,6 +10,7 @@
 	<WM.LoadCaravanPawnsAndItemsGizmo>Load everything</WM.LoadCaravanPawnsAndItemsGizmo>
 	<WM.LoadCaravanItemsGizmo>Load items</WM.LoadCaravanItemsGizmo>
 	<WM.LoadCaravanPawnsGizmo>Load pawns</WM.LoadCaravanPawnsGizmo>
+	<WM.MergeGizmo>Merge {0} fleets</WM.MergeGizmo>
 	<WM.FleetInventoryWITab>Contents</WM.FleetInventoryWITab>
 
 	<!-- ================ Message ================ -->
@@ -18,7 +19,7 @@
 	<WM.MessageCaravanNeeded>Caravan needed on location.</WM.MessageCaravanNeeded>
 	<WM.MessageCaravanLoadedToPods>Caravan loaded to pods.</WM.MessageCaravanLoadedToPods>
 	<WM.MessageCaravanPodsFleetCapacityTooLow>Pods fleet capacity too low: can not load. ({0} more kg needed).</WM.MessageCaravanPodsFleetCapacityTooLow>
-	<WM.MessageNoPodsToLoad>No pods to load in.</WM.MessageNoPodsToLoad>
+	<WM.MessageNoPodsToLoad>No pods to load in. Need {0} kg ({1} pods).</WM.MessageNoPodsToLoad>
 	<WM.MessageNoPawnsToUnload>No pawns to unload.</WM.MessageNoPawnsToUnload>
 	<WM.MessageNothingToUnload>Nothing to unload.</WM.MessageNothingToUnload>
 	<WM.MessageNothingToLoad>Nothing to load.</WM.MessageNothingToLoad>

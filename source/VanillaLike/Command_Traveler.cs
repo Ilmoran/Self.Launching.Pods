@@ -13,5 +13,13 @@ namespace WM.SelfLaunchingPods
 		{
 			get; private set;
 		}
+
+		public override bool Visible
+		{
+			get
+			{
+				return (!Parent.Traveling);
+			}
+		}
 	}
 }

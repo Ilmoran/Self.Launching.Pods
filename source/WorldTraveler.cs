@@ -5,19 +5,23 @@ using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
+//TODO: fix. can created caravan with non colonist pawns only
+//TODO: fix. caravan reform
+//TODO: set target fuel to reach destination...
+//TODO: caravan weight
+//TODO: command: discard one pod
+//TODO: more efficient cargo splitting	
+//TODO: fix pawn saving issue
+//TODO: map generation
+//TODO: allow discarding from WITab
+//TODO: tick pawns
+//TODO: allow manual refueling from inventory
+//TODO: pod opening delay (like vanilla)
+//TODO: fix prisoners fleeing after landing (vanilla issue)
+//TODO: fix no pawn ticking in pods (vanilla issue)
+
 namespace WM.SelfLaunchingPods
 {
-	//TODO: set target fuel to reach destination...
-	//TODO: command: merge fleets
-	//TODO: command: discard one pod
-	//TODO: more efficient cargo splitting	
-	//TODO: fix pawn saving issue
-	//TODO: map generation
-	//TODO: allow discarding from WITab
-	//TODO: tick pawns
-	//TODO: allow manual refueling from inventory
-	//TODO: pod opening delay (like vanilla)
-	//TODO: fix prisoners fleeing after landing (vanilla issue)
 	public class WorldTraveler : WorldObject
 	{
 		// RimWorld.Planet.TravelingTransportPods
@@ -125,6 +129,14 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public IEnumerable<PodPair> Pods
+		{
+			get
+			{
+				return pods;
+			}
+		}
+
 		public IEnumerable<Thing> PodsAsThing
 		{
 			get
@@ -223,7 +235,18 @@ namespace WM.SelfLaunchingPods
 		public void AddPod(Thing building, ActiveDropPodInfo podInfo)
 		{
 			var pair = new PodPair(building, podInfo);
-			this.pods.Add(pair);
+			AddPod(pair);
+		}
+
+		public void AddPod(PodPair podPair)
+		{
+			this.pods.Add(podPair);
+		}
+
+		public void RemovePod(PodPair podPair)
+		{
+			if (!this.pods.Remove(podPair))
+				Log.Warning("Tried to remove pod from fleet but pod is not in fleet.");
 		}
 
 		public override IEnumerable<Gizmo> GetGizmos()
@@ -231,13 +254,11 @@ namespace WM.SelfLaunchingPods
 			foreach (var item in base.GetGizmos())
 				yield return (item);
 
-			if (!Traveling)
-			{
-				yield return new Command_Launch_FromWorld(this);
-				yield return new Command_UnloadCaravan_PawnsAndItems(this);
-				yield return new Command_UnloadCaravan_Pawns(this);
-				yield return new Command_UnloadCaravan_Items(this);
-			}
+			yield return new Command_Launch_FromWorld(this);
+			yield return new Command_UnloadCaravan_PawnsAndItems(this);
+			yield return new Command_UnloadCaravan_Pawns(this);
+			yield return new Command_UnloadCaravan_Items(this);
+			yield return new Command_Merge_Travelers(this);
 		}
 
 		public void Launch(int destinationTile, IntVec3 destinationCell)

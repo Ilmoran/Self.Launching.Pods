@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -20,13 +21,15 @@ namespace WM.SelfLaunchingPods
 			return Mathf.FloorToInt(((fuelAmount - podsCount * Config.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (Config.PodFuelUsePerTile * (oneway ? 1 : 2)));
 		}
 
+
 		internal static IEnumerable<WorldTraveler> GetRemoteTradable()
 		{
 			var list = Find.WorldObjects.AllWorldObjects.Where((WorldObject arg) => arg is WorldTraveler).Cast<WorldTraveler>();
 
-			return	(list
+			return (list
 					.Where((WorldTraveler arg) => arg.remoteTrader.CanRemoteTradeNow));
 		}
+
 
 		public static void RemoveAllPawnsFromWorldPawns(IEnumerable<Pawn> pawns)
 		{
@@ -122,9 +125,33 @@ namespace WM.SelfLaunchingPods
 			return (true);
 		}
 
+		internal static void MergeTravelers(WorldTraveler alpha, WorldTraveler beta)
+		{
+			var list = beta.Pods.ToList();
+
+			Log.Message("Adding " + list.Count + " pods to alpha");
+			foreach (var item in list)
+			{
+				beta.RemovePod(item);
+				alpha.AddPod(item);
+			}
+
+			Find.WorldObjects.Remove(beta);
+		}
+
 		internal static float MissingMassCapacity(WorldTraveler traveler, List<Thing> thingsToLoad)
 		{
 			return (CollectionsMassCalculator.MassUsage<Thing>(thingsToLoad, IgnorePawnsInventoryMode.Ignore, true) - (traveler.MaxCapacity - traveler.MassUsage));
+		}
+
+		internal static float CaravanMass(List<Thing> thingsToLoad)
+		{
+			return CollectionsMassCalculator.MassUsage<Thing>(thingsToLoad, IgnorePawnsInventoryMode.Ignore, true);
+		}
+
+		internal static int RequiredPodsCountForMass(float mass)
+		{
+			return Mathf.CeilToInt((mass / ((CompProperties_Transporter)DefOf.WM_TransportPod.comps.Find((obj) => obj is CompProperties_Transporter)).massCapacity));
 		}
 	}
 }

@@ -30,7 +30,7 @@ namespace WM.SelfLaunchingPods
 						arg.cell.Standable(arg.map) &&
 						!arg.cell.GetThingList(map).Any((Thing arg2) => arg2.def == DefOf.WM_DropPodIncoming))
 				.Select((arg) => arg.cell)
-				 .Distinct().ToList());
+				.Distinct().ToList());
 		}
 
 		internal static Caravan FindCaravanAt(int tile)
@@ -66,6 +66,11 @@ namespace WM.SelfLaunchingPods
 		internal static float CaravanWeight(Caravan caravan)
 		{
 			return (CollectionsMassCalculator.MassUsage<Pawn>(caravan.pawns.InnerListForReading, IgnorePawnsInventoryMode.DontIgnore, true, false));
+		}
+
+		public static IEnumerable<T2> WhereCast<T1,T2>(this IEnumerable<T1> obj)
+		{
+			return (obj.Where((arg) => arg is T2).Cast<T2>());
 		}
 	}
 }

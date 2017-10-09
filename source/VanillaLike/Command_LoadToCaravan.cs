@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using RimWorld.Planet;
 using Verse;
 
@@ -14,13 +15,15 @@ namespace WM.SelfLaunchingPods
 			{
 				var traveler = Find.WorldObjects.ObjectsAt(parent.Tile).FirstOrDefault(
 					(WorldObject arg) => arg.def == DefOf.WM_TravelingTransportPods);
+				var list = ThingsToLoad.ToList();
 
 				if (traveler == null)
 				{
-					Messages.Message("WM.MessageNoPodsToLoad".Translate(), MessageSound.RejectInput);
+					float mass = TravelingPodsUtils.CaravanMass(list);
+					Messages.Message(string.Format("WM.MessageNoPodsToLoad".Translate(), mass.ToStringMass(), TravelingPodsUtils.RequiredPodsCountForMass(mass) ), MessageSound.RejectInput);
 					return;
 				}
-				var missingMassCapacity = TravelingPodsUtils.MissingMassCapacity((WorldTraveler)traveler, ThingsToLoad.ToList());
+				var missingMassCapacity = TravelingPodsUtils.MissingMassCapacity((WorldTraveler)traveler, list);
 
 				if (!ThingsToLoad.Any())
 				{
