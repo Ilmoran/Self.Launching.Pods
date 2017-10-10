@@ -110,10 +110,18 @@ namespace WM.SelfLaunchingPods
 				else
 					info.innerContainer.TryAdd(item, item.stackCount);
 
-				if (usedMass > podThing.TryGetComp<CompTransporter>().Props.massCapacity && traveler.PodsCount < i)
+				if (usedMass > podThing.TryGetComp<CompTransporter>().Props.massCapacity)
 				{
-					usedMass = 0;
-					i++;
+					if (traveler.PodsCount < i)
+					{
+						usedMass = 0;
+						i++;
+					}
+					else
+					{
+						usedMass = float.MinValue;
+						Log.Warning("No more pods to load things in. I must have tried to load more than possible.");
+					}
 				}
 			}
 

@@ -26,6 +26,7 @@
 	<WM.MessageNothingToLoad>Nothing to load.</WM.MessageNothingToLoad>
 	<WM.MessageCannotUnload>Cannot unload.</WM.MessageCannotUnload>
 	<WM.MessageNoCapableNegociatorUseComms>No capable negociator in fleet. Use comms console to remotely trade.</WM.MessageNoCapableNegociatorUseComms>
+	<WM.MessagePodsFleetCapacityInsufficient>Fleet capacity insufficient.</WM.MessagePodsFleetCapacityInsufficient>
 
 	<!-- ================ Remote trading ================ -->
 
