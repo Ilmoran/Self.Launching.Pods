@@ -1,9 +1,11 @@
 ﻿
 
-TODO: Fix: mass limit after trade.
+TODO: IZI Fix: use hugslib logger
+TODO: Fix: check destination tile.
 TODO: Fix: no floating menu when targeting a faction base that has a fleet there.
 TODO: Fix: more efficient cargo splitting	
 TODO: Balance: chance of breaking down when attacking a base
+TODO: Balance: Increase fuel cost?
 
 TODO: Feature/fix: tick pawns
 

@@ -24,5 +24,6 @@ namespace WM.SelfLaunchingPods
 		public static ThingDef			WM_LandingSpot;
 		public static ThingDef			Chemfuel;
 		public static ThingDef			DropPodIncoming;
+		public static ThingDef			Silver;
 	}
 }
