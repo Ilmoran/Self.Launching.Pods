@@ -81,6 +81,8 @@
     <Folder Include="Detours\Building_CommsConsole\" />
     <Folder Include="Gizmos\" />
     <Folder Include="VanillaLike\" />
+    <Folder Include="Detours\Dialog_Trade\" />
+    <Folder Include="Detours\TradeDeal\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -139,6 +141,9 @@
     <Compile Include="Gizmos\Command_UnloadCaravan_PawnsAndItems.cs" />
     <Compile Include="Gizmos\Command_Merge_Travelers.cs" />
     <Compile Include="Gizmos\Command_Trade.cs" />
+    <Compile Include="Detours\Dialog_Trade\Dialog_Trade.cs" />
+    <Compile Include="Detours\TradeDeal\TryExecute.cs" />
+    <Compile Include="UI\Dialog_Trade_Remote.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
