@@ -8,7 +8,7 @@ namespace WM.SelfLaunchingPods
 {
 	public static class TradeUtils
 	{
-		public static void TradeFromTraveler( WorldTraveler worldTraveler, Pawn negotiator = null)
+		public static void TradeFromTraveler(WorldTraveler worldTraveler, Pawn negotiator = null)
 		{
 			if (negotiator == null)
 				negotiator = TradeUtils.BestNegociator(worldTraveler.AllCarriedColonists);

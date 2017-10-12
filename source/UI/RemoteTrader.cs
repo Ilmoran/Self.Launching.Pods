@@ -47,6 +47,4 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 	}
-
-	
 }

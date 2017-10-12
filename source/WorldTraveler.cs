@@ -82,6 +82,17 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public IEnumerable<Thing> AllCarriedThingsOrdered
+		{
+			get
+			{
+				return	(from item in AllCarriedThings
+						orderby item.MarketValue descending, item.stackCount descending
+				        select item);
+				//return (AllCarriedThings.OrderByDescending((Thing arg) => arg.MarketValue));
+			}
+		}
+
 		public IEnumerable<Pawn> AllCarriedPawns
 		{
 			get
@@ -318,7 +329,7 @@ namespace WM.SelfLaunchingPods
 				else
 				{
 					string text = "MessageTransportPodsArrived".Translate();
-					Messages.Message(text, new GlobalTargetInfo(this.Tile), MessageSound.Benefit);
+					Messages.Message(text, this, MessageSound.Benefit);
 				}
 			}
 		}
