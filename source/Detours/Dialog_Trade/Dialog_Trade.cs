@@ -17,27 +17,25 @@ namespace WM.SelfLaunchingPods.Detour.Dialog_Trade
 		{
 			var cachedTradeables = Traverse.Create(instance).Field("cachedTradeables").GetValue<List<Tradeable>>();
 
-			CachedMassOffset = cachedTradeables.Sum(
-							delegate (Tradeable arg)
-							{
-								float mass;
+			CachedMassOffset = cachedTradeables
+						.Where((Tradeable arg) => arg.CountToTransfer != 0)
+						.Sum(	delegate (Tradeable arg)
+								{
+									float mass;
 
-								mass = arg.AnyThing.GetStatValue(StatDefOf.Mass) * arg.CountToTransfer;
-								mass -= arg.CurTotalSilverCost * DefOf.Silver.BaseMass;
-								if (arg.AnyThing is Pawn)
-									mass += MassUtility.GearAndInventoryMass((Pawn)arg.AnyThing);
+									mass = arg.AnyThing.GetStatValue(StatDefOf.Mass) * arg.CountToTransfer;
+									mass -= arg.CurTotalSilverCost * DefOf.Silver.BaseMass;
+									if (arg.AnyThing is Pawn)
+										mass += MassUtility.GearAndInventoryMass((Pawn)arg.AnyThing);
 
-								return (mass);
-							});
+									return (mass);
+								});
 
 			return (CachedMassOffset);
 		}
 
 		internal static void Setup(float massCapacity, float currentMassUsage)
 		{
-#if DEBUG
-			Log.Message("Setup() currentMassUsage=" + currentMassUsage);
-#endif
 			Detouring = true;
 			MassCapacity = massCapacity;
 			CurrentMassUsage = currentMassUsage;

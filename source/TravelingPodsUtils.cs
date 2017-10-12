@@ -21,7 +21,6 @@ namespace WM.SelfLaunchingPods
 			return Mathf.FloorToInt(((fuelAmount - podsCount * Config.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (Config.PodFuelUsePerTile * (oneway ? 1 : 2)));
 		}
 
-
 		internal static IEnumerable<WorldTraveler> GetRemoteTradable()
 		{
 			var list = Find.WorldObjects.AllWorldObjects.Where((WorldObject arg) => arg is WorldTraveler).Cast<WorldTraveler>();
@@ -29,7 +28,6 @@ namespace WM.SelfLaunchingPods
 			return (list
 					.Where((WorldTraveler arg) => arg.remoteTrader.CanRemoteTradeNow));
 		}
-
 
 		public static void RemoveAllPawnsFromWorldPawns(IEnumerable<Pawn> pawns)
 		{
@@ -87,43 +85,7 @@ namespace WM.SelfLaunchingPods
 				return (false);
 			}
 
-			var list = thingsToTransfer.ToList();
-			int i = 0;
-			float usedMass = 0;
-
-			list.SortByDescending((Thing arg) => arg.GetStatValue(StatDefOf.Mass) * arg.stackCount);
-			foreach (var item in list)
-			{
-				var info = traveler.PodsInfo.ElementAt(i);
-				var podThing = traveler.PodsAsThing.ElementAt(i);
-
-				usedMass += item.GetStatValue(StatDefOf.Mass) * item.stackCount;
-				if (item is Pawn)
-				{
-					if (Find.WorldPawns.Contains((Pawn)item))
-						Find.WorldPawns.RemovePawn((Pawn)item);
-					usedMass += MassUtility.GearAndInventoryMass(item as Pawn);
-				}
-
-				if (item.holdingOwner != null)
-					item.holdingOwner.TryTransferToContainer(item, info.innerContainer);
-				else
-					info.innerContainer.TryAdd(item, item.stackCount);
-
-				if (usedMass > podThing.TryGetComp<CompTransporter>().Props.massCapacity)
-				{
-					if (traveler.PodsCount < i)
-					{
-						usedMass = 0;
-						i++;
-					}
-					else
-					{
-						usedMass = float.MinValue;
-						Log.Warning("No more pods to load things in. I must have tried to load more than possible.");
-					}
-				}
-			}
+			DistributeThingsForPods(traveler, thingsToTransfer);
 
 			if (!caravan.pawns.Any && Find.WorldObjects.Contains(caravan))
 			{
@@ -131,6 +93,34 @@ namespace WM.SelfLaunchingPods
 			}
 
 			return (true);
+		}
+
+		static void DistributeThingsForPods(WorldTraveler traveler, IEnumerable<Thing> thingsToTransfer, bool newtry = false)
+		{
+			var list = thingsToTransfer.InRandomOrder().ToList();
+			int thingsCountPerPod = Mathf.CeilToInt(list.Count() / traveler.PodsCount);
+			var podsEnumerator = traveler.Pods.GetEnumerator();
+			int i = 0;
+
+			podsEnumerator.MoveNext();
+			foreach (var item in list)
+			{
+				if (item is Pawn)
+				{
+					var pawn = (Pawn)item;
+					if (pawn.IsWorldPawn())
+						Find.WorldPawns.RemovePawn(pawn);
+				}
+				if (!item.holdingOwner.TryTransferToContainer(item, podsEnumerator.Current.PodInfo.innerContainer))
+					Log.Warning($"Could not transfer {item}");
+				i++;
+				if (i > thingsCountPerPod)
+				{
+					i = 0;
+					if (!podsEnumerator.MoveNext())
+						podsEnumerator.Reset();
+				}
+			}
 		}
 
 		internal static void MergeTravelers(WorldTraveler alpha, WorldTraveler beta)

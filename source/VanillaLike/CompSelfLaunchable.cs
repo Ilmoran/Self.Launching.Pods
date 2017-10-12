@@ -97,6 +97,7 @@ namespace WM.SelfLaunchingPods
 			if (ticksUntilOpen <= 0)
 			{
 				PodOpen();
+				return;
 			}
 			ticksUntilOpen--;
 		}

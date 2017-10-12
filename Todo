@@ -1,25 +1,41 @@
 ﻿
 
-TODO: IZI Fix: use hugslib logger
-TODO: Fix: check destination tile.
-TODO: Fix: no floating menu when targeting a faction base that has a fleet there.
-TODO: Fix: more efficient cargo splitting	
-TODO: Balance: chance of breaking down when attacking a base
-TODO: Balance: Increase fuel cost?
+* Fix:		more efficient cargo distribution	
+* Fix/Misc:	use comps instead of detours
+* Feature/Misc:	pod opening delay (like vanilla)
 
-TODO: Feature/fix: tick pawns
+* Fix:		Prevent traded things to endup in negociator inventory just in case
 
-TODO: Feature/fix: caravan reform
-TODO: Feature: caravan weight
-TODO: Feature: set target fuel to reach destination...
-TODO: Feature: discard one pod
-TODO: Feature: allow discarding from WITab
-TODO: Feature: allow manual refueling from inventory
-TODO: Feature: planning route prints required fuel.
+* Balance:	chance of breaking down when attacking a base
+* Balance:	chance to accident when lifting off in a damaged pod
+* Balance:	Increase fuel price at faction bases
+* Balance:	Requires components change every N launches
 
-TODO: Fix: pawn saving issue?
+* Feature:	quick fuel purchase gizmo
 
-TODO: Feature/Misc: pod opening delay (like vanilla)
-TODO: Feature/Misc: fix prisoners fleeing after landing (vanilla issue)
-TODO: Feature/Misc: fix no pawn ticking in pods (vanilla issue)
-TODO: Feature/Misc: fix "story is over" when all pawns are traveling aboard pods.
+* Feature/fix:	tick pawns
+
+* Feature/fix:	caravan reform
+* Feature:	caravan weight
+* Feature:	set target fuel to reach destination...
+* Feature:	discard one pod
+* Feature:	allow discarding from WITab
+* Feature:	allow manual refueling from inventory + show where you can purchase fuel.
+* Feature:	planning route prints required fuel.
+
+* Fix:		pawn saving issue?
+
+* Feature/Misc:	fix prisoners fleeing after landing (vanilla issue)
+* Feature/Misc:	fix no pawn ticking in pods (vanilla issue)
+* Feature/Misc:	fix "story is over" when all pawns are traveling aboard pods.
+
+* Fix rare exception when closing trading window:
+	Exception filling window for WM.SelfLaunchingPods.Dialog_Trade_Remote: System.NullReferenceException: Object reference not set to an instance of an object
+	  at RimWorld.Planet.VirtualPlantsUtility.EnvironmentAllowsEatingVirtualPlantsNowAt (Int32 tile) [0x00000] in <filename unknown>:0 
+	  at RimWorld.Dialog_Trade.get_EnvironmentAllowsEatingVirtualPlantsNow () [0x00000] in <filename unknown>:0 
+	  at RimWorld.Dialog_Trade.DoWindowContents (Rect inRect) [0x00000] in <filename unknown>:0 
+	  at Verse.Window+<WindowOnGUI>c__AnonStorey2C4.<>m__1B1 (Int32 x) [0x00000] in <filename unknown>:0 
+	Verse.Log:Error(String)
+	Verse.<WindowOnGUI>c__AnonStorey2C4:<>m__1B1(Int32)
+	UnityEngine.GUI:CallWindowDelegate(WindowFunction, Int32, GUISkin, Int32, Single, Single, GUIStyle)
+

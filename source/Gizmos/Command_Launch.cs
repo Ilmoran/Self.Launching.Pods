@@ -92,7 +92,7 @@ namespace WM.SelfLaunchingPods
 
 		bool ChoseWorldTarget(GlobalTargetInfo target)
 		{
-			if (!target.IsValid)
+			if (!target.IsValid || Find.World.Impassable(target.Tile))
 			{
 				Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(), MessageSound.RejectInput);
 				return (false);
@@ -109,7 +109,7 @@ namespace WM.SelfLaunchingPods
 
 				return (false);
 			}
-			MapParent mapParent = target.WorldObject as MapParent;
+			MapParent mapParent = Find.WorldObjects.MapParentAt(target.Tile);
 
 			if (mapParent == null)
 			{
@@ -132,7 +132,7 @@ namespace WM.SelfLaunchingPods
 
 					Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), targeter, null, null, Resources.LaunchCommandTex);
 				}
-				else if (mapParent.TransportPodsCanLandAndGenerateMap)
+				else
 				{
 					var list = new List<FloatMenuOption>();
 					Settlement settlement = mapParent as Settlement;
@@ -147,28 +147,31 @@ namespace WM.SelfLaunchingPods
 													CameraJumper.TryHideWorld();
 												}, MenuOptionPriority.Default, null, null, 0f, null, null));
 					}
-
-					list.Add(new FloatMenuOption("DropAtEdge".Translate(), delegate
+					if (mapParent.TransportPodsCanLandAndGenerateMap)
 					{
+
+						list.Add(new FloatMenuOption("DropAtEdge".Translate(), delegate
+						{
 							//if (!this.LoadingInProgressOrReadyToLaunch)
 							//	return;
 							this.Launch(target.Tile, target.Cell, PawnsArriveMode.EdgeDrop, true);
-						//CameraJumper.TryHideWorld();
-					}, MenuOptionPriority.Default, null, null, 0f, null, null));
+							//CameraJumper.TryHideWorld();
+						}, MenuOptionPriority.Default, null, null, 0f, null, null));
 
-					list.Add(new FloatMenuOption("DropInCenter".Translate(), delegate
-					{
+						list.Add(new FloatMenuOption("DropInCenter".Translate(), delegate
+						{
 							//if (!this.LoadingInProgressOrReadyToLaunch)
 							//	return;
 							this.Launch(target.Tile, target.Cell, PawnsArriveMode.CenterDrop, true);
-						//CameraJumper.TryHideWorld();
-					}, MenuOptionPriority.Default, null, null, 0f, null, null));
+							//CameraJumper.TryHideWorld();
+						}, MenuOptionPriority.Default, null, null, 0f, null, null));
+					}
+					if (!list.Any())
+					{
+						throw new Exception("Error when choosing pods destination.");
+					}
 
 					Find.WindowStack.Add(new FloatMenu(list));
-				}
-				else
-				{
-					throw new Exception("Error when choosing pods destination.");
 				}
 			}
 
