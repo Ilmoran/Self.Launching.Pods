@@ -22,7 +22,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (base.Visible &&
+				return	(base.Visible &&
 						Parent.LocalFactionBase != null &&
 						Parent.LocalFactionBase.CanTradeNow);
 			}

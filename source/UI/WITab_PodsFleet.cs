@@ -69,7 +69,7 @@ namespace WM.SelfLaunchingPods
 		private void UpdateItemsList()
 		{
 			this.items.Clear();
-			this.items.AddRange(this.Instance.AllCarriedThings);
+			this.items.AddRange(this.Instance.AllCarriedThingsOrdered);
 		}
 	}
 }
