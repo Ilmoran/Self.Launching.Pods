@@ -85,7 +85,7 @@ namespace WM.SelfLaunchingPods
 		public IEnumerable<Thing> AllCarriedThingsOrdered
 		{
 			get
-			{
+			{	
 				return	(from item in AllCarriedThings
 						orderby item.MarketValue descending, item.stackCount descending
 				        select item);

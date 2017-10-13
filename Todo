@@ -1,7 +1,4 @@
 ﻿
-
-* Fix:		more efficient cargo distribution	
-* Fix/Misc:	use comps instead of detours
 * Feature/Misc:	pod opening delay (like vanilla)
 
 * Fix:		Prevent traded things to endup in negociator inventory just in case
@@ -11,6 +8,7 @@
 * Balance:	Increase fuel price at faction bases
 * Balance:	Requires components change every N launches
 
+* Feature/fix:	fleet appears empty when trade dialog is open.
 * Feature:	quick fuel purchase gizmo
 
 * Feature/fix:	tick pawns

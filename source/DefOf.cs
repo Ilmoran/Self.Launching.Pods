@@ -25,5 +25,7 @@ namespace WM.SelfLaunchingPods
 		public static ThingDef			Chemfuel;
 		public static ThingDef			DropPodIncoming;
 		public static ThingDef			Silver;
+		public static WorldObjectDef	Caravan;
+		public static ThingDef			CommsConsole;
 	}
 }
