@@ -48,7 +48,7 @@ namespace WM.SelfLaunchingPods
 		private void DrawMassUsage(ref float curY)
 		{
 			curY += 10f;
-			Rect rect = new Rect(10f, curY, this.size.x - 10f, 100f);
+			var rect = new Rect(10f, curY, this.size.x - 10f, 100f);
 			float massUsage = Instance.MassUsage;
 			float allLandedShipMassCapacity = this.Instance.MaxCapacity;
 			bool flag = massUsage > allLandedShipMassCapacity;

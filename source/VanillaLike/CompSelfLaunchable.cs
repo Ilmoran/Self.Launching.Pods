@@ -130,7 +130,7 @@ namespace WM.SelfLaunchingPods
 						}
 					});
 				//GenPlace.TryPlaceThing(thing, this.parent.Position, this.parent.Map, ThingPlaceMode.Near, out thing2);
-				Pawn pawn = thing2 as Pawn;
+				var pawn = thing2 as Pawn;
 
 				if (pawn != null)
 				{
