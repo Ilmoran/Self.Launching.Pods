@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -95,7 +94,7 @@ namespace WM.SelfLaunchingPods
 			return (true);
 		}
 
-		static void DistributeThingsForPods(WorldTraveler traveler, IEnumerable<Thing> thingsToTransfer, bool newtry = false)
+		static void DistributeThingsForPods(WorldTraveler traveler, IEnumerable<Thing> thingsToTransfer)
 		{
 			var list = thingsToTransfer.InRandomOrder().ToList();
 			int thingsCountPerPod = Mathf.CeilToInt(list.Count() / traveler.PodsCount);

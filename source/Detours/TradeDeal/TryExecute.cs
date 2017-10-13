@@ -9,7 +9,7 @@ namespace WM.SelfLaunchingPods.Detour.TradeDeal
 	{
 		static bool Prefix(ref bool __result)
 		{
-			if	(Dialog_Trade.Controler.Detouring &&
+			if (Dialog_Trade.Controler.Detouring &&
 				Dialog_Trade.Controler.CachedMassOffset + Dialog_Trade.Controler.CurrentMassUsage > Dialog_Trade.Controler.MassCapacity)
 			{
 				//TODO: flash mass
@@ -17,10 +17,7 @@ namespace WM.SelfLaunchingPods.Detour.TradeDeal
 				__result = false;
 				return (false);
 			}
-			else
-			{
-				return (true);
-			}
+			return (true);
 		}
-}
+	}
 }

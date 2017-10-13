@@ -19,17 +19,17 @@ namespace WM.SelfLaunchingPods.Detour.Dialog_Trade
 
 			CachedMassOffset = cachedTradeables
 						.Where((Tradeable arg) => arg.CountToTransfer != 0)
-						.Sum(	delegate (Tradeable arg)
-								{
-									float mass;
+						.Sum(delegate (Tradeable arg)
+							 {
+								 float mass;
 
-									mass = arg.AnyThing.GetStatValue(StatDefOf.Mass) * arg.CountToTransfer;
-									mass -= arg.CurTotalSilverCost * DefOf.Silver.BaseMass;
-									if (arg.AnyThing is Pawn)
-										mass += MassUtility.GearAndInventoryMass((Pawn)arg.AnyThing);
+								 mass = arg.AnyThing.GetStatValue(StatDefOf.Mass) * arg.CountToTransfer;
+								 mass -= arg.CurTotalSilverCost * DefOf.Silver.BaseMass;
+								 if (arg.AnyThing is Pawn)
+									 mass += MassUtility.GearAndInventoryMass((Pawn)arg.AnyThing);
 
-									return (mass);
-								});
+								 return (mass);
+							 });
 
 			return (CachedMassOffset);
 		}
