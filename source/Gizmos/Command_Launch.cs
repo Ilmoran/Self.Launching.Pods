@@ -135,7 +135,7 @@ namespace WM.SelfLaunchingPods
 				else
 				{
 					var list = new List<FloatMenuOption>();
-					Settlement settlement = mapParent as Settlement;
+					var settlement = mapParent as Settlement;
 
 					if (settlement != null && settlement.Visitable)
 					{
