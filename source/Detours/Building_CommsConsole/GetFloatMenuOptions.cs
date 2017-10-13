@@ -16,7 +16,8 @@ namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 			if (!__instance.CanUseCommsNow)
 				return;
 
-			var travelers = TravelingPodsUtils.GetRemoteTradable();
+			var travelers = TravelingPodsUtils.GetRemoteTradeable();
+
 			if (!travelers.Any())
 				return;
 
@@ -25,23 +26,22 @@ namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 			__result = __result.Concat(extraoptions);
 		}
 
-		static List<FloatMenuOption> GetRemoteTradingMenuOptions(RimWorld.Building_CommsConsole __instance, Pawn myPawn, IEnumerable<WorldTraveler> travelers)
+		static IEnumerable<FloatMenuOption> GetRemoteTradingMenuOptions(RimWorld.Building_CommsConsole __instance, Pawn myPawn, IEnumerable<WorldTraveler> travelers)
 		{
-			var extraoptions = new List<FloatMenuOption>();
 			foreach (var item in travelers)
 			{
-				var option = new FloatMenuOption(MenuOptionPriority.InitiateSocial);
+				var option = new FloatMenuOption(MenuOptionPriority.High);
+
 				option.Label = item.remoteTrader.GetCallLabel();
 				option.action = delegate
 				{
 					var job = new Job(JobDefOf.UseCommsConsole, __instance);
+
 					job.commTarget = item.remoteTrader;
 					myPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
 				};
-				extraoptions.Add(option);
+				yield return (option);
 			}
-
-			return (extraoptions);
 		}
 	}
 }

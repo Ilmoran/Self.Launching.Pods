@@ -17,7 +17,7 @@ namespace WM.SelfLaunchingPods
 
 		internal static List<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
 		{
-			var launchers = FindBuildingsWithinRadius(map, intVec, Config.LandingSpotMaxRange, DefOf.WM_LandingSpot);
+			var launchers = FindBuildingsWithinRadius(map, intVec, ModControler.LandingSpotMaxRange, DefOf.WM_LandingSpot);
 
 			return
 				(launchers
