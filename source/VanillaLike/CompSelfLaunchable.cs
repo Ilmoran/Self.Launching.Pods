@@ -70,6 +70,14 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public float MaxFuelLevel
+		{
+			get
+			{
+				return (this.parent.TryGetComp<CompRefuelable>().Props.fuelCapacity);
+			}
+		}
+
 		public override void PostExposeData()
 		{
 			base.PostExposeData();
@@ -219,6 +227,11 @@ namespace WM.SelfLaunchingPods
 
 				GenSpawn.Spawn(dropPodLeaving, compTransporter.parent.Position, map);
 			}
+		}
+
+		public override void PostDraw()
+		{
+			Utils.DrawFuelOverlay(FuelingPortSourceFuel / MaxFuelLevel, this.parent.DrawPos);
 		}
 	}
 }

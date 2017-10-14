@@ -4,17 +4,26 @@
   <author>Wishmaster</author>
   <targetversion>0.17.1546</targetversion>
   <description>
-&lt;size=18&gt;&lt;color=orange&gt;&lt;b&gt;Requires HugsLib.&lt;/b&gt;&lt;/color&gt;&lt;/size&gt;
+&lt;color=orange&gt;&lt;b&gt;Requires HugsLib.&lt;/b&gt;&lt;/color&gt;
 
-&lt;b&gt;Adds a new self launching pod.&lt;/b&gt;
-This pod does not need its own launcher, has a fuel tank and can take off from anywhere !
-Useful to travel to a nearby village trade and come back quick.
+&lt;size=18&gt;&lt;b&gt;Features&lt;/b&gt;&lt;/size&gt;
+* New pod that does not require a pod launcher.
+* Lift off from anywhere.
+* Trade, Raid.
+* Can trade remotely with factions where you have pods using comms console. (No colonist required on location).
+* Load downed pawns into all kind of pods.
+* Landing spot to designate where to land pods.
+* Load / unload your caravan from a pods fleet.
 
-&lt;b&gt;Also allows you to reuse vanilla pods.&lt;/b&gt;
-Target your pods within 20 tiles of a Pod Launcher. 
-One pod launcher is required for every arriving pods. Remaining pods drop elsewhere nearby and vanish.
+&lt;size=18&gt;&lt;b&gt;Balance&lt;/b&gt;&lt;/size&gt;
+* Must be researched after &quot;transport pods&quot;.
+* Requires repair with a components every two launches.
 
-The beacon has been removed in the A17 version.
+
+&lt;size=18&gt;&lt;b&gt;!! Limitations &amp; bugs !!&lt;/b&gt;&lt;/size&gt;
+* You may not recover your pods left behind after reforming from a map.
+* After reforming, pawns and goods inside pods will be LOST. (When you are loading them).
+
   </description>
 	<url>https://ludeon.com/forums/index.php?topic=27315.0</url>
 </ModMetaData>

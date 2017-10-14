@@ -94,7 +94,7 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 					}
 				}
 			}
-			Find.WindowStack.Add(new Dialog_LoadTransporters(__instance.transComp.Map, __instance.transporters));
+			Find.WindowStack.Add(new RimWorld.Dialog_LoadTransporters(__instance.transComp.Map, __instance.transporters));
 		}
 
 	}
