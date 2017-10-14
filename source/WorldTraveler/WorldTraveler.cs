@@ -7,7 +7,8 @@ using Verse;
 
 namespace WM.SelfLaunchingPods
 {
-	public class WorldTraveler : WorldObject
+	//TODO: split in partial
+	public partial class WorldTraveler : WorldObject
 	{
 		// RimWorld.Planet.TravelingTransportPods
 		public override Vector3 DrawPos
@@ -47,124 +48,6 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public float FuelLevel
-		{
-			get
-			{
-				return (PodsAsThing.Sum(arg => arg.TryGetComp<CompRefuelable>().Fuel));
-			}
-		}
-
-		public float FuelLevelPerPod
-		{
-			get
-			{
-				return this.FuelLevel / this.PodsCount;
-			}
-		}
-
-		public int PodsCount
-		{
-			get
-			{
-				return (this.pods.Count);
-			}
-		}
-
-		public IEnumerable<Thing> AllCarriedThings
-		{
-			get
-			{
-				return
-					this.pods.SelectMany((arg) => arg.PodInfo.innerContainer)
-						//.Concat(AllCarriedPawns.SelectMany((Pawn arg) => arg.inventory.innerContainer))
-						;
-			}
-		}
-
-		public IEnumerable<Thing> AllCarriedThingsOrdered
-		{
-			get
-			{	
-				return	(from item in AllCarriedThings
-						orderby item.MarketValue descending, item.stackCount descending
-				        select item);
-				//return (AllCarriedThings.OrderByDescending((Thing arg) => arg.MarketValue));
-			}
-		}
-
-		public IEnumerable<Pawn> AllCarriedPawns
-		{
-			get
-			{
-				return InventoryUtils.GetPawnsFrom(AllCarriedThings);
-			}
-		}
-
-		public IEnumerable<Pawn> AllCarriedColonists
-		{
-			get
-			{
-				return InventoryUtils.GetColonistsFrom(AllCarriedThings);
-			}
-		}
-
-		public IEnumerable<Thing> AllCarriedItems
-		{
-			get
-			{
-				return InventoryUtils.GetItemsFrom(AllCarriedThings);
-			}
-		}
-
-		public bool HasPawns
-		{
-			get
-			{
-				return (AllCarriedPawns.Any());
-			}
-		}
-
-		public IEnumerable<PodPair> Pods
-		{
-			get
-			{
-				return pods;
-			}
-		}
-
-		public IEnumerable<Thing> PodsAsThing
-		{
-			get
-			{
-				return pods.Select(arg => arg.PodThing);
-			}
-		}
-
-		public IEnumerable<ActiveDropPodInfo> PodsInfo
-		{
-			get
-			{
-				return pods.Select(arg => arg.PodInfo);
-			}
-		}
-
-		public float MaxCapacity
-		{
-			get
-			{
-				return PodsAsThing.Sum(arg => arg.TryGetComp<CompTransporter>().Props.massCapacity);
-			}
-		}
-
-		public float MassUsage
-		{
-			get
-			{
-				return (CollectionsMassCalculator.MassUsage<Thing>(this.AllCarriedThings.ToList(), IgnorePawnsInventoryMode.DontIgnore, true, false));
-			}
-		}
-
 		public FactionBase LocalFactionBase
 		{
 			get
@@ -185,6 +68,7 @@ namespace WM.SelfLaunchingPods
 					return (1f);
 				}
 				float num = GenMath.SphericalDistance(start.normalized, end.normalized);
+
 				if (System.Math.Abs(num) < float.Epsilon)
 				{
 					return (1f);
@@ -194,7 +78,6 @@ namespace WM.SelfLaunchingPods
 		}
 
 		List<PodPair> pods = new List<PodPair>();
-
 		float traveledPct;
 		int departTile;
 		int destinationTile;
@@ -235,23 +118,6 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public void AddPod(Thing building, ActiveDropPodInfo podInfo)
-		{
-			var pair = new PodPair(building, podInfo);
-			AddPod(pair);
-		}
-
-		public void AddPod(PodPair podPair)
-		{
-			this.pods.Add(podPair);
-		}
-
-		public void RemovePod(PodPair podPair)
-		{
-			if (!this.pods.Remove(podPair))
-				Log.Warning("Tried to remove pod from fleet but pod is not in fleet.");
-		}
-
 		public override IEnumerable<Gizmo> GetGizmos()
 		{
 			foreach (var item in base.GetGizmos())
@@ -263,6 +129,7 @@ namespace WM.SelfLaunchingPods
 			yield return new Command_UnloadCaravan_Pawns(this);
 			yield return new Command_UnloadCaravan_Items(this);
 			yield return new Command_Merge_Travelers(this);
+			yield return new Command_Repair(this);
 		}
 
 		public void Launch(int destinationTile, IntVec3 destinationCell, PawnsArriveMode arriveMode, bool attackOnArrival)
@@ -278,18 +145,6 @@ namespace WM.SelfLaunchingPods
 			float fuelAmount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(distance, this.PodsCount);
 
 			Consume(fuelAmount);
-		}
-
-		private void Consume(float amount)
-		{
-			float newFuelAmountPerPod = (this.FuelLevel - amount) / this.PodsCount;
-
-			foreach (var item in this.pods)
-			{
-				var compRefuelable = item.PodThing.TryGetComp<CompRefuelable>();
-
-				compRefuelable.ConsumeFuel(Mathf.Ceil(compRefuelable.Fuel - newFuelAmountPerPod));
-			}
 		}
 
 		// RimWorld.Planet.TravelingTransportPods
@@ -328,6 +183,7 @@ namespace WM.SelfLaunchingPods
 				}
 				else
 				{
+					DamagePods();
 					string text = "MessageTransportPodsArrived".Translate();
 					Messages.Message(text, this, MessageSound.Benefit);
 				}
@@ -406,8 +262,9 @@ namespace WM.SelfLaunchingPods
 		{
 			string v = base.GetInspectString();
 
-			v += "\r\n";
-			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity);
+			v += "\n";
+			string remainingLaunchesStr = string.Format("WM.RemainingLaunchesUntilBreakdown".Translate(), RemainingLaunches);
+			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity, remainingLaunchesStr);
 
 			return (v);
 		}

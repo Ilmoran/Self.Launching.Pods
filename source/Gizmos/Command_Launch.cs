@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -48,18 +49,28 @@ namespace WM.SelfLaunchingPods
 			get;
 		}
 
+		public abstract IEnumerable<ThingWithComps> PodsList
+		{
+			get;
+		}
+
+		internal abstract void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = PawnsArriveMode.Undecided, bool attackOnArrival = false);
+
 		//TODO: rearrange destination validation
 		internal Command_Launch()
 		{
 			this.icon = Resources.LaunchCommandTex;
-
 			action = delegate
 			{
 				try
 				{
+					if (!DamageLevelAllowsLaunch())
+					{
+						Messages.Message("WM.MessageRepairPodsFirst".Translate(), MessageSound.RejectInput);
+						return;
+					}
 					CameraJumper.TryJump(CameraJumper.GetWorldTarget(new GlobalTargetInfo(ParentTile)));
 					Find.WorldSelector.ClearSelection();
-
 					Find.WorldTargeter.BeginTargeting(new Func<GlobalTargetInfo, bool>(this.ChoseWorldTarget), true, Resources.LaunchCommandTex, false,
 														delegate
 														{
@@ -88,7 +99,10 @@ namespace WM.SelfLaunchingPods
 			};
 		}
 
-		internal abstract void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = PawnsArriveMode.Undecided, bool attackOnArrival = false);
+		bool DamageLevelAllowsLaunch()
+		{
+			return (this.PodsList.All((ThingWithComps arg) => !Utils.PodIsBrokenDown(arg, true)));
+		}
 
 		bool ChoseWorldTarget(GlobalTargetInfo target)
 		{
@@ -141,9 +155,9 @@ namespace WM.SelfLaunchingPods
 					{
 						list.Add(new FloatMenuOption("VisitSettlement".Translate(new object[] { settlement.Label }), delegate
 												{
-														//if (!this.LoadingInProgressOrReadyToLaunch)
-														//	return;
-														this.Launch(target.Tile, target.Cell, PawnsArriveMode.Undecided, false);
+													//if (!this.LoadingInProgressOrReadyToLaunch)
+													//	return;
+													this.Launch(target.Tile, target.Cell, PawnsArriveMode.Undecided, false);
 													CameraJumper.TryHideWorld();
 												}, MenuOptionPriority.Default, null, null, 0f, null, null));
 					}

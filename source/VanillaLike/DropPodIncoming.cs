@@ -62,6 +62,7 @@ namespace WM.SelfLaunchingPods
 				Vector3 loc = base.Position.ToVector3Shifted() + Gen.RandomHorizontalVector(1f);
 				MoteMaker.ThrowDustPuff(loc, base.Map, 1.2f);
 			}
+
 			MoteMaker.ThrowLightningGlow(base.Position.ToVector3Shifted(), base.Map, 2f);
 
 			// ============= MOD ============= 
@@ -71,6 +72,7 @@ namespace WM.SelfLaunchingPods
 			//GenSpawn.Spawn(activeDropPod, base.Position, base.Map, base.Rotation, false);
 			this.landedThing.TryGetComp<CompSelfLaunchable>().podInfo = this.Contents;
 			GenSpawn.Spawn(this.landedThing, base.Position, base.Map, base.Rotation, false);
+			((ThingWithComps)this.landedThing).BroadcastCompSignal(CompPlannedBreakdownable.UseSignal);
 
 			// ============= /MOD ============= 
 

@@ -77,6 +77,7 @@
     <Folder Include="VanillaLike\" />
     <Folder Include="Detours\Dialog_Trade\" />
     <Folder Include="Detours\TradeDeal\" />
+    <Folder Include="WorldTraveler\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -96,6 +97,7 @@
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\UnloadItems.png" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\UnloadPawns.png" />
     <None Include="..\Mods\WM Self Launching Pods\Assemblies\wmselflaunchingpods.dll" />
+    <None Include="..\Mods\WM Self Launching Pods\Textures\UI\Repair.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModControler.cs" />
@@ -107,7 +109,6 @@
     <Compile Include="PodPair.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="UI\WITab_PodsFleet.cs" />
-    <Compile Include="WorldTraveler.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InventoryUtils.cs" />
     <Compile Include="UI\PlaceWorker_LandingSpot.cs" />
@@ -140,6 +141,12 @@
     <Compile Include="UI\CommsRemoteTradeComp.cs" />
     <Compile Include="UI\CaravanTransferComp.cs" />
     <Compile Include="Detours\Building_CommsConsole\GetFloatMenuOptions.cs" />
+    <Compile Include="CompPlannedBreakdownable.cs" />
+    <Compile Include="WorkGiver_FixBrokenDownPod.cs" />
+    <Compile Include="Gizmos\Command_Repair.cs" />
+    <Compile Include="WorldTraveler\WorldTraveler.cs" />
+    <Compile Include="WorldTraveler\Damages.cs" />
+    <Compile Include="WorldTraveler\Inventory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

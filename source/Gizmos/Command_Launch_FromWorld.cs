@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using Verse;
 using Verse.Sound;
@@ -34,6 +36,14 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				return (parent.Tile);
+			}
+		}
+
+		public override IEnumerable<ThingWithComps> PodsList
+		{
+			get
+			{
+				return (this.parent.PodsAsThing.Cast<ThingWithComps>());
 			}
 		}
 
