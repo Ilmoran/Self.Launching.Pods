@@ -27,9 +27,6 @@ namespace WM.SelfLaunchingPods
 		//TODO: can't figure out why this is not working. Using detour.
 		public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
 		{
-#if DEBUG
-			Log.Message("CompFloatMenuOptions()");
-#endif
 			if (!Parent.CanUseCommsNow)
 				return (null);
 

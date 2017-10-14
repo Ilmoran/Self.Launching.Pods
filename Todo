@@ -1,17 +1,15 @@
 ﻿
-* Feature/Misc:	pod opening delay (like vanilla)
-
-* Fix:		Prevent traded things to endup in negociator inventory just in case
-
 * Balance:	chance of breaking down when attacking a base
-* Balance:	chance to accident when lifting off in a damaged pod
 * Balance:	Increase fuel price at faction bases
-* Balance:	Requires components change every N launches
 
 * Feature/fix:	fleet appears empty when trade dialog is open.
 * Feature:	quick fuel purchase gizmo
 
 * Feature/fix:	tick pawns
+
+* Feature/Misc:	pod opening delay (like vanilla)
+
+* Fix:		Prevent traded things to endup in negociator inventory just in case
 
 * Feature/fix:	caravan reform
 * Feature:	caravan weight
@@ -21,11 +19,8 @@
 * Feature:	allow manual refueling from inventory + show where you can purchase fuel.
 * Feature:	planning route prints required fuel.
 
-* Fix:		pawn saving issue?
-
-* Feature/Misc:	fix prisoners fleeing after landing (vanilla issue)
-* Feature/Misc:	fix no pawn ticking in pods (vanilla issue)
-* Feature/Misc:	fix "story is over" when all pawns are traveling aboard pods.
+* Fix/Misc:	prisoners fleeing after landing (vanilla issue)
+* Fix/Misc:	"story is over" when all pawns are traveling aboard pods.
 
 * Fix rare exception when closing trading window:
 	Exception filling window for WM.SelfLaunchingPods.Dialog_Trade_Remote: System.NullReferenceException: Object reference not set to an instance of an object

@@ -33,7 +33,12 @@ namespace WM.SelfLaunchingPods
 				.Distinct().ToList());
 		}
 
-		internal static Caravan FindCaravanAt(int tile)
+		public static int ThingsOfDefCount(IEnumerable<Thing> allCarriedThings, ThingDef def)
+		{
+			return (allCarriedThings.Where((Thing arg) => arg.def == def).Sum((Thing arg) => arg.stackCount));
+		}
+
+		public static Caravan FindCaravanAt(int tile)
 		{
 			return ((Caravan)Find.WorldObjects.ObjectsAt(tile).FirstOrDefault((WorldObject arg) => arg is Caravan));
 		}
@@ -53,6 +58,7 @@ namespace WM.SelfLaunchingPods
 			return (list);
 		}
 
+
 		internal static bool CanLandAt(Map map, IntVec3 pos)
 		{
 			return !pos.Roofed(map) && IsAtPad(map, pos);
@@ -71,6 +77,29 @@ namespace WM.SelfLaunchingPods
 		public static IEnumerable<T2> WhereCast<T1, T2>(this IEnumerable<T1> obj)
 		{
 			return (obj.Where((arg) => arg is T2).Cast<T2>());
+		}
+
+		public static bool SafeToLaunch(ThingWithComps t)
+		{
+			var compPlannedBreakdownable = t.TryGetComp<CompPlannedBreakdownable>();
+
+			return (compPlannedBreakdownable != null &&
+					//t.HitPoints - (compPlannedBreakdownable.Props.damageRatePerUse * t.HitPoints) > 0 &&
+					!compPlannedBreakdownable.BrokenDown);
+		}
+
+		public static float HitpointsRate(Thing parent)
+		{
+#pragma warning disable IDE0004 // Remove Unnecessary Cast
+			return ((float)parent.HitPoints / (float)parent.MaxHitPoints);
+#pragma warning restore IDE0004 // Remove Unnecessary Cast
+		}
+
+		public static bool PodIsBrokenDown(Thing arg, bool checkHitpoints = false)
+		{
+			var comp = arg.TryGetComp<CompPlannedBreakdownable>();
+
+			return ((comp.BrokenDown || (checkHitpoints && !comp.DamageLevelAllowsUse)));
 		}
 	}
 }

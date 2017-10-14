@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -35,6 +37,16 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				return (parent.Tile);
+			}
+		}
+
+		public override IEnumerable<ThingWithComps> PodsList
+		{
+			get
+			{
+				return (this.parent.TryGetComp<CompTransporter>()
+						.TransportersInGroup(this.parent.Map)
+						.Select((CompTransporter arg) => arg.parent));
 			}
 		}
 
