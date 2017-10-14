@@ -6,7 +6,7 @@ namespace WM.SelfLaunchingPods
 	{
 		public Command_Trade(WorldTraveler worldTraveler) : base(worldTraveler)
 		{
-			this.icon = Resources.Trade;
+			this.icon = Resources.GizmoTrade;
 			this.action = delegate
 			{
 				if (TradeUtils.BestNegociator(worldTraveler.AllCarriedColonists) == null)

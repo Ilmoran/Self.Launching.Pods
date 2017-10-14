@@ -75,19 +75,24 @@
 		<iconDrawScale>1</iconDrawScale>
 		<statBases>
 			<MaxHitPoints>250</MaxHitPoints>
-			<WorkToBuild>3500</WorkToBuild>
+			<WorkToBuild>4000</WorkToBuild>
 			<Flammability>0</Flammability>
 		</statBases>
 		<costList>
-			<Steel>60</Steel>
+			<Steel>80</Steel>
 			<Plasteel>30</Plasteel>
 			<Component>2</Component>
 		</costList>
 		<comps>
 			<li Class="CompProperties_Transporter" />
+			<li Class="WM.SelfLaunchingPods.CompProperties_PlannedBreakdownable">
+				<usesCountUntilBreakdown>2</usesCountUntilBreakdown>
+<!--			<damageRatePerUse>0.38</damageRatePerUse>	-->
+				<minHitpointsRateToUse>0.2</minHitpointsRateToUse>
+			</li>
 			<li Class="WM.SelfLaunchingPods.CompProperties_SelfLaunchable">
-				<fuelUsePerTile>3</fuelUsePerTile>
-				<fuelUsePerLaunch>10</fuelUsePerLaunch>
+				<fuelUsePerTile>2.5</fuelUsePerTile>
+				<fuelUsePerLaunch>15</fuelUsePerLaunch>
 			</li>
 			<li Class="CompProperties_Refuelable">
 				<fuelCapacity>200</fuelCapacity>

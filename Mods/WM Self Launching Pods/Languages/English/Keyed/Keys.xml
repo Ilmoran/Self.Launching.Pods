@@ -2,15 +2,17 @@
 <LanguageData>
 	<!-- ================ World view ================ -->
 
-	<WM.WorldObjectLandedPodsInspectString>Number of pods: {0}\nFuel amount: {1} ({2} per pod).\nCapacity: {3} / {4} kg.</WM.WorldObjectLandedPodsInspectString>
+	<WM.WorldObjectLandedPodsInspectString>Number of pods: {0}\nFuel amount: {1} ({2} per pod).\nCapacity: {3} / {4} kg.\n{5}</WM.WorldObjectLandedPodsInspectString>
 	<WM.LaunchCaravanGizmo>Launch pods</WM.LaunchCaravanGizmo>
-	<WM.UnloadCaravanGizmo>Unload everything</WM.UnloadCaravanGizmo>
+	<WM.UnloadCaravanGizmo>Unload</WM.UnloadCaravanGizmo>
 	<WM.UnloadCaravanItemsGizmo>Unload items</WM.UnloadCaravanItemsGizmo>
 	<WM.UnloadCaravanPawnsGizmo>Unload pawns</WM.UnloadCaravanPawnsGizmo>
-	<WM.LoadCaravanPawnsAndItemsGizmo>Load everything</WM.LoadCaravanPawnsAndItemsGizmo>
+	<WM.LoadCaravanPawnsAndItemsGizmo>Load</WM.LoadCaravanPawnsAndItemsGizmo>
 	<WM.LoadCaravanItemsGizmo>Load items</WM.LoadCaravanItemsGizmo>
 	<WM.LoadCaravanPawnsGizmo>Load pawns</WM.LoadCaravanPawnsGizmo>
 	<WM.MergeGizmo>Merge {0} fleets</WM.MergeGizmo>
+	<WM.RepairGizmo>Repair</WM.RepairGizmo>
+	<WM.RepairGizmoDesc>Will use {0} {2} (you have {1}).</WM.RepairGizmoDesc>
 	<WM.FleetInventoryWITab>Contents</WM.FleetInventoryWITab>
 
 	<!-- ================ Message ================ -->
@@ -20,16 +22,26 @@
 	<WM.MessageColonistsNeeded>At least one colonist is needed to create a caravan.</WM.MessageColonistsNeeded>
 	<WM.MessageCaravanLoadedToPods>Caravan loaded to pods.</WM.MessageCaravanLoadedToPods>
 	<WM.MessageCaravanPodsFleetCapacityTooLow>Pods fleet capacity too low: can not load. ({0} more kg needed).</WM.MessageCaravanPodsFleetCapacityTooLow>
-	<WM.MessageNoPodsToLoad>No pods to load in. Need {0} kg ({1} pods).</WM.MessageNoPodsToLoad>
+	<WM.MessageNoPodsToLoad>No pods to load in. Need {0} ({1} pods).</WM.MessageNoPodsToLoad>
 	<WM.MessageNoPawnsToUnload>No pawns to unload.</WM.MessageNoPawnsToUnload>
 	<WM.MessageNothingToUnload>Nothing to unload.</WM.MessageNothingToUnload>
 	<WM.MessageNothingToLoad>Nothing to load.</WM.MessageNothingToLoad>
 	<WM.MessageCannotUnload>Cannot unload.</WM.MessageCannotUnload>
 	<WM.MessageNoCapableNegociatorUseComms>No capable negociator in fleet. Use comms console to remotely trade.</WM.MessageNoCapableNegociatorUseComms>
 	<WM.MessagePodsFleetCapacityInsufficient>Fleet capacity insufficient.</WM.MessagePodsFleetCapacityInsufficient>
+	<WM.MessageRepairPodsFirst>One or more pods are too damaged. Repair them first.</WM.MessageRepairPodsFirst>
+	<WM.MessageFleetPodsRepaired>Fleet pods repaired.</WM.MessageFleetPodsRepaired>
+	<WM.MessageNoCapableColonistsInFleet>No non-downed colonist capable of manipulation.</WM.MessageNoCapableColonistsInFleet>
+	<WM.MessageAtLeastComponentsNeeded>At least {0} {1} are required to perform this (you have {2}).</WM.MessageAtLeastComponentsNeeded>
+	<WM.MessagePodsRepairedComponentsUsed>Pods repaired. {0} {1} used.</WM.MessagePodsRepairedComponentsUsed>
 
 	<!-- ================ Remote trading ================ -->
 
 	<WM.RemoteTradeWith>Remotely trade with {0}</WM.RemoteTradeWith>
+
+	<!-- ================ Pod ================ -->
+
+	<WM.RemainingLaunchesUntilBreakdown>Remaining launches until breakdown: {0}</WM.RemainingLaunchesUntilBreakdown>
+	<WM.CantUseDamageTooHigh>Can not use: too damaged.</WM.CantUseDamageTooHigh>
 	
 </LanguageData>
