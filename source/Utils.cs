@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace WM.SelfLaunchingPods
@@ -100,6 +101,23 @@ namespace WM.SelfLaunchingPods
 			var comp = arg.TryGetComp<CompPlannedBreakdownable>();
 
 			return ((comp.BrokenDown || (checkHitpoints && !comp.DamageLevelAllowsUse)));
+		}
+
+		private static readonly Vector2 FuelBarSize = new Vector2(0.62f, 0.2f);
+		private static readonly Vector3 FuelBarOffset = new Vector3(0, 0.1f, 0.2f);
+
+		internal static void DrawFuelOverlay(float fuelPercent, Vector3 drawPos)
+		{
+			GenDraw.FillableBarRequest r = default(GenDraw.FillableBarRequest);
+
+			r.center = drawPos + FuelBarOffset;
+			r.size = FuelBarSize;
+			r.fillPercent = fuelPercent;
+			r.filledMat = Resources.FuelBarFilledMat;
+			r.unfilledMat = Resources.FuelBarUnfilledMat;
+			r.margin = 0.15f;
+			r.rotation = Rot4.West;
+			GenDraw.DrawFillableBar(r);
 		}
 	}
 }

@@ -78,6 +78,7 @@
     <Folder Include="Detours\Dialog_Trade\" />
     <Folder Include="Detours\TradeDeal\" />
     <Folder Include="WorldTraveler\" />
+    <Folder Include="Detours\Dialog_LoadTransporters\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -147,6 +148,7 @@
     <Compile Include="WorldTraveler\WorldTraveler.cs" />
     <Compile Include="WorldTraveler\Damages.cs" />
     <Compile Include="WorldTraveler\Inventory.cs" />
+    <Compile Include="Detours\Dialog_LoadTransporters\Dialog_LoadTransporters.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

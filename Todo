@@ -1,28 +1,27 @@
-﻿
-* Balance:	chance of breaking down when attacking a base
-* Balance:	Increase fuel price at faction bases
+﻿* Balance:		Chance of breaking down when attacking a base
+* Balance:		Increase fuel price at faction bases
 
-* Feature/fix:	fleet appears empty when trade dialog is open.
-* Feature:	quick fuel purchase gizmo
+* Feature/fix:	Fleet appears empty when trade dialog is open.
+* Feature:		Quick fuel purchase gizmo
 
-* Feature/fix:	tick pawns
+* Feature/fix:	Tick pawns
 
-* Feature/Misc:	pod opening delay (like vanilla)
+* Feature/Misc:	Pod opening delay (like vanilla)
 
-* Fix:		Prevent traded things to endup in negociator inventory just in case
+* Fix:			Prevent traded things to endup in negociator inventory just in case
 
-* Feature/fix:	caravan reform
-* Feature:	caravan weight
-* Feature:	set target fuel to reach destination...
-* Feature:	discard one pod
-* Feature:	allow discarding from WITab
-* Feature:	allow manual refueling from inventory + show where you can purchase fuel.
-* Feature:	planning route prints required fuel.
+* Feature/fix:	Caravan reform + colonists lost when inside pods and map is forced to vanish.
+* Feature:		Caravan weight
+* Feature:		Set target fuel to reach destination...
+* Feature:		Discard one pod
+* Feature:		Allow discarding from WITab
+* Feature:		Allow manual refueling from inventory + show where you can purchase fuel.
+* Feature:		Planning route prints required fuel.
 
-* Fix/Misc:	prisoners fleeing after landing (vanilla issue)
-* Fix/Misc:	"story is over" when all pawns are traveling aboard pods.
+* Fix/Misc:		Prisoners fleeing after landing (vanilla issue)
+* Fix/Misc:		"story is over" when all pawns are traveling aboard pods.
 
-* Fix rare exception when closing trading window:
+* Fix rare exception when closing trading window: (seems harmless)
 	Exception filling window for WM.SelfLaunchingPods.Dialog_Trade_Remote: System.NullReferenceException: Object reference not set to an instance of an object
 	  at RimWorld.Planet.VirtualPlantsUtility.EnvironmentAllowsEatingVirtualPlantsNowAt (Int32 tile) [0x00000] in <filename unknown>:0 
 	  at RimWorld.Dialog_Trade.get_EnvironmentAllowsEatingVirtualPlantsNow () [0x00000] in <filename unknown>:0 
