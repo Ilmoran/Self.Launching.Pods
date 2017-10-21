@@ -12,12 +12,12 @@ namespace WM.SelfLaunchingPods
 		// RimWorld.CompLaunchable
 		public static float FuelNeededToLaunchAtDistance(int dist, int podsCount)
 		{
-			return (ModControler.PodFuelUsePerLaunch + ModControler.PodFuelUsePerTile * dist) * podsCount;
+			return (ModController.PodFuelUsePerLaunch + ModController.PodFuelUsePerTile * dist) * podsCount;
 		}
 
 		public static int MaxLaunchDistance(float fuelAmount, int podsCount, bool oneway)
 		{
-			return Mathf.FloorToInt(((fuelAmount - podsCount * ModControler.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (ModControler.PodFuelUsePerTile * (oneway ? 1 : 2)));
+			return Mathf.FloorToInt(((fuelAmount - podsCount * ModController.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (ModController.PodFuelUsePerTile * (oneway ? 1 : 2)));
 		}
 
 		internal static IEnumerable<WorldTraveler> GetRemoteTradeable()
@@ -137,7 +137,7 @@ namespace WM.SelfLaunchingPods
 
 		internal static float MissingMassCapacity(WorldTraveler traveler, List<Thing> thingsToLoad)
 		{
-			return (CollectionsMassCalculator.MassUsage<Thing>(thingsToLoad, IgnorePawnsInventoryMode.Ignore, true) - (traveler.MaxCapacity - traveler.MassUsage));
+			return (CollectionsMassCalculator.MassUsage<Thing>(thingsToLoad, IgnorePawnsInventoryMode.Ignore, true) - (traveler.MassCapacity - traveler.MassUsage));
 		}
 
 		internal static float CaravanMass(List<Thing> thingsToLoad)

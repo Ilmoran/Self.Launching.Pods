@@ -34,7 +34,7 @@ namespace WM.SelfLaunchingPods
 			factionBase = arg_localFactionBase;
 			worldTraveler = arg_worldTraveler;
 
-			Detour.Dialog_Trade.Controler.Setup(worldTraveler.MaxCapacity, worldTraveler.MassUsage);
+			Detour.Dialog_Trade.Controler.Setup(worldTraveler.MassCapacity, worldTraveler.MassUsage);
 
 			if (negotiator.Spawned)
 			{

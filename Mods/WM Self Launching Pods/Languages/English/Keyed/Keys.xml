@@ -2,8 +2,10 @@
 <LanguageData>
 	<!-- ================ World view ================ -->
 
-	<WM.WorldObjectLandedPodsInspectString>Number of pods: {0}\nFuel amount: {1} ({2} per pod).\nCapacity: {3} / {4} kg.\n{5}</WM.WorldObjectLandedPodsInspectString>
+	<WM.WorldObjectLandedPodsInspectString>Number of pods: {0}\nFuel amount: {1} ({2} per pod).\nCapacity: {3} / {4} kg.\n{5}\nInventory fuel: {6} ({7} per pod).</WM.WorldObjectLandedPodsInspectString>
 	<WM.LaunchCaravanGizmo>Launch pods</WM.LaunchCaravanGizmo>
+	<WM.RefuelAndLaunchCaravanGizmo>Refuel + Launch</WM.RefuelAndLaunchCaravanGizmo>
+	<WM.RefuelAndLaunchCaravanGizmoDesc>Refuel pods from inventory at maximum and launch.</WM.RefuelAndLaunchCaravanGizmoDesc>
 	<WM.UnloadCaravanGizmo>Unload</WM.UnloadCaravanGizmo>
 	<WM.UnloadCaravanItemsGizmo>Unload items</WM.UnloadCaravanItemsGizmo>
 	<WM.UnloadCaravanPawnsGizmo>Unload pawns</WM.UnloadCaravanPawnsGizmo>
@@ -11,6 +13,7 @@
 	<WM.LoadCaravanItemsGizmo>Load items</WM.LoadCaravanItemsGizmo>
 	<WM.LoadCaravanPawnsGizmo>Load pawns</WM.LoadCaravanPawnsGizmo>
 	<WM.MergeGizmo>Merge {0} fleets</WM.MergeGizmo>
+	<WM.MergeAllOnTileGizmo>Merge all fleets</WM.MergeAllOnTileGizmo>
 	<WM.RepairGizmo>Repair</WM.RepairGizmo>
 	<WM.RepairGizmoDesc>Will use {0} {2} (you have {1}).</WM.RepairGizmoDesc>
 	<WM.FleetInventoryWITab>Contents</WM.FleetInventoryWITab>

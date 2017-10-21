@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -85,6 +86,7 @@ namespace WM.SelfLaunchingPods
 		PawnsArriveMode arriveMode;
 		bool attackOnArrival;
 		internal readonly RemoteTrader remoteTrader;
+		IEnumerable<Gizmo> gizmos;
 
 		public WorldTraveler()
 		{
@@ -103,6 +105,13 @@ namespace WM.SelfLaunchingPods
 			Scribe_Collections.Look<PodPair>(ref pods, "pods", LookMode.Deep);
 		}
 
+		public override void SpawnSetup()
+		{
+			base.SpawnSetup();
+
+			gizmos = MakeGizmos().ToList();
+		}
+
 		public override void Tick()
 		{
 			base.Tick();
@@ -118,18 +127,20 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		IEnumerable<Gizmo> MakeGizmos()
+		{
+			yield return new Command_Launch_FromWorld(this);
+			yield return new Command_Launch_FromWorld_AutoRefuel(this);
+
+			foreach (var item in typeof(Command_Traveler).AllSubclassesNonAbstract())
+			{
+				yield return ((Gizmo)Activator.CreateInstance(item, new object[] { this }));
+			}
+		}
+
 		public override IEnumerable<Gizmo> GetGizmos()
 		{
-			foreach (var item in base.GetGizmos())
-				yield return (item);
-
-			yield return new Command_Launch_FromWorld(this);
-			yield return new Command_Trade(this);
-			yield return new Command_UnloadCaravan_PawnsAndItems(this);
-			yield return new Command_UnloadCaravan_Pawns(this);
-			yield return new Command_UnloadCaravan_Items(this);
-			yield return new Command_Merge_Travelers(this);
-			yield return new Command_Repair(this);
+			return (base.GetGizmos().Concat(gizmos));
 		}
 
 		public void Launch(int destinationTile, IntVec3 destinationCell, PawnsArriveMode arriveMode, bool attackOnArrival)
@@ -264,7 +275,11 @@ namespace WM.SelfLaunchingPods
 
 			v += "\n";
 			string remainingLaunchesStr = string.Format("WM.RemainingLaunchesUntilBreakdown".Translate(), RemainingLaunches);
-			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(), this.PodsCount, this.FuelLevel, FuelLevelPerPod, this.MassUsage, this.MaxCapacity, remainingLaunchesStr);
+			v += string.Format("WM.WorldObjectLandedPodsInspectString".Translate(),
+							   this.PodsCount, this.FuelLevel, FuelLevelPerPod,
+							   this.MassUsage, this.MassCapacity,
+							   remainingLaunchesStr,
+							   this.CarriedFuelLevel, this.CarriedFuelLevel / this.PodsCount);
 
 			return (v);
 		}

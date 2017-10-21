@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods
 
 		internal static List<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
 		{
-			var launchers = FindBuildingsWithinRadius(map, intVec, ModControler.LandingSpotMaxRange, DefOf.WM_LandingSpot);
+			var launchers = FindBuildingsWithinRadius(map, intVec, ModController.LandingSpotMaxRange, DefOf.WM_LandingSpot);
 
 			return
 				(launchers
@@ -118,6 +118,11 @@ namespace WM.SelfLaunchingPods
 			r.margin = 0.15f;
 			r.rotation = Rot4.West;
 			GenDraw.DrawFillableBar(r);
+		}
+
+		public static IEnumerable<WorldTraveler> GetSelectedTravelers()
+		{
+			return (Find.WorldSelector.SelectedObjects.WhereCast<WorldObject, WorldTraveler>());
 		}
 	}
 }

@@ -13,15 +13,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (SelectedTravelers.FirstOrDefault());
-			}
-		}
-
-		public IEnumerable<WorldTraveler> SelectedTravelers
-		{
-			get
-			{
-				return (Find.WorldSelector.SelectedObjects.WhereCast<WorldObject, WorldTraveler>());
+				return (Utils.GetSelectedTravelers().FirstOrDefault());
 			}
 		}
 
@@ -30,13 +22,14 @@ namespace WM.SelfLaunchingPods
 			this.icon = Resources.GizmoMergeFleets;
 			this.action = delegate
 			{
-				var list = SelectedTravelers.ToList();
+				var list = Utils.GetSelectedTravelers().ToList();
 				var n = list.Count;
 
-				for (int i = 1; i < n; i++)
+				foreach (var item in list.Skip(1))
 				{
-					TravelingPodsUtils.MergeTravelers(SingleSelectedTraveler, list.ElementAt(i));
+					TravelingPodsUtils.MergeTravelers(SingleSelectedTraveler, item);
 				}
+
 				SoundDefOf.TickHigh.PlayOneShotOnCamera();
 			};
 		}
@@ -45,9 +38,9 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (SelectedTravelers.Count() >= 2 &&
+				return (Utils.GetSelectedTravelers().Count() >= 2 &&
 						SingleSelectedTraveler != null &&
-						 SelectedTravelers.All((WorldTraveler arg) => arg.Tile == SingleSelectedTraveler.Tile));
+						Utils.GetSelectedTravelers().All((WorldTraveler arg) => arg.Tile == SingleSelectedTraveler.Tile));
 			}
 		}
 
@@ -55,7 +48,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return string.Format("WM.MergeGizmo".Translate(), SelectedTravelers.Count());
+				return string.Format("WM.MergeGizmo".Translate(), Utils.GetSelectedTravelers().Count());
 			}
 		}
 	}

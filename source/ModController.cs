@@ -2,11 +2,11 @@ using System.Linq;
 
 namespace WM.SelfLaunchingPods
 {
-	public class ModControler : HugsLib.ModBase
+	public class ModController : HugsLib.ModBase
 	{
 		private static readonly string modName = "WM_Self_Launching_Pods";
 		internal static readonly float LandingSpotMaxRange = 7f;
-		internal static ModControler SingleInstance { get; private set; }
+		internal static ModController SingleInstance { get; private set; }
 
 		public override string ModIdentifier
 		{
@@ -70,15 +70,15 @@ namespace WM.SelfLaunchingPods
 	{
 		internal static void Message(string text)
 		{
-			ModControler.Log.Message(text);
+			ModController.Log.Message(text);
 		}
 		internal static void Warning(string text)
 		{
-			ModControler.Log.Warning(text);
+			ModController.Log.Warning(text);
 		}
 		internal static void Error(string text)
 		{
-			ModControler.Log.Error(text);
+			ModController.Log.Error(text);
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace WM.SelfLaunchingPods
@@ -15,10 +16,19 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				return ("WM.LaunchCaravanGizmo".Translate());
+
 			}
 		}
 
-		public int MaxLaunchDistanceOneWay
+		public virtual int MaxLaunchDistanceEver
+		{
+			get
+			{
+				return (-1);
+			}
+		}
+
+		public virtual int MaxLaunchDistanceOneWay
 		{
 			get
 			{
@@ -30,7 +40,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (TravelingPodsUtils.MaxLaunchDistance(ParentLeastFueledPodFuelLevel, 1, false));
+				return (Mathf.FloorToInt(MaxLaunchDistanceOneWay / 2));
 			}
 		}
 
@@ -59,7 +69,7 @@ namespace WM.SelfLaunchingPods
 		//TODO: rearrange destination validation
 		internal Command_Launch()
 		{
-			this.icon = Resources.LaunchCommandTex;
+            this.icon = Resources.LaunchCommandTex;
 			action = delegate
 			{
 				try
