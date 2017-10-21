@@ -99,9 +99,10 @@
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\UnloadPawns.png" />
     <None Include="..\Mods\WM Self Launching Pods\Assemblies\wmselflaunchingpods.dll" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\Repair.png" />
+    <None Include="..\Mods\WM Self Launching Pods\Textures\UI\RefuelAndLaunchShip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModControler.cs" />
+    <Compile Include="ModController.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Detours\FuelingPortUtility\FuelingPortGiverAt.cs" />
     <Compile Include="Detours\Command_LoadToTransporter\ProcessInput.cs" />
@@ -149,6 +150,9 @@
     <Compile Include="WorldTraveler\Damages.cs" />
     <Compile Include="WorldTraveler\Inventory.cs" />
     <Compile Include="Detours\Dialog_LoadTransporters\Dialog_LoadTransporters.cs" />
+    <Compile Include="Gizmos\Command_Merge_Travelers_AllOnTile.cs" />
+    <Compile Include="Gizmos\Command_Refuel_From_Inventory.cs" />
+    <Compile Include="Gizmos\Command_Launch_FromWorld_AutoRefuel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

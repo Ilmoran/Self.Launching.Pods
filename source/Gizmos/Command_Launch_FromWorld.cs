@@ -8,7 +8,7 @@ namespace WM.SelfLaunchingPods
 {
 	public class Command_Launch_FromWorld : Command_Launch
 	{
-		readonly WorldTraveler parent;
+		protected readonly WorldTraveler parent;
 
 		public Command_Launch_FromWorld(WorldTraveler parent)
 		{
@@ -51,7 +51,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (!parent.Traveling);
+				return (base.Visible && !this.parent.Traveling && Utils.GetSelectedTravelers().Count() == 1);
 			}
 		}
 
@@ -59,6 +59,7 @@ namespace WM.SelfLaunchingPods
 		{
 			parent.Launch(tile, cell, arriveMode, attackOnArrival);
 			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
+			Find.WorldSelector.Select(this.parent);
 		}
 	}
 }

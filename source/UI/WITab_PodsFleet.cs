@@ -50,7 +50,7 @@ namespace WM.SelfLaunchingPods
 			curY += 10f;
 			var rect = new Rect(10f, curY, this.size.x - 10f, 100f);
 			float massUsage = Instance.MassUsage;
-			float allLandedShipMassCapacity = this.Instance.MaxCapacity;
+			float allLandedShipMassCapacity = this.Instance.MassCapacity;
 			bool flag = massUsage > allLandedShipMassCapacity;
 			if (flag)
 			{

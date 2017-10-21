@@ -33,7 +33,7 @@ namespace WM.SelfLaunchingPods
 						Messages.Message(string.Format("WM.MessagePodsRepairedComponentsUsed".Translate(),
 														num,
 						                               	ThingDefOf.Component.label),
-						                 				MessageSound.Benefit);
+						                 				MessageSound.Standard);
 						break;
 				}
 			};
