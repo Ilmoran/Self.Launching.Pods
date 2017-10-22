@@ -153,7 +153,7 @@ namespace WM.SelfLaunchingPods
 			this.attackOnArrival = attackOnArrival;
 
 			int distance = Find.WorldGrid.TraversalDistanceBetween(this.Tile, destinationTile);
-			float fuelAmount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(distance, this.PodsCount);
+			float fuelAmount = FuelUtils.FuelNeededToLaunchAtDistance(distance, this.PodsCount);
 
 			Consume(fuelAmount);
 		}

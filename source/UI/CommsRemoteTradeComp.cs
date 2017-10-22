@@ -30,7 +30,7 @@ namespace WM.SelfLaunchingPods
 			if (!Parent.CanUseCommsNow)
 				return (null);
 
-			var travelers = TravelingPodsUtils.GetRemoteTradeable();
+			var travelers = TradeUtils.GetRemoteTradeable();
 
 			if (!travelers.Any())
 				return (null);

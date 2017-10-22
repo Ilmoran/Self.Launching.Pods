@@ -9,25 +9,6 @@ namespace WM.SelfLaunchingPods
 {
 	public static class TravelingPodsUtils
 	{
-		// RimWorld.CompLaunchable
-		public static float FuelNeededToLaunchAtDistance(int dist, int podsCount)
-		{
-			return (ModController.PodFuelUsePerLaunch + ModController.PodFuelUsePerTile * dist) * podsCount;
-		}
-
-		public static int MaxLaunchDistance(float fuelAmount, int podsCount, bool oneway)
-		{
-			return Mathf.FloorToInt(((fuelAmount - podsCount * ModController.PodFuelUsePerLaunch * (oneway ? 1 : 2)) / podsCount) / (ModController.PodFuelUsePerTile * (oneway ? 1 : 2)));
-		}
-
-		internal static IEnumerable<WorldTraveler> GetRemoteTradeable()
-		{
-			var list = Find.WorldObjects.AllWorldObjects.Where((WorldObject arg) => arg is WorldTraveler).Cast<WorldTraveler>();
-
-			return (list
-					.Where((WorldTraveler arg) => arg.remoteTrader.CanRemoteTradeNow));
-		}
-
 		public static void RemoveAllPawnsFromWorldPawns(IEnumerable<Pawn> pawns)
 		{
 			foreach (var item in pawns)

@@ -33,7 +33,7 @@
 			<li Class="WM.SelfLaunchingPods.CompProperties_PlannedBreakdownable">
 				<usesCountUntilBreakdown>2</usesCountUntilBreakdown>
 <!--			<damageRatePerUse>0.38</damageRatePerUse>	-->
-				<minHitpointsRateToUse>0.2</minHitpointsRateToUse>
+				<minHitpointsRateToUse>0.8</minHitpointsRateToUse>
 			</li>
 			<li Class="WM.SelfLaunchingPods.CompProperties_SelfLaunchable">
 				<fuelUsePerTile>2.5</fuelUsePerTile>

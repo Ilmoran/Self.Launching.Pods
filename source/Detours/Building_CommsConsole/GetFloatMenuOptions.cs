@@ -16,7 +16,7 @@ namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 			if (!__instance.CanUseCommsNow)
 				return;
 
-			var travelers = TravelingPodsUtils.GetRemoteTradeable();
+			var travelers = TradeUtils.GetRemoteTradeable();
 
 			if (!travelers.Any())
 				return;

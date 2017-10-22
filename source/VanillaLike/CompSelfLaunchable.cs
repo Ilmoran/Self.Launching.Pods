@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return TravelingPodsUtils.MaxLaunchDistance(this._FuelInLeastFueledFuelingPortSource, 1, true);
+				return FuelUtils.MaxLaunchDistance(this._FuelInLeastFueledFuelingPortSource, 1, true);
 			}
 		}
 
@@ -201,7 +201,7 @@ namespace WM.SelfLaunchingPods
 			this.Transporter.TryRemoveLord(map);
 
 			int groupID = this.Transporter.groupID;
-			float amount = TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, 1);
+			float amount = FuelUtils.FuelNeededToLaunchAtDistance(num, 1);
 
 			for (int i = 0; i < transportersInGroup.Count; i++)
 			{
