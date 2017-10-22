@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
-using Verse;
 
 namespace WM.SelfLaunchingPods
 {
@@ -34,7 +32,7 @@ namespace WM.SelfLaunchingPods
 
 		public static int MaxLaunchDistance(float fuelAmount, int podsCount, bool oneway)
 		{
-			var fuelPerPod = fuelAmount / podsCount;;
+			var fuelPerPod = fuelAmount / podsCount;
 			var result = ((fuelPerPod - PodFuelUsePerLaunch) / PodFuelUsePerTile) / (oneway ? 1 : 2);
 
 			return (Mathf.FloorToInt(result));

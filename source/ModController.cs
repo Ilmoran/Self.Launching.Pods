@@ -1,6 +1,3 @@
-using System.Linq;
-using HugsLib;
-
 namespace WM.SelfLaunchingPods
 {
 	public class ModController : HugsLib.ModBase
