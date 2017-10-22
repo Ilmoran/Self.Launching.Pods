@@ -1,4 +1,5 @@
 using System.Linq;
+using RimWorld.Planet;
 
 namespace WM.SelfLaunchingPods
 {
@@ -47,6 +48,13 @@ namespace WM.SelfLaunchingPods
 			base.DefsLoaded();
 			DefOf.Caravan.comps.Add(new CaravanTranferCompProperties());
 			DefOf.CommsConsole.comps.Add(new CommsRemoteTradeCompProperties());
+		}
+
+		public override void Update()
+		{
+			base.Update();
+			if (!WorldRendererUtility.WorldRenderedNow)
+				WorldOverlay.Draw();
 		}
 
 		internal static class Log
