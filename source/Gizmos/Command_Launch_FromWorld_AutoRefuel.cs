@@ -16,7 +16,7 @@ namespace WM.SelfLaunchingPods
 			get
 			{
 				var fuelForTrip = Math.Min(this.parent.FuelLevel + parent.CarriedFuelLevel, parent.FuelCapacity);
-				var result = TravelingPodsUtils.MaxLaunchDistance(fuelForTrip, this.parent.PodsCount, true);
+				var result = FuelUtils.MaxLaunchDistance(fuelForTrip, this.parent.PodsCount, true);
 
 				return (result);
 			}

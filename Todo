@@ -1,13 +1,14 @@
-﻿UPDATE DESCRIPTION TO MATCH STEAM
+﻿
+
+!! UPDATE DESCRIPTION TO MATCH STEAM !!
 
 * Fix:			Exploit. Allows to save components when merging world objects.
 
 * Balance:		Chance of breaking down when attacking a base
 * Balance:		Increase fuel price at faction bases
 
+* Feature:		Show where you can purchase fuel.
 * Feature:		Quick fuel purchase gizmo
-* Feature:		More obvious fleet merge + land & merge command
-* Feature:		Allow manual refueling from inventory + show where you can purchase fuel.
 * Feature:		Force repair.
 * Feature:		Keep your inventory.
 * Feature:		Map generation + setup camp compatibility.
@@ -26,6 +27,7 @@
 * Feature:		Discard one pod
 * Feature:		Allow discarding from WITab
 * Feature:		Planning route prints required fuel.
+* Feature:		Land & merge command
 
 * Fix/Misc:		Prisoners fleeing after landing (vanilla issue)
 * Fix/Misc:		"story is over" when all pawns are traveling aboard pods.

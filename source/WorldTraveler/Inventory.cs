@@ -182,9 +182,9 @@ namespace WM.SelfLaunchingPods
 		{
 			var list =
 				(from item in this.AllCarriedThings
-				 where item.def == thingDef
-				 orderby item.stackCount
-				 select item);
+				where item.def == thingDef
+				orderby item.stackCount
+				select item);
 
 			foreach (var item in list)
 			{

@@ -1,12 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<!--=============================== Tier 3: Hi-tech research bench ===================================-->
-
+	
 	<ResearchProjectDef>
 		<defName>WM_AdvancedTransportPod</defName>
 		<label>advanced transport pod</label>
 		<description>Construct advanced transport pods that can self launch.</description>
-		<baseCost>1400</baseCost>
+		<baseCost>2000</baseCost>
 		<techLevel>Industrial</techLevel>
 		<prerequisites>
 			<li>TransportPod</li>
@@ -15,4 +15,77 @@
 		<researchViewX>9</researchViewX>
 		<researchViewY>1.6</researchViewY>
 	</ResearchProjectDef>
+	
+	<!--=============================== Fuel capacity ===================================-->
+	
+<!--	<WM.SelfLaunchingPods.PodResearchProjectDef>
+		<defName>WM_AdvancedTransportPod_FuelCapacity01</defName>
+		<label>pods fuel capacity 1</label>
+		<description>Increases the advanced pods's fuel capacity by 40%.</description>
+		<baseCost>1500</baseCost>
+		<techLevel>Industrial</techLevel>
+		<prerequisites>
+			<li>WM_AdvancedTransportPod</li>
+		</prerequisites>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<researchViewX>10</researchViewX>
+		<researchViewY>1.3</researchViewY>
+		<podsStatsModifiers>
+			<fuelCapacity>0.4</fuelCapacity>
+		</podsStatsModifiers>
+	</WM.SelfLaunchingPods.PodResearchProjectDef>
+	
+	<WM.SelfLaunchingPods.PodResearchProjectDef>
+		<defName>WM_AdvancedTransportPod_FuelCapacity02</defName>
+		<label>pods fuel capacity 2</label>
+		<description>Increases the advanced pods's fuel capacity by 40%.</description>
+		<baseCost>3000</baseCost>
+		<techLevel>Industrial</techLevel>
+		<prerequisites>
+			<li>WM_AdvancedTransportPod_FuelCapacity01</li>
+		</prerequisites>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<researchViewX>11</researchViewX>
+		<researchViewY>1.3</researchViewY>
+		<podsStatsModifiers>
+			<fuelCapacity>0.4</fuelCapacity>
+		</podsStatsModifiers>
+	</WM.SelfLaunchingPods.PodResearchProjectDef>-->
+	
+	<!--=============================== Fuel efficiency ===================================-->
+	
+	<WM.SelfLaunchingPods.PodResearchProjectDef>
+		<defName>WM_AdvancedTransportPod_FuelEfficiency01</defName>
+		<label>pods fuel efficiency 1</label>
+		<description>Increases the advanced pods's fuel efficiency by 25%.</description>
+		<baseCost>1800</baseCost>
+		<techLevel>Industrial</techLevel>
+		<prerequisites>
+			<li>WM_AdvancedTransportPod</li>
+		</prerequisites>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<researchViewX>10</researchViewX>
+		<researchViewY>1.9</researchViewY>
+		<podsStatsModifiers>
+			<fuelEfficiency>0.25</fuelEfficiency>
+		</podsStatsModifiers>
+	</WM.SelfLaunchingPods.PodResearchProjectDef>
+	
+	<WM.SelfLaunchingPods.PodResearchProjectDef>
+		<defName>WM_AdvancedTransportPod_FuelEfficiency02</defName>
+		<label>pods fuel efficiency 2</label>
+		<description>Increases the advanced pods's fuel efficiency by 25%.</description>
+		<baseCost>3600</baseCost>
+		<techLevel>Industrial</techLevel>
+		<prerequisites>
+			<li>WM_AdvancedTransportPod_FuelEfficiency01</li>
+		</prerequisites>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<researchViewX>11</researchViewX>
+		<researchViewY>1.9</researchViewY>
+		<podsStatsModifiers>
+			<fuelEfficiency>0.25</fuelEfficiency>
+		</podsStatsModifiers>
+	</WM.SelfLaunchingPods.PodResearchProjectDef>
+	
 </Defs>

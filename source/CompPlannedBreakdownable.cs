@@ -9,6 +9,8 @@ namespace WM.SelfLaunchingPods
 		public int usesCountUntilBreakdown;
 		//public float damageRatePerUse;
 		public float minHitpointsRateToUse;
+		//public float minHitpointsRateToUseLow;
+		//public float minHitpointsRateToUseHigh;
 
 		public CompProperties_PlannedBreakdownable()
 		{

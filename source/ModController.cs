@@ -1,5 +1,5 @@
 using System.Linq;
-using RimWorld.Planet;
+using HugsLib;
 
 namespace WM.SelfLaunchingPods
 {
@@ -17,26 +17,6 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public static float PodFuelUsePerTile
-		{
-			get
-			{
-				var t = DefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
-
-				return (t.fuelUsePerTile);
-			}
-		}
-
-		public static float PodFuelUsePerLaunch
-		{
-			get
-			{
-				var t = DefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
-
-				return (t.fuelUsePerLaunch);
-			}
-		}
-
 		public override void Initialize()
 		{
 			base.Initialize();
@@ -48,13 +28,6 @@ namespace WM.SelfLaunchingPods
 			base.DefsLoaded();
 			DefOf.Caravan.comps.Add(new CaravanTranferCompProperties());
 			DefOf.CommsConsole.comps.Add(new CommsRemoteTradeCompProperties());
-		}
-
-		public override void Update()
-		{
-			base.Update();
-			if (!WorldRendererUtility.WorldRenderedNow)
-				WorldOverlay.Draw();
 		}
 
 		internal static class Log

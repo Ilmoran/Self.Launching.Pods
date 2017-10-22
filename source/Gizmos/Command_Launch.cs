@@ -32,7 +32,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (TravelingPodsUtils.MaxLaunchDistance(ParentLeastFueledPodFuelLevel, 1, true));
+				return (FuelUtils.MaxLaunchDistance(ParentLeastFueledPodFuelLevel, 1, true));
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace WM.SelfLaunchingPods
 				Messages.Message(
 							string.Format(
 									"MessageTransportPodsDestinationIsTooFar".Translate(),
-									TravelingPodsUtils.FuelNeededToLaunchAtDistance(num, this.ParentPodsCount)),
+									FuelUtils.FuelNeededToLaunchAtDistance(num, this.ParentPodsCount)),
 							MessageSound.RejectInput);
 
 				return (false);

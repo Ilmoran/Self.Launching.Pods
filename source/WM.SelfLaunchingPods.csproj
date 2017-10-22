@@ -79,6 +79,9 @@
     <Folder Include="Detours\TradeDeal\" />
     <Folder Include="WorldTraveler\" />
     <Folder Include="Detours\Dialog_LoadTransporters\" />
+    <Folder Include="..\Mods\WM Self Launching Pods\Patches\" />
+    <Folder Include="Research\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -100,22 +103,20 @@
     <None Include="..\Mods\WM Self Launching Pods\Assemblies\wmselflaunchingpods.dll" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\Repair.png" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\RefuelAndLaunchShip.png" />
+    <None Include="..\Mods\WM Self Launching Pods\Patches\Buildings_Production.xml" />
+    <None Include="..\Mods\WM Self Launching Pods\Defs\ThingDefs_Items\Items_Resource_Manufactured.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModController.cs" />
-    <Compile Include="Utils.cs" />
     <Compile Include="Detours\FuelingPortUtility\FuelingPortGiverAt.cs" />
     <Compile Include="Detours\Command_LoadToTransporter\ProcessInput.cs" />
     <Compile Include="DefOf.cs" />
-    <Compile Include="TravelingPodsUtils.cs" />
     <Compile Include="PodPair.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="UI\WITab_PodsFleet.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="InventoryUtils.cs" />
     <Compile Include="UI\PlaceWorker_LandingSpot.cs" />
     <Compile Include="UI\RemoteTrader.cs" />
-    <Compile Include="TradeUtils.cs" />
     <Compile Include="VanillaLike\CompProperties_SelfLaunchable.cs" />
     <Compile Include="VanillaLike\CompSelfLaunchable.cs" />
     <Compile Include="VanillaLike\DropPodIncoming.cs" />
@@ -151,8 +152,14 @@
     <Compile Include="WorldTraveler\Inventory.cs" />
     <Compile Include="Detours\Dialog_LoadTransporters\Dialog_LoadTransporters.cs" />
     <Compile Include="Gizmos\Command_Merge_Travelers_AllOnTile.cs" />
-    <Compile Include="Gizmos\Command_Refuel_From_Inventory.cs" />
     <Compile Include="Gizmos\Command_Launch_FromWorld_AutoRefuel.cs" />
+    <Compile Include="Research\PodResearchProjectDef.cs" />
+    <Compile Include="Utils\InventoryUtils.cs" />
+    <Compile Include="Utils\TradeUtils.cs" />
+    <Compile Include="Utils\TravelingPodsUtils.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Utils\FuelUtils.cs" />
+    <Compile Include="Utils\TechUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
