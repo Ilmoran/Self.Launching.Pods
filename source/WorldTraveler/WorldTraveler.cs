@@ -165,8 +165,8 @@ namespace WM.SelfLaunchingPods
 			this.departTile = -1;
 			this.destinationTile = -1;
 
-			Map map = Current.Game.FindMap(this.Tile);
-			MapParent mapParent = Find.WorldObjects.MapParentAt(this.Tile);
+			var map = Current.Game.FindMap(this.Tile);
+			var mapParent = Find.WorldObjects.MapParentAt(this.Tile);
 
 			if (map != null)
 			{

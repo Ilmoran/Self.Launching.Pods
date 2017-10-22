@@ -26,16 +26,5 @@ namespace WM.SelfLaunchingPods
 				return (Parent.AllCarriedPawns.Cast<Thing>());
 			}
 		}
-
-		//public override string FailMessage
-		//{
-		//	get
-		//	{
-		//		if (!CanDoNow)
-		//			return ("WM.MessageNoPawnsToUnload".Translate());
-
-		//		return (base.FailMessage);
-		//	}
-		//}
 	}
 }

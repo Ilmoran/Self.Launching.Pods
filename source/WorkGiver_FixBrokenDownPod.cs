@@ -11,7 +11,7 @@ namespace WM.SelfLaunchingPods
 		// RimWorld.WorkGiver_FixBrokenDownBuilding
 		public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
-			Building building = t as Building;
+			var building = t as Building;
 
 			if (building == null)
 			{

@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods.Detours.Dialog_LoadTransporters
 		// RimWorld.Dialog_LoadTransporters
 		internal static void AddPawnsToTransferables_Internal(RimWorld.Dialog_LoadTransporters instance)
 		{
-			List<Pawn> list = RimWorld.Planet.CaravanFormingUtility.AllSendablePawns(getMap(instance), true, false);
+			var list = RimWorld.Planet.CaravanFormingUtility.AllSendablePawns(getMap(instance), true, false);
 			for (int i = 0; i < list.Count; i++)
 			{
 				AddToTransferables(instance, list[i]);

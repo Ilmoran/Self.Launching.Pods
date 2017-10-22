@@ -12,9 +12,8 @@ namespace WM.SelfLaunchingPods
 		static FactionBase factionBase;
 		static bool respawnNegociatorAfterTrade;
 		static ThingOwner tmpNegociatorContainer;
-
 		static ThingOwner tmpInventoryContainer;
-		//static List<Thing> negocitorInventory;
+
 		internal Dialog_Trade_Remote() : base(negotiator, factionBase)
 		{
 		}

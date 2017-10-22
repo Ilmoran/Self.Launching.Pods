@@ -133,7 +133,7 @@ namespace WM.SelfLaunchingPods
 
 				return (false);
 			}
-			MapParent mapParent = Find.WorldObjects.MapParentAt(target.Tile);
+			var mapParent = Find.WorldObjects.MapParentAt(target.Tile);
 
 			if (mapParent == null)
 			{
@@ -165,8 +165,6 @@ namespace WM.SelfLaunchingPods
 					{
 						list.Add(new FloatMenuOption("VisitSettlement".Translate(new object[] { settlement.Label }), delegate
 												{
-													//if (!this.LoadingInProgressOrReadyToLaunch)
-													//	return;
 													this.Launch(target.Tile, target.Cell, PawnsArriveMode.Undecided, false);
 													CameraJumper.TryHideWorld();
 												}, MenuOptionPriority.Default, null, null, 0f, null, null));
@@ -176,18 +174,12 @@ namespace WM.SelfLaunchingPods
 
 						list.Add(new FloatMenuOption("DropAtEdge".Translate(), delegate
 						{
-							//if (!this.LoadingInProgressOrReadyToLaunch)
-							//	return;
 							this.Launch(target.Tile, target.Cell, PawnsArriveMode.EdgeDrop, true);
-							//CameraJumper.TryHideWorld();
 						}, MenuOptionPriority.Default, null, null, 0f, null, null));
 
 						list.Add(new FloatMenuOption("DropInCenter".Translate(), delegate
 						{
-							//if (!this.LoadingInProgressOrReadyToLaunch)
-							//	return;
 							this.Launch(target.Tile, target.Cell, PawnsArriveMode.CenterDrop, true);
-							//CameraJumper.TryHideWorld();
 						}, MenuOptionPriority.Default, null, null, 0f, null, null));
 					}
 					if (!list.Any())

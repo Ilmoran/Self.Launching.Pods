@@ -59,7 +59,6 @@ namespace WM.SelfLaunchingPods
 			return (list);
 		}
 
-
 		internal static bool CanLandAt(Map map, IntVec3 pos)
 		{
 			return !pos.Roofed(map) && IsAtPad(map, pos);

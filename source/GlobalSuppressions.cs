@@ -7,4 +7,3 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Redundancies in Code", "IDE0001:Simplify Names", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Redundancies in Code", "IDE0002:Simplify member access '{0}'", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Redundancies in Code", "IDE0003:Remove 'this'", Justification = "<Pending>")]
-
