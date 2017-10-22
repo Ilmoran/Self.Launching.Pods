@@ -9,7 +9,8 @@ namespace WM.SelfLaunchingPods
 	{
 		Success,
 		NoMaterials,
-		NoCapablePawns	}
+		NoCapablePawns
+	}
 
 	public partial class WorldTraveler : WorldObject
 	{
@@ -45,10 +46,7 @@ namespace WM.SelfLaunchingPods
 		{
 			bool flag;
 
-			flag = this.AllCarriedColonists.Any(delegate (Pawn arg)
-			{
-				return (!arg.Downed && arg.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation));
-			});
+			flag = InventoryUtils.AnyCapablePawn(this.AllCarriedColonists);
 			if (!flag)
 			{
 				return (RepairState.NoCapablePawns);

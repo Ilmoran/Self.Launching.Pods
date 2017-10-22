@@ -64,6 +64,11 @@ namespace WM.SelfLaunchingPods
 			get;
 		}
 
+		public virtual bool CustomCondition()
+		{
+			return (true);
+		}
+
 		internal abstract void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = PawnsArriveMode.Undecided, bool attackOnArrival = false);
 
 		//TODO: rearrange destination validation
@@ -74,6 +79,11 @@ namespace WM.SelfLaunchingPods
 			{
 				try
 				{
+					if (!CustomCondition())
+					{
+						return;
+					}
+
 					if (!DamageLevelAllowsLaunch())
 					{
 						Messages.Message("WM.MessageRepairPodsFirst".Translate(), MessageSound.RejectInput);
