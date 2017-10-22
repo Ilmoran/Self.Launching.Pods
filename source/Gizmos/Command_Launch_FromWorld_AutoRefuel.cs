@@ -22,6 +22,16 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public override bool CustomCondition()
+		{
+			if (!InventoryUtils.AnyCapablePawn(this.parent.AllCarriedColonists))
+			{
+				Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageSound.Negative);
+				return (false);
+			}
+			return (true);
+		}
+
 		internal override void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = 0, bool attackOnArrival = false)
 		{
 			int distance = Find.WorldGrid.TraversalDistanceBetween(this.parent.Tile, tile);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -30,6 +31,14 @@ namespace WM.SelfLaunchingPods
 		public static IEnumerable<Pawn> GetPrisonersFrom(IEnumerable<Thing> things)
 		{
 			return (GetPawnsFrom(things).Where((Pawn arg) => arg.IsPrisonerOfColony));
+		}
+
+		public static bool AnyCapablePawn(IEnumerable<Pawn> pawns)
+		{
+			return pawns.Any(delegate (Pawn arg)
+			{
+				return (!arg.Downed && arg.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation));
+			});
 		}
 	}
 }
