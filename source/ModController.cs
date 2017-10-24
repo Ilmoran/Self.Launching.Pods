@@ -25,6 +25,7 @@ namespace WM.SelfLaunchingPods
 			base.DefsLoaded();
 			DefOf.Caravan.comps.Add(new CaravanTranferCompProperties());
 			DefOf.CommsConsole.comps.Add(new CommsRemoteTradeCompProperties());
+			DefOf.FactionBase.comps.Add(new FactionBaseAvailableFuelCompProperties());
 		}
 
 		internal static class Log

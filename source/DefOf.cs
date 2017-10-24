@@ -26,5 +26,6 @@ namespace WM.SelfLaunchingPods
 		public static ThingDef			Silver;
 		public static WorldObjectDef	Caravan;
 		public static ThingDef			CommsConsole;
+		public static WorldObjectDef	FactionBase;
 	}
 }
