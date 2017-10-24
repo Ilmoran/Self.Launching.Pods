@@ -42,6 +42,10 @@
 
 	<WM.RemoteTradeWith>Remotely trade with {0}</WM.RemoteTradeWith>
 
+	<!-- ================ Inspect strings ================ -->
+	
+	<WM.FactionBaseInspectStringFuelForSale>Selling {0} units of {1}.</WM.FactionBaseInspectStringFuelForSale>
+
 	<!-- ================ Pod ================ -->
 
 	<WM.RemainingLaunchesUntilBreakdown>Remaining launches until breakdown: {0}</WM.RemainingLaunchesUntilBreakdown>
