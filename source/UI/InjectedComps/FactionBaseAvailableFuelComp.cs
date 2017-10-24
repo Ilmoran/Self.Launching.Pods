@@ -22,9 +22,7 @@ namespace WM.SelfLaunchingPods
 			if (factionBase == null || factionBase.trader == null || !factionBase.trader.CanTradeNow)
 				return "";
 
-			var fuelQt = factionBase.trader.StockListForReading
-									.Where((Thing arg) => arg.def == DefOf.Chemfuel)
-									.Sum((Thing arg) => arg.stackCount);
+			var fuelQt = TradeUtils.FuelAvailableAt((FactionBase)parent);
 
 			if (fuelQt <= 0)
 				return "";

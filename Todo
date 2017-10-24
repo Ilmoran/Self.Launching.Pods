@@ -11,7 +11,9 @@
 * Feature:		Force repair.
 * Feature:		Keep your inventory.
 * Feature:		Map generation + setup camp compatibility.
+* Feature:		"max" button in trade dialog.
 
+* Feature/fix:	Discard that dummy caravan thing for trade sessions.
 * Feature/fix:	Fleet appears empty when trade dialog is open.
 
 * Feature/fix:	Tick pawns
@@ -41,3 +43,5 @@
 	Verse.<WindowOnGUI>c__AnonStorey2C4:<>m__1B1(Int32)
 	UnityEngine.GUI:CallWindowDelegate(WindowFunction, Int32, GUISkin, Int32, Single, Single, GUIStyle)
 
+
+* Feature:		Pirate raids with advanced pods !

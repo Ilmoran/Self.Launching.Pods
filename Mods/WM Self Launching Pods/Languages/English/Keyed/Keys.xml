@@ -17,6 +17,8 @@
 	<WM.RepairGizmo>Repair</WM.RepairGizmo>
 	<WM.RepairGizmoDesc>Will use {0} {2} (you have {1}).</WM.RepairGizmoDesc>
 	<WM.FleetInventoryWITab>Contents</WM.FleetInventoryWITab>
+	<WM.QuickBuyFuelGizmo>Buy fuel</WM.QuickBuyFuelGizmo>
+	<WM.QuickBuyFuelGizmoDesc>Buy fuel from the local faction base.</WM.QuickBuyFuelGizmoDesc>
 
 	<!-- ================ Message ================ -->
 	
@@ -37,6 +39,7 @@
 	<WM.MessageNoCapableColonistsInFleet>No non-downed colonist capable of manipulation.</WM.MessageNoCapableColonistsInFleet>
 	<WM.MessageAtLeastComponentsNeeded>At least {0} {1} are required to perform this (you have {2}).</WM.MessageAtLeastComponentsNeeded>
 	<WM.MessagePodsRepairedComponentsUsed>Pods repaired. {0} {1} used.</WM.MessagePodsRepairedComponentsUsed>
+	<WM.MessageCannotQuickBuyNow>Can not buy {0} now. You either don't have sufficient money or cargo space.</WM.MessageCannotQuickBuyNow>
 
 	<!-- ================ Remote trading ================ -->
 
@@ -46,6 +49,10 @@
 	
 	<WM.FactionBaseInspectStringFuelForSale>Selling {0} units of {1}.</WM.FactionBaseInspectStringFuelForSale>
 
+	<!-- ================ Dialogs ================ -->
+	
+	<WM.QuickBuyFuelGizmoDialog>Buy {0}/{1} {2} for {3}/{4} {5}</WM.QuickBuyFuelGizmoDialog>
+	
 	<!-- ================ Pod ================ -->
 
 	<WM.RemainingLaunchesUntilBreakdown>Remaining launches until breakdown: {0}</WM.RemainingLaunchesUntilBreakdown>

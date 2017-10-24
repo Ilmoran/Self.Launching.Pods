@@ -17,6 +17,7 @@ namespace WM.SelfLaunchingPods
 		public static readonly Texture2D GizmoMergeFleets = ContentFinder<Texture2D>.Get("UI/MergeFleets", true);
 		public static readonly Texture2D GizmoTrade = ContentFinder<Texture2D>.Get("UI/Commands/Trade", true);
 		public static readonly Texture2D GizmoRepair = ContentFinder<Texture2D>.Get("UI/Repair", true);
+		public static readonly Texture2D GizmoQuickBuyFuel = ContentFinder<Texture2D>.Get("UI/QuickBuyFuel", true);
 
 		// RimWorld.CompRefuelable
 		public static readonly Material FuelBarFilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.6f, 0.56f, 0.13f), false);
