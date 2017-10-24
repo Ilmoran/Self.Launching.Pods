@@ -163,6 +163,8 @@
     <Compile Include="UI\InjectedComps\CaravanTransferComp.cs" />
     <Compile Include="UI\InjectedComps\CommsRemoteTradeComp.cs" />
     <Compile Include="UI\InjectedComps\FactionBaseAvailableFuelComp.cs" />
+    <Compile Include="Gizmos\Command_QuickBuyFuel.cs" />
+    <Compile Include="Utils\TradeTweakUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

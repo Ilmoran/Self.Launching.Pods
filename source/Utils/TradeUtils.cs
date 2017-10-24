@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
@@ -12,8 +13,8 @@ namespace WM.SelfLaunchingPods
 		{
 			if (negotiator == null)
 				negotiator = TradeUtils.BestNegociator(worldTraveler.AllCarriedColonists);
-			Dialog_Trade_Remote.InitTrade(negotiator, worldTraveler.LocalFactionBase, worldTraveler);
-			var dialog = new Dialog_Trade_Remote();
+			TradeTweakUtils.PrepareTrade(negotiator, worldTraveler.LocalFactionBase, worldTraveler);
+			var dialog = new Dialog_Trade_Remote(negotiator, worldTraveler.LocalFactionBase);
 			Find.WindowStack.Add(dialog);
 		}
 
@@ -29,11 +30,22 @@ namespace WM.SelfLaunchingPods
 			return (pawn);
 		}
 
+
 		internal static IEnumerable<WorldTraveler> GetRemoteTradeable()
 		{
 			var list = Find.WorldObjects.AllWorldObjects.Where((WorldObject arg) => arg is WorldTraveler).Cast<WorldTraveler>();
 
 			return (list.Where((WorldTraveler arg) => arg.remoteTrader.CanRemoteTradeNow));
+		}
+
+		public static int FuelAvailableAt(FactionBase factionBase)
+		{
+			if (factionBase.trader == null || !factionBase.trader.CanTradeNow)
+				return 0;
+
+			return (factionBase.trader.StockListForReading
+					.Where((Thing arg) => arg.def == DefOf.Chemfuel)
+					.Sum((Thing arg) => arg.stackCount));
 		}
 	}
 }

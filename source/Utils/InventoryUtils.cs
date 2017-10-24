@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace WM.SelfLaunchingPods
@@ -39,6 +39,30 @@ namespace WM.SelfLaunchingPods
 			{
 				return (!arg.Downed && arg.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation));
 			});
+		}
+
+		public static int CalculateMaxBuyableFuel(float freeMassCapacity, int fuelForSale, int colonyMoney, float fuelPrice)
+		{
+			int buyableFuelByMoney;
+			int buyableFuelByMass;
+			int maxFuel = 0;
+			int previousMaxFuel = int.MinValue;
+
+			do
+			{
+				previousMaxFuel = maxFuel;
+				buyableFuelByMoney = Mathf.FloorToInt(colonyMoney / fuelPrice);
+				buyableFuelByMass = Mathf.FloorToInt(freeMassCapacity / DefOf.Chemfuel.BaseMass);
+				maxFuel = (new int[]
+				{
+					fuelForSale,
+					buyableFuelByMoney,
+					buyableFuelByMass
+				}).Min();
+
+				freeMassCapacity += fuelPrice * (maxFuel - previousMaxFuel) * DefOf.Silver.BaseMass;
+			} while (previousMaxFuel < maxFuel);
+			return (maxFuel);
 		}
 	}
 }
