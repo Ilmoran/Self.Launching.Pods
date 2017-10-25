@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+	<HugsLib.UpdateFeatureDef Abstract="true" Name="WM.SelfLaunchingPods.UpdateFeatureBase">
+		<modNameReadable>WM Self Launching Pods</modNameReadable>
+		<modIdentifier>WM_Self_Launching_Pods</modIdentifier>
+		<linkUrl>https://ludeon.com/forums/index.php?topic=27315.0</linkUrl>
+	</HugsLib.UpdateFeatureDef>
+	<HugsLib.UpdateFeatureDef ParentName="WM.SelfLaunchingPods.UpdateFeatureBase">
+		<defName>WMSelfLaunchingPods_1_1_0</defName>
+		<assemblyVersion>1.1</assemblyVersion>
+<content>
+&lt;color=orange&gt;&lt;size=22&gt;New features &amp; balance update&lt;/size&gt;&lt;/color&gt;
+|img:UpdateNews/1_1/NewCommands|img:UpdateNews/1_1/NewResearch|img:UpdateNews/1_1/FuelForSale|
+|&lt;color=orange&gt;&lt;size=18&gt;New features&lt;/size&gt;&lt;/color&gt;
+* Refueling pods fleet from inventory.
+* Quick buy fuel command.
+* See how much and where fuel is for sale.
+|&lt;color=orange&gt;&lt;size=18&gt;Balance&lt;/size&gt;&lt;/color&gt;
+* Increased research cost.
+* New fuel efficiency research.
+* Pods needs 80% of HP to launch (careful in raids!).
+|&lt;color=orange&gt;&lt;size=18&gt;Fixes&lt;/size&gt;&lt;/color&gt;
+* World view hiding after launching pods.</content>
+	</HugsLib.UpdateFeatureDef>
+</Defs>

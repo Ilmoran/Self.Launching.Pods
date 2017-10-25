@@ -65,7 +65,7 @@
 		</prerequisites>
 		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
 		<researchViewX>10</researchViewX>
-		<researchViewY>1.9</researchViewY>
+		<researchViewY>1.6</researchViewY>
 		<podsStatsModifiers>
 			<fuelEfficiency>0.25</fuelEfficiency>
 		</podsStatsModifiers>
@@ -82,7 +82,7 @@
 		</prerequisites>
 		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
 		<researchViewX>11</researchViewX>
-		<researchViewY>1.9</researchViewY>
+		<researchViewY>1.6</researchViewY>
 		<podsStatsModifiers>
 			<fuelEfficiency>0.25</fuelEfficiency>
 		</podsStatsModifiers>
