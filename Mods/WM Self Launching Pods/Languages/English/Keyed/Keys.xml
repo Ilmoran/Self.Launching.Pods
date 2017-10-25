@@ -19,7 +19,9 @@
 	<WM.FleetInventoryWITab>Contents</WM.FleetInventoryWITab>
 	<WM.QuickBuyFuelGizmo>Buy fuel</WM.QuickBuyFuelGizmo>
 	<WM.QuickBuyFuelGizmoDesc>Buy fuel from the local faction base.</WM.QuickBuyFuelGizmoDesc>
-
+	<WM.RefuelGizmo>Refuel</WM.RefuelGizmo>
+	<WM.RefuelGizmoDesc>Refuel pods from inventory as much as possible.</WM.RefuelGizmoDesc>
+	
 	<!-- ================ Message ================ -->
 	
 	<WM.MessageCaravanUnloadedFromPods>Unloaded caravan from pods.</WM.MessageCaravanUnloadedFromPods>
@@ -40,6 +42,7 @@
 	<WM.MessageAtLeastComponentsNeeded>At least {0} {1} are required to perform this (you have {2}).</WM.MessageAtLeastComponentsNeeded>
 	<WM.MessagePodsRepairedComponentsUsed>Pods repaired. {0} {1} used.</WM.MessagePodsRepairedComponentsUsed>
 	<WM.MessageCannotQuickBuyNow>Can not buy {0} now. You either don't have sufficient money or cargo space.</WM.MessageCannotQuickBuyNow>
+	<WM.MessagePodsRefueled>Pods refueled.</WM.MessagePodsRefueled>
 
 	<!-- ================ Remote trading ================ -->
 
