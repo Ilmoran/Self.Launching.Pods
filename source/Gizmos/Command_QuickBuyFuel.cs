@@ -4,6 +4,7 @@ using Harmony;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace WM.SelfLaunchingPods
 {
@@ -66,12 +67,7 @@ namespace WM.SelfLaunchingPods
 							Log.Error("TryExecute() failed.");
 							return;
 						}
-						var massExcess = this.Parent.MassCapacity - this.Parent.MassUsage;
-						if (massExcess > 0)
-						{
-							var countToRemove = Mathf.CeilToInt(massExcess / DefOf.Chemfuel.BaseMass);
-							this.Parent.RefuelFromInventory(countToRemove);
-						}
+						SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
 					};
 
 				Action finalAction =

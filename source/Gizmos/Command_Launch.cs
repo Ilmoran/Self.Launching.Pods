@@ -36,6 +36,14 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public virtual bool HideWorldAfterLaunch
+		{
+			get
+			{
+				return (true);
+			}
+		}
+
 		public int MaxLaunchDistanceRoundTrip
 		{
 			get
@@ -74,7 +82,7 @@ namespace WM.SelfLaunchingPods
 		//TODO: rearrange destination validation
 		internal Command_Launch()
 		{
-            this.icon = Resources.LaunchCommandTex;
+			this.icon = Resources.LaunchCommandTex;
 			action = delegate
 			{
 				try
@@ -155,8 +163,8 @@ namespace WM.SelfLaunchingPods
 
 				if (mapParent.HasMap)
 				{
-					if (!CameraJumper.TryHideWorld())
-						throw new Exception("CameraJumper.TryHideWorld() failed.");
+					if (HideWorldAfterLaunch)
+						CameraJumper.TryHideWorld();
 
 					Current.Game.VisibleMap = mapParent.Map;
 					targeter = delegate (LocalTargetInfo localTarget)
@@ -176,7 +184,8 @@ namespace WM.SelfLaunchingPods
 						list.Add(new FloatMenuOption("VisitSettlement".Translate(new object[] { settlement.Label }), delegate
 												{
 													this.Launch(target.Tile, target.Cell, PawnsArriveMode.Undecided, false);
-													CameraJumper.TryHideWorld();
+													if (HideWorldAfterLaunch)
+														CameraJumper.TryHideWorld();
 												}, MenuOptionPriority.Default, null, null, 0f, null, null));
 					}
 					if (mapParent.TransportPodsCanLandAndGenerateMap)

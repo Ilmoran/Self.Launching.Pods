@@ -165,6 +165,7 @@
     <Compile Include="UI\InjectedComps\FactionBaseAvailableFuelComp.cs" />
     <Compile Include="Gizmos\Command_QuickBuyFuel.cs" />
     <Compile Include="Utils\TradeTweakUtils.cs" />
+    <Compile Include="Gizmos\Command_Refuel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -221,8 +221,8 @@ namespace WM.SelfLaunchingPods
 				totalAmountToRefuel = this.MissingFuelLevel;
 			else
 				totalAmountToRefuel = arg_totalamountToRefuel;
-			
-			float fuelPerPod = Mathf.FloorToInt((Math.Min(this.CarriedFuelLevel, totalAmountToRefuel) / this.PodsCount));
+
+			float maxFuelPerPod = Mathf.FloorToInt(Math.Min(totalAmountToRefuel, this.CarriedFuelLevel / this.PodsCount)) + this.FuelLevelPerPod;
 
 			int n = 0;
 			var neededThings = this.AllCarriedFuelThingsOrdered.TakeWhile(
@@ -242,70 +242,30 @@ namespace WM.SelfLaunchingPods
 			foreach (var item in this.PodsAsThing)
 			{
 				var compRefuelable = item.TryGetComp<CompRefuelable>();
-
+				var fuelPerPod = Math.Min(compRefuelable.Props.fuelCapacity, maxFuelPerPod);
+#if DEBUG
+				Log.Message(string.Format("pod #{0} has {1}/{2} fuel", this.PodsAsThing.FirstIndexOf((Thing arg) => arg == item), compRefuelable.Fuel, fuelPerPod));
+#endif
 				while (fuelPerPod > compRefuelable.Fuel)
 				{
 					var amountToRefuel = Math.Min(fuelPerPod - compRefuelable.Fuel, fuelEnum.Current.stackCount);
+					if (amountToRefuel <= 0)
+						throw new Exception("Could not refuel pods: amount to refuel = 0.");
 #if DEBUG
 					Log.Message(string.Format("refueling pod #{0} with {1} ({2})", this.PodsAsThing.FirstIndexOf((Thing arg) => arg == item), fuelEnum.Current.Label, amountToRefuel));
 #endif
-					if (fuelEnum.Current.stackCount <= amountToRefuel)
+					compRefuelable.Refuel(amountToRefuel);
+					fuelEnum.Current.stackCount -= Mathf.CeilToInt(amountToRefuel);
+					if (fuelEnum.Current.Destroyed || fuelEnum.Current.stackCount <= 0)
 					{
-						compRefuelable.Refuel(fuelEnum.Current);
+						if (!fuelEnum.Current.Destroyed)
+							fuelEnum.Current.Destroy();
 						if (!fuelEnum.MoveNext() && this.PodsAsThing.Last() != item)
-							throw new Exception("Could not refuel pods");
-					}
-					else
-					{
-						compRefuelable.Refuel(amountToRefuel);
-						fuelEnum.Current.stackCount -= Mathf.CeilToInt(amountToRefuel);
+							throw new Exception("Could not refuel pods: fuel missing.");
 					}
 				}
 			}
 		}
-		//		internal void RefuelFromInventory(float amount)
-		//		{
-		//			float fuelPerPod = Mathf.FloorToInt((Math.Min(this.CarriedFuelLevel, amount) / this.PodsCount));
-
-		//			foreach (var item in this.PodsAsThing)
-		//			{
-		//				int n = 0;
-		//				var neededThings = this.AllCarriedFuelThings.TakeWhile(
-		//						delegate (Thing arg)
-		//						{
-		//							bool flag = (n < fuelPerPod);
-		//							if (!flag)
-		//								return (false);
-		//							n += arg.stackCount;
-		//							return (true);
-		//						})
-		//						.ToList();
-		//
-		//#if DEBUG
-		//				Log.Message("fuelneed = " + amount + " neededThings count = " + neededThings.Count());
-		//#endif
-
-		//				var compRefuelable = item.TryGetComp<CompRefuelable>();
-		//				Thing finalFuelThing = neededThings.Last();
-
-		//				foreach (var item2 in neededThings.Take(neededThings.Count() - 1))
-		//				{
-		//					if (item2.stackCount > compRefuelable.GetFuelCountToFullyRefuel())
-		//					{
-		//						finalFuelThing = item2;
-		//						break;
-		//					}
-		//					compRefuelable.Refuel(item2);
-		//				}
-
-		//				var v = n - (int)amount;
-
-		//				compRefuelable.Refuel(v);
-		//				finalFuelThing.stackCount -= v;
-		//				if (finalFuelThing.stackCount <= 0)
-		//					finalFuelThing.Destroy();
-		//			}
-		//		}
 
 		private void Consume(float amount)
 		{

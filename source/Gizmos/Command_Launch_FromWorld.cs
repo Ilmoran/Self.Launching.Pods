@@ -47,6 +47,14 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
+		public override bool HideWorldAfterLaunch
+		{
+			get
+			{
+				return (false);
+			}
+		}
+
 		public override bool Visible
 		{
 			get
