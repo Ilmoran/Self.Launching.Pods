@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Buildings>
+<Defs>
 	<!--========================== Transport pods ============================-->
 	<ThingDef ParentName="BuildingBase">
 		<defName>WM_TransportPod</defName>
@@ -65,19 +65,19 @@
 	<ThingDef ParentName="BuildingBase">
 		<defName>WM_LandingSpot</defName>
 		<label>landing spot</label>
-		<Description>Advanced pods will lands here when targeted closeby.</Description>
+		<description>Advanced pods will lands here when targeted closeby.</description>
 		<graphicData>
 			<texPath>Things/LandingSpot</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
-		<AltitudeLayer>FloorEmplacement</AltitudeLayer>
+		<altitudeLayer>FloorEmplacement</altitudeLayer>
 		<statBases>
 			<WorkToBuild>0</WorkToBuild>
 		</statBases>
 		<scatterableOnMapGen>false</scatterableOnMapGen>
 		<useHitPoints>False</useHitPoints>
-		<DesignationCategory>Misc</DesignationCategory>
-		<Passability>Standable</Passability>
+		<designationCategory>Misc</designationCategory>
+		<passability>Standable</passability>
 		<interactionCellOffset>(0,0,1)</interactionCellOffset>
 		<hasInteractionCell>true</hasInteractionCell>
 		<building>
@@ -87,4 +87,4 @@
 			<li>WM.SelfLaunchingPods.PlaceWorker_LandingSpot</li>
 		</placeWorkers>
 	</ThingDef>
-</Buildings>
+</Defs>

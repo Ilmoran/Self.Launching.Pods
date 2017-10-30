@@ -70,14 +70,14 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 					map.floodFiller.FloodFill(fuelingPortSource.Position, (IntVec3 x) => RimWorld.FuelingPortUtility.AnyFuelingPortGiverAt(x, map), delegate (IntVec3 x)
 					{
 						Command_LoadToTransporter.tmpFuelingPortGivers.Add(RimWorld.FuelingPortUtility.FuelingPortGiverAt(x, map));
-					}, false);
+					});
 
 					for (int i = 0; i < __instance.transporters.Count; i++)
 					{
 						Building fuelingPortSource2 = __instance.transporters[i].Launchable.FuelingPortSource;
 						if (fuelingPortSource2 != null && !Command_LoadToTransporter.tmpFuelingPortGivers.Contains(fuelingPortSource2))
 						{
-							Messages.Message("MessageTransportersNotAdjacent".Translate(), fuelingPortSource2, MessageSound.RejectInput);
+							Messages.Message("MessageTransportersNotAdjacent".Translate(), fuelingPortSource2, MessageTypeDefOf.NeutralEvent);
 							return;
 						}
 					}
@@ -89,7 +89,7 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 				{
 					if (!__instance.transComp.Map.reachability.CanReach(__instance.transComp.parent.Position, __instance.transporters[j].parent, PathEndMode.Touch, TraverseParms.For(TraverseMode.PassDoors, Danger.Deadly, false)))
 					{
-						Messages.Message("MessageTransporterUnreachable".Translate(), __instance.transporters[j].parent, MessageSound.RejectInput);
+						Messages.Message("MessageTransporterUnreachable".Translate(), __instance.transporters[j].parent, MessageTypeDefOf.NeutralEvent);
 						return;
 					}
 				}

@@ -94,7 +94,7 @@ namespace WM.SelfLaunchingPods
 
 					if (!DamageLevelAllowsLaunch())
 					{
-						Messages.Message("WM.MessageRepairPodsFirst".Translate(), MessageSound.RejectInput);
+						Messages.Message("WM.MessageRepairPodsFirst".Translate(), MessageTypeDefOf.NeutralEvent);
 						return;
 					}
 					CameraJumper.TryJump(CameraJumper.GetWorldTarget(new GlobalTargetInfo(ParentTile)));
@@ -136,7 +136,7 @@ namespace WM.SelfLaunchingPods
 		{
 			if (!target.IsValid || Find.World.Impassable(target.Tile))
 			{
-				Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(), MessageSound.RejectInput);
+				Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(), MessageTypeDefOf.NeutralEvent);
 				return (false);
 			}
 			int num = Find.WorldGrid.TraversalDistanceBetween(this.ParentTile, target.Tile);
@@ -147,7 +147,7 @@ namespace WM.SelfLaunchingPods
 							string.Format(
 									"MessageTransportPodsDestinationIsTooFar".Translate(),
 									FuelUtils.FuelNeededToLaunchAtDistance(num, this.ParentPodsCount)),
-							MessageSound.RejectInput);
+							MessageTypeDefOf.NeutralEvent);
 
 				return (false);
 			}

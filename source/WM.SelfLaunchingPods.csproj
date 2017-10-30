@@ -50,20 +50,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="HugsLib">
-      <HintPath>..\..\HugsLib\Assemblies\HugsLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="0Harmony">
       <HintPath>..\..\HugsLib\Assemblies\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HugsLib">
+      <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\workshop\content\294100\1181070440\Assemblies\HugsLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -79,7 +79,6 @@
     <Folder Include="Detours\TradeDeal\" />
     <Folder Include="WorldTraveler\" />
     <Folder Include="Detours\Dialog_LoadTransporters\" />
-    <Folder Include="..\Mods\WM Self Launching Pods\Patches\" />
     <Folder Include="Research\" />
     <Folder Include="Utils\" />
     <Folder Include="UI\InjectedComps\" />
@@ -105,7 +104,6 @@
     <None Include="..\Mods\WM Self Launching Pods\Assemblies\wmselflaunchingpods.dll" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\Repair.png" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UI\RefuelAndLaunchShip.png" />
-    <None Include="..\Mods\WM Self Launching Pods\Patches\Buildings_Production.xml" />
     <None Include="..\Mods\WM Self Launching Pods\Defs\UpdateFeatureDefs\UpdateFeatures.xml" />
     <None Include="..\Mods\WM Self Launching Pods\About\version.xml" />
     <None Include="..\Mods\WM Self Launching Pods\Textures\UpdateNews\1_1\FuelForSale.png" />

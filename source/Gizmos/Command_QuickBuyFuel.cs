@@ -37,7 +37,7 @@ namespace WM.SelfLaunchingPods
 				{
 					TradeSession.Close();
 					TradeTweakUtils.FinishTrade();
-					Messages.Message(string.Format("WM.MessageCannotQuickBuyNow".Translate(), DefOf.Chemfuel.label), MessageSound.RejectInput);
+					Messages.Message(string.Format("WM.MessageCannotQuickBuyNow".Translate(), DefOf.Chemfuel.label), MessageTypeDefOf.NegativeEvent);
 					return;
 				}
 

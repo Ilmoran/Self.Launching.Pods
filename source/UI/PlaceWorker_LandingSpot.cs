@@ -5,10 +5,10 @@ namespace WM.SelfLaunchingPods
 {
 	public class PlaceWorker_LandingSpot : PlaceWorker
 	{
-		public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
+		public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
 		{
 			var interactionCell = loc + rot.FacingCell;
-			var buildings = Map.thingGrid.ThingsAt(interactionCell)
+			var buildings = map.thingGrid.ThingsAt(interactionCell)
 			                   .Where((Thing arg) => arg.def.passability == Traversability.Impassable || arg is Building);
 
 			if (buildings.Any() && buildings.Any((Thing arg) => arg.def != DefOf.WM_TransportPod))
@@ -16,7 +16,7 @@ namespace WM.SelfLaunchingPods
 				return (AcceptanceReport.WasRejected);
 			}
 
-			var allSpots = Map.listerBuildings.AllBuildingsColonistOfDef(DefOf.WM_LandingSpot);
+			var allSpots = map.listerBuildings.AllBuildingsColonistOfDef(DefOf.WM_LandingSpot);
 
 			if (allSpots.Any((Building arg) => arg.InteractionCell == interactionCell || arg.InteractionCell == loc))
 			{

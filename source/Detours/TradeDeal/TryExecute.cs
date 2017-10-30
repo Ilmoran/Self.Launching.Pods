@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using RimWorld;
 using Verse;
 
 namespace WM.SelfLaunchingPods.Detour.TradeDeal
@@ -13,7 +14,7 @@ namespace WM.SelfLaunchingPods.Detour.TradeDeal
 				Dialog_Trade.Controler.CachedMassOffset + Dialog_Trade.Controler.CurrentMassUsage > Dialog_Trade.Controler.MassCapacity)
 			{
 				//TODO: flash mass
-				Messages.Message("WM.MessagePodsFleetCapacityInsufficient".Translate(), MessageSound.RejectInput);
+				Messages.Message("WM.MessagePodsFleetCapacityInsufficient".Translate(), MessageTypeDefOf.NeutralEvent);
 				__result = false;
 				return (false);
 			}

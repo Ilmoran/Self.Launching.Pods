@@ -1,3 +1,4 @@
+using RimWorld;
 using Verse;
 
 namespace WM.SelfLaunchingPods
@@ -11,7 +12,7 @@ namespace WM.SelfLaunchingPods
 			{
 				if (TradeUtils.BestNegociator(worldTraveler.AllCarriedColonists) == null)
 				{
-					Messages.Message("WM.MessageNoCapableNegociatorUseComms".Translate(), MessageSound.RejectInput);
+					Messages.Message("WM.MessageNoCapableNegociatorUseComms".Translate(), MessageTypeDefOf.NeutralEvent);
 					return;
 				}
 				TradeUtils.TradeFromTraveler(worldTraveler);

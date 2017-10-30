@@ -217,7 +217,7 @@ namespace WM.SelfLaunchingPods
 				ThingOwner directlyHeldThings = compTransporter.GetDirectlyHeldThings();
 
 				dropPodLeaving.Contents = new ActiveDropPodInfo();
-				dropPodLeaving.Contents.innerContainer.TryAddRange(directlyHeldThings, true);
+				dropPodLeaving.Contents.innerContainer.TryAddRangeOrTransfer(directlyHeldThings, true);
 
 				directlyHeldThings.Clear();
 

@@ -196,7 +196,7 @@ namespace WM.SelfLaunchingPods
 				{
 					DamagePods();
 					string text = "MessageTransportPodsArrived".Translate();
-					Messages.Message(text, this, MessageSound.Benefit);
+					Messages.Message(text, this, MessageTypeDefOf.NeutralEvent);
 				}
 			}
 		}
@@ -262,7 +262,7 @@ namespace WM.SelfLaunchingPods
 			{
 				text = text + " " + extraMessagePart;
 			}
-			Messages.Message(text, new TargetInfo(intVec, map, false), MessageSound.Benefit);
+			Messages.Message(text, new TargetInfo(intVec, map, false), MessageTypeDefOf.NeutralEvent);
 
 			Find.WorldObjects.Remove(this);
 

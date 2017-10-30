@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ThingDefinitions>
+<Defs>
 	<ThingDef>
 		<defName>WM_DropPodIncoming</defName>
 		<label>drop pod (incoming)</label>
@@ -32,4 +32,4 @@
 		<useHitPoints>false</useHitPoints>
 		<drawOffscreen>true</drawOffscreen>
 	</ThingDef>
-</ThingDefinitions>
+</Defs>

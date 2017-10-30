@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods
 				switch (state)
 				{
 					case RepairState.NoCapablePawns:
-						Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageSound.Negative);
+						Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageTypeDefOf.NegativeEvent);
 						break;
 
 					case RepairState.NoMaterials:
@@ -26,14 +26,14 @@ namespace WM.SelfLaunchingPods
 														this.Parent.ComponentsCountNeededToRepair, 
 														ThingDefOf.Component.label, 
 														this.Parent.ComponentsCountAvailable), 
-														MessageSound.Negative);
+														MessageTypeDefOf.NegativeEvent);
 						break;
 
 					case RepairState.Success:
 						Messages.Message(string.Format("WM.MessagePodsRepairedComponentsUsed".Translate(),
 														num,
 						                               	ThingDefOf.Component.label),
-						                 				MessageSound.Standard);
+						                 				MessageTypeDefOf.NeutralEvent);
 						break;
 				}
 			};
