@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Harmony;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 using Verse.AI.Group;
-using Verse.Sound;
 
 namespace WM.SelfLaunchingPods
 {
@@ -35,19 +32,10 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public DropPodLeaving()
-		{
-			this.innerContainer = new ThingOwner<Thing>(this);
-		}
-
 		// RimWorld.Skyfaller
 		public override void ExposeData()
 		{
 			base.ExposeData();
-			Scribe_Deep.Look<ThingOwner>(ref this.innerContainer, "innerContainer", new object[]
-			{
-				this
-			});
 			Scribe_Values.Look<int>(ref this.ticksToImpact, "ticksToImpact", 0, false);
 			Scribe_Values.Look<float>(ref this.angle, "angle", 0f, false);
 			Scribe_Values.Look<float>(ref this.shrapnelDirection, "shrapnelDirection", 0f, false);

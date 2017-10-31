@@ -244,7 +244,9 @@ namespace WM.SelfLaunchingPods
 					}
 				}
 				else
+				{
 					VanillaLikeUtils.TryFindDropSpotNear(intVec, map, out c, false, true);
+				}
 
 				// ---------- mod ----------------
 				//if (this.def == DefOf.WM_TravelingTransportPods)
