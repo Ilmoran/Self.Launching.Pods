@@ -70,7 +70,6 @@
   <ItemGroup>
     <Folder Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\" />
     <Folder Include="Detours\" />
-    <Folder Include="Detours\FuelingPortUtility\" />
     <Folder Include="Detours\Command_LoadToTransporter\" />
     <Folder Include="UI\" />
     <Folder Include="Gizmos\" />
@@ -113,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModController.cs" />
-    <Compile Include="Detours\FuelingPortUtility\FuelingPortGiverAt.cs" />
     <Compile Include="Detours\Command_LoadToTransporter\ProcessInput.cs" />
     <Compile Include="DefOf.cs" />
     <Compile Include="PodPair.cs" />
