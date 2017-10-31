@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Harmony;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using Verse.AI.Group;
 using Verse.Sound;
 
 namespace WM.SelfLaunchingPods
 {
-	public class DropPodLeaving : RimWorld.DropPodLeaving
+	public class DropPodLeaving : Skyfaller, IActiveDropPod, IThingHolder
 	{
 		//=========== mod ============
 
@@ -16,121 +17,117 @@ namespace WM.SelfLaunchingPods
 
 		// ============ /mod ============
 
-		public override void DeSpawn()
+		public int groupID = -1;
+		public int destinationTile = -1;
+		public IntVec3 destinationCell = IntVec3.Invalid;
+		public PawnsArriveMode arriveMode = PawnsArriveMode.Undecided;
+		public bool attackOnArrival;
+		private bool alreadyLeft;
+		private static List<Thing> tmpActiveDropPods = new List<Thing>();
+
+		public ActiveDropPodInfo Contents
 		{
-			base.DeSpawn();
+			get; internal set;
+			//get
+			//{
+			//	return ((ActiveDropPod)this.innerContainer[0]).Contents;
+			//}
+			//set
+			//{
+			//	((ActiveDropPod)this.innerContainer[0]).Contents = value;
+			//}
 		}
 
-
-		private bool _alreadyLeft
+		public DropPodLeaving()
 		{
-			get
-			{
-				return ((bool)Traverse.Create(this).Field("alreadyLeft").GetValue());
-			}
-			set
-			{
-				Traverse.Create(this).Field("alreadyLeft").SetValue(value);
-			}
+			this.innerContainer = new ThingOwner<Thing>(this);
 		}
 
-		private ActiveDropPodInfo _contents
+		// RimWorld.Skyfaller
+		public override void ExposeData()
 		{
-			get
+			base.ExposeData();
+			Scribe_Deep.Look<ThingOwner>(ref this.innerContainer, "innerContainer", new object[]
 			{
-				return ((ActiveDropPodInfo)Traverse.Create(this).Field("contents").GetValue());
-			}
-			set
-			{
-				Traverse.Create(this).Field("contents").SetValue(value);
-			}
+				this
+			});
+			Scribe_Values.Look<int>(ref this.ticksToImpact, "ticksToImpact", 0, false);
+			Scribe_Values.Look<float>(ref this.angle, "angle", 0f, false);
+			Scribe_Values.Look<float>(ref this.shrapnelDirection, "shrapnelDirection", 0f, false);
 		}
 
-		static List<Thing> tmpActiveDropPods
+		public override void PostMake()
 		{
-			get
-			{
-				return ((List<Thing>)Traverse.Create(typeof(RimWorld.DropPodLeaving)).Field("tmpActiveDropPods").GetValue());
-			}
+			base.PostMake();
+
+
 		}
 
-		bool _soundPlayed
+		protected override void LeaveMap()
 		{
-			get
+			if (this.alreadyLeft)
 			{
-				return ((bool)Traverse.Create(this).Field("soundPlayed").GetValue());
+				base.LeaveMap();
 			}
-			set
-			{
-				Traverse.Create(this).Field("soundPlayed").SetValue(value);
-			}
-		}
-		int _ticksSinceStart
-		{
-			get
-			{
-				return ((int)Traverse.Create(this).Field("ticksSinceStart").GetValue());
-			}
-			set
-			{
-				Traverse.Create(this).Field("ticksSinceStart").SetValue(value);
-			}
-		}
-
-		// RimWorld.DropPodLeaving
-		public override void Tick()
-		{
-			if (!this._soundPlayed && this._ticksSinceStart >= -10)
-			{
-				SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo(base.Position, base.Map, false));
-				this._soundPlayed = true;
-			}
-			this._ticksSinceStart++;
-			if (!this._alreadyLeft && this._ticksSinceStart >= 220)
-			{
-				// MOD
-				this.GroupLeftMap();
-			}
-		}
-
-		// RimWorld.DropPodLeaving
-		private void GroupLeftMap()
-		{
-			if (this.groupID < 0)
+			else if (this.groupID < 0)
 			{
 				Log.Error("Drop pod left the map, but its group ID is " + this.groupID);
 				this.Destroy(DestroyMode.Vanish);
-				return;
 			}
-			if (this.destinationTile < 0)
+			else if (this.destinationTile < 0)
 			{
 				Log.Error("Drop pod left the map, but its destination tile is " + this.destinationTile);
 				this.Destroy(DestroyMode.Vanish);
-				return;
 			}
-			Lord lord = TransporterUtility.FindLord(this.groupID, base.Map);
-			if (lord != null)
+			else
 			{
-				base.Map.lordManager.RemoveLord(lord);
-			}
+				Lord lord = TransporterUtility.FindLord(this.groupID, base.Map);
 
-			DropPodLeaving.tmpActiveDropPods.Clear();
-			DropPodLeaving.tmpActiveDropPods
-						  .AddRange(base.Map.listerThings.ThingsInGroup(ThingRequestGroup.ActiveDropPod)
-					 	 .Where(arg => ((DropPodLeaving)arg).groupID == this.groupID));
+				if (lord != null)
+				{
+					base.Map.lordManager.RemoveLord(lord);
+				}
 
-			var podsInfo = (DropPodLeaving.tmpActiveDropPods).Select(arg => (arg as DropPodLeaving).Contents);
-			var podsLandedThings = (DropPodLeaving.tmpActiveDropPods).Select(arg => (arg as DropPodLeaving).landedThing);
+				//TravelingTransportPods travelingTransportPods = (TravelingTransportPods)WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.TravelingTransportPods);
+				//travelingTransportPods.Tile = base.Map.Tile;
+				//travelingTransportPods.SetFaction(Faction.OfPlayer);
+				//travelingTransportPods.destinationTile = this.destinationTile;
+				//travelingTransportPods.destinationCell = this.destinationCell;
+				//travelingTransportPods.arriveMode = this.arriveMode;
+				//travelingTransportPods.attackOnArrival = this.attackOnArrival;
 
-			var worldobject = TravelingPodsUtils.CreateWorldTraveler(this.Map.Tile, podsInfo, podsLandedThings);
+				DropPodLeaving.tmpActiveDropPods.Clear();
+				DropPodLeaving.tmpActiveDropPods.AddRange(base.Map.listerThings.ThingsInGroup(ThingRequestGroup.ActiveDropPod));
 
-			worldobject.Launch(this.destinationTile, this.destinationCell, this.arriveMode, this.attackOnArrival);
+				var dropPods = DropPodLeaving.tmpActiveDropPods.Cast<DropPodLeaving>();
+				var podsInfo = dropPods.Select((arg) => arg.Contents);
+				var podsThing = dropPods.Select((arg) => arg.landedThing);
 
-			foreach (DropPodLeaving item in DropPodLeaving.tmpActiveDropPods)
-			{
-				item._contents = null;
-				item._alreadyLeft = true;
-				item.Destroy();
+				var traveler = TravelingPodsUtils.CreateWorldTraveler(this.Map.Tile, podsInfo, podsThing);
+
+				traveler.Launch(this.destinationTile, this.destinationCell, this.arriveMode, this.attackOnArrival);
+
+				foreach (var item in dropPods)
+				{
+					if (item != null && item.groupID == this.groupID)
+					{
+						item.alreadyLeft = true;
+						item.Contents = null;
+						item.Destroy(DestroyMode.Vanish);
+					}
+				}
+
+				//for (int i = 0; i < DropPodLeaving.tmpActiveDropPods.Count; i++)
+				//{
+				//	DropPodLeaving dropPodLeaving = DropPodLeaving.tmpActiveDropPods[i] as DropPodLeaving;
+				//	if (dropPodLeaving != null && dropPodLeaving.groupID == this.groupID)
+				//	{
+				//		dropPodLeaving.alreadyLeft = true;
+				//		travelingTransportPods.AddPod(dropPodLeaving.Contents, true);
+				//		dropPodLeaving.Contents = null;
+				//		dropPodLeaving.Destroy(DestroyMode.Vanish);
+				//	}
+				//}
 			}
 		}
 	}

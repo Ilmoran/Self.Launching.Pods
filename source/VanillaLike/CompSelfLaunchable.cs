@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Harmony;
 using RimWorld;
 using RimWorld.Planet;
@@ -9,64 +10,42 @@ namespace WM.SelfLaunchingPods
 {
 	//TODO: CompTick() does not work (see tick type)
 	//TODO: Fix carried item spawning over pod.
-	public class CompSelfLaunchable : RimWorld.CompLaunchable
+	public class CompSelfLaunchable : ThingComp
 	{
 		public ActiveDropPodInfo podInfo;
-		int ticksUntilOpen = 100;
-
-		private int _MaxLaunchDistance
-		{
-			get
-			{
-				return FuelUtils.MaxLaunchDistance(this._FuelInLeastFueledFuelingPortSource, 1, true);
-			}
-		}
-
-		public float _FuelInLeastFueledFuelingPortSource
-		{
-			get
-			{
-				return ((float)Traverse.Create(this as RimWorld.CompLaunchable).Property("FuelInLeastFueledFuelingPortSource").GetValue());
-			}
-		}
+		private int ticksUntilOpen = 100;
+		private CompTransporter cachedCompTransporter;
 
 		public CompProperties_SelfLaunchable Props
 		{
 			get
 			{
-				return props as CompProperties_SelfLaunchable;
+				return (props as CompProperties_SelfLaunchable);
+
 			}
 		}
 
-		public new bool ConnectedToFuelingPort { get { return (true); } }
-		public new bool AllInGroupConnectedToFuelingPort { get { return (true); } }
+		private int MaxLaunchDistance
+		{
+			get
+			{
+				return FuelUtils.MaxLaunchDistance(this.FuelInLeastFueledFuelingPortSource, 1, true);
+			}
+		}
 
-		// RimWorld.CompLaunchable
-		public new bool FuelingPortSourceHasAnyFuel
+		public CompRefuelable Refuelable
 		{
 			get
 			{
-				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
-				return (compRefuelable.Fuel > 0f);
+				return (this.parent.GetComp<CompRefuelable>());
 			}
 		}
-		// RimWorld.CompLaunchable
-		public new float FuelingPortSourceFuel
+
+		public float FuelLevel
 		{
 			get
 			{
-				var compRefuelable = ((Building)parent).TryGetComp<CompRefuelable>();
-				if (compRefuelable != null)
-					return (compRefuelable.Fuel);
-				return (0f);
-			}
-		}
-		// RimWorld.CompLaunchable
-		public new Building FuelingPortSource
-		{
-			get
-			{
-				return ((Building)parent);
+				return (Refuelable.Fuel);
 			}
 		}
 
@@ -74,7 +53,41 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (this.parent.TryGetComp<CompRefuelable>().Props.fuelCapacity);
+				return (Refuelable.Props.fuelCapacity);
+			}
+		}
+
+		// RimWorld.CompLaunchable
+		public CompTransporter Transporter
+		{
+			get
+			{
+				if (this.cachedCompTransporter == null)
+				{
+					this.cachedCompTransporter = this.parent.GetComp<CompTransporter>();
+				}
+				return (this.cachedCompTransporter);
+			}
+		}
+
+		// RimWorld.CompLaunchable
+		public List<CompTransporter> TransportersInGroup
+		{
+			get
+			{
+				return this.Transporter.TransportersInGroup(this.parent.Map);
+			}
+		}
+
+		public float FuelInLeastFueledFuelingPortSource
+		{
+			get
+			{
+				if (!TransportersInGroup.Any())
+					return (0f);
+
+				var result = TransportersInGroup.Min((arg) => arg.parent.TryGetComp<CompRefuelable>().Fuel);
+				return (result);
 			}
 		}
 
@@ -96,19 +109,19 @@ namespace WM.SelfLaunchingPods
 			PodOpen();
 		}
 
-		public override void CompTick()
-		{
-			base.CompTick();
-			if (podInfo == null)
-				return;
+		//public override void CompTick()
+		//{
+		//	base.CompTick();
+		//	if (podInfo == null)
+		//		return;
 
-			if (ticksUntilOpen <= 0)
-			{
-				PodOpen();
-				return;
-			}
-			ticksUntilOpen--;
-		}
+		//	if (ticksUntilOpen <= 0)
+		//	{
+		//		PodOpen();
+		//		return;
+		//	}
+		//	ticksUntilOpen--;
+		//}
 
 		public override IEnumerable<Gizmo> CompGetGizmosExtra()
 		{
@@ -146,7 +159,7 @@ namespace WM.SelfLaunchingPods
 					{
 						TaleRecorder.RecordTale(TaleDefOf.LandedInPod, new object[]
 						{
-					pawn
+							pawn
 						});
 					}
 					if (pawn.IsColonist && pawn.Spawned && !parent.Map.IsPlayerHome)
@@ -179,14 +192,18 @@ namespace WM.SelfLaunchingPods
 				return;
 			}
 
-			List<CompTransporter> transportersInGroup = this.TransportersInGroup;
+			var transportersInGroup = this.TransportersInGroup;
+
+#if DEBUG
+			Log.Message("TryLaunch(): transportersInGroup = " + transportersInGroup.Count);
+#endif
 
 			if (transportersInGroup == null)
 			{
 				Log.Error("Tried to launch " + this.parent + ", but it's not in any group.");
 				return;
 			}
-			if (!this.LoadingInProgressOrReadyToLaunch || !this.AllInGroupConnectedToFuelingPort || !this.AllFuelingPortSourcesInGroupHaveAnyFuel)
+			if (!this.Transporter.LoadingInProgressOrReadyToLaunch || this.FuelInLeastFueledFuelingPortSource <= 0)
 			{
 				return;
 			}
@@ -194,7 +211,7 @@ namespace WM.SelfLaunchingPods
 			Map map = this.parent.Map;
 			int num = Find.WorldGrid.TraversalDistanceBetween(map.Tile, target.Tile);
 
-			if (num > this._MaxLaunchDistance)
+			if (num > this.MaxLaunchDistance)
 			{
 				return;
 			}
@@ -203,9 +220,11 @@ namespace WM.SelfLaunchingPods
 			int groupID = this.Transporter.groupID;
 			float amount = FuelUtils.FuelNeededToLaunchAtDistance(num, 1);
 
-			for (int i = 0; i < transportersInGroup.Count; i++)
+			foreach (CompTransporter compTransporter in transportersInGroup)
 			{
-				CompTransporter compTransporter = transportersInGroup[i];
+				//#if DEBUG
+				//				Log.Message("TryLaunch(): i = " + i);
+				//#endif
 				var dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(DefOf.WM_DropPodLeaving, null);
 
 				dropPodLeaving.groupID = groupID;
@@ -213,25 +232,26 @@ namespace WM.SelfLaunchingPods
 				dropPodLeaving.destinationCell = target.Cell;
 				dropPodLeaving.arriveMode = arriveMode;
 				dropPodLeaving.attackOnArrival = attackOnArrival;
+				dropPodLeaving.landedThing = compTransporter.parent; // MOD
 
 				ThingOwner directlyHeldThings = compTransporter.GetDirectlyHeldThings();
-
 				dropPodLeaving.Contents = new ActiveDropPodInfo();
 				dropPodLeaving.Contents.innerContainer.TryAddRangeOrTransfer(directlyHeldThings, true);
-
 				directlyHeldThings.Clear();
 
+				GenSpawn.Spawn(dropPodLeaving, compTransporter.parent.Position, map);
+			}
+
+			foreach (CompTransporter compTransporter in transportersInGroup)
+			{
 				compTransporter.CleanUpLoadingVars(map);
 				compTransporter.parent.DeSpawn();
-				dropPodLeaving.landedThing = compTransporter.parent;
-
-				GenSpawn.Spawn(dropPodLeaving, compTransporter.parent.Position, map);
 			}
 		}
 
 		public override void PostDraw()
 		{
-			Utils.DrawFuelOverlay(FuelingPortSourceFuel / MaxFuelLevel, this.parent.DrawPos);
+			Utils.DrawFuelOverlay(FuelLevel / MaxFuelLevel, this.parent.DrawPos);
 		}
 	}
 }

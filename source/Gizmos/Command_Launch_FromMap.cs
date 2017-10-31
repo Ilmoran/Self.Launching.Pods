@@ -20,7 +20,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return parent.TryGetComp<CompSelfLaunchable>()._FuelInLeastFueledFuelingPortSource;
+				return parent.TryGetComp<CompSelfLaunchable>().FuelInLeastFueledFuelingPortSource;
 			}
 		}
 
