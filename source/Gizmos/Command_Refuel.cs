@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods
 #if DEBUG
 				Log.Message("refuelAmout = " + refuelAmout);
 #endif
-				Messages.Message("WM.MessagePodsRefueled".Translate(), MessageTypeDefOf.NeutralEvent);
+				Messages.Message("WM.MessagePodsRefueled".Translate(), MessageTypeDefOf.PositiveEvent);
 			};
 		}
 

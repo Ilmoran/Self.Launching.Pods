@@ -12,7 +12,7 @@ namespace WM.SelfLaunchingPods
 			{
 				if (TradeUtils.BestNegociator(worldTraveler.AllCarriedColonists) == null)
 				{
-					Messages.Message("WM.MessageNoCapableNegociatorUseComms".Translate(), MessageTypeDefOf.NeutralEvent);
+					Messages.Message("WM.MessageNoCapableNegociatorUseComms".Translate(), MessageTypeDefOf.RejectInput);
 					return;
 				}
 				TradeUtils.TradeFromTraveler(worldTraveler);

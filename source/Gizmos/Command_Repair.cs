@@ -18,7 +18,7 @@ namespace WM.SelfLaunchingPods
 				switch (state)
 				{
 					case RepairState.NoCapablePawns:
-						Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageTypeDefOf.NegativeEvent);
+						Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageTypeDefOf.RejectInput);
 						break;
 
 					case RepairState.NoMaterials:

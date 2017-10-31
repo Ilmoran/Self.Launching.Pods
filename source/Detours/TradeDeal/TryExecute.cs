@@ -14,7 +14,7 @@ namespace WM.SelfLaunchingPods.Detour.TradeDeal
 				Dialog_Trade.Controler.CachedMassOffset + Dialog_Trade.Controler.CurrentMassUsage > Dialog_Trade.Controler.MassCapacity)
 			{
 				//TODO: flash mass
-				Messages.Message("WM.MessagePodsFleetCapacityInsufficient".Translate(), MessageTypeDefOf.NeutralEvent);
+				Messages.Message("WM.MessagePodsFleetCapacityInsufficient".Translate(), MessageTypeDefOf.RejectInput);
 				__result = false;
 				return (false);
 			}

@@ -26,7 +26,7 @@ namespace WM.SelfLaunchingPods
 		{
 			if (!InventoryUtils.AnyCapablePawn(this.parent.AllCarriedColonists))
 			{
-				Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageTypeDefOf.NegativeEvent);
+				Messages.Message(string.Format("WM.MessageNoCapableColonistsInFleet".Translate()), MessageTypeDefOf.RejectInput);
 				return (false);
 			}
 			return (true);

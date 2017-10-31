@@ -16,7 +16,7 @@ namespace WM.SelfLaunchingPods
 
 				if (!thingsToUnload.Any())
 				{
-					Messages.Message("WM.MessageNothingToUnload".Translate(), MessageTypeDefOf.NeutralEvent);
+					Messages.Message("WM.MessageNothingToUnload".Translate(), MessageTypeDefOf.RejectInput);
 					return;
 				}
 				Caravan caravan;
@@ -28,7 +28,7 @@ namespace WM.SelfLaunchingPods
 
 					if (!pawns.Any())
 					{
-						Messages.Message("WM.MessageCaravanNeeded".Translate(), MessageTypeDefOf.NeutralEvent);
+						Messages.Message("WM.MessageCaravanNeeded".Translate(), MessageTypeDefOf.RejectInput);
 						return;
 					}
 
@@ -36,7 +36,7 @@ namespace WM.SelfLaunchingPods
 
 					if (!colonists.Any())
 					{
-						Messages.Message("WM.MessageColonistsNeeded".Translate(), MessageTypeDefOf.NeutralEvent);
+						Messages.Message("WM.MessageColonistsNeeded".Translate(), MessageTypeDefOf.RejectInput);
 						return;
 					}
 
@@ -55,7 +55,7 @@ namespace WM.SelfLaunchingPods
 				TravelingPodsUtils.ToCaravan(caravan, thingsToUnload);
 				Find.WorldSelector.ClearSelection();
 				Find.WorldSelector.Select(caravan);
-				Messages.Message(SuccessMessage, MessageTypeDefOf.NeutralEvent);
+				Messages.Message(SuccessMessage, MessageTypeDefOf.PositiveEvent);
 			};
 		}
 

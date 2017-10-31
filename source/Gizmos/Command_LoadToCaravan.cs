@@ -20,14 +20,14 @@ namespace WM.SelfLaunchingPods
 				if (traveler == null)
 				{
 					float mass = TravelingPodsUtils.CaravanMass(list);
-					Messages.Message(string.Format("WM.MessageNoPodsToLoad".Translate(), mass.ToStringMass(), TravelingPodsUtils.RequiredPodsCountForMass(mass)), MessageTypeDefOf.NeutralEvent);
+					Messages.Message(string.Format("WM.MessageNoPodsToLoad".Translate(), mass.ToStringMass(), TravelingPodsUtils.RequiredPodsCountForMass(mass)), MessageTypeDefOf.RejectInput);
 					return;
 				}
 				var missingMassCapacity = TravelingPodsUtils.MissingMassCapacity((WorldTraveler)traveler, list);
 
 				if (!ThingsToLoad.Any())
 				{
-					Messages.Message("WM.MessageNothingToLoad".Translate(), MessageTypeDefOf.NeutralEvent);
+					Messages.Message("WM.MessageNothingToLoad".Translate(), MessageTypeDefOf.RejectInput);
 					return;
 				}
 
@@ -43,7 +43,7 @@ namespace WM.SelfLaunchingPods
 				}
 				else
 				{
-					Messages.Message(string.Format("WM.MessageCaravanPodsFleetCapacityTooLow".Translate(), missingMassCapacity.ToStringMass()), MessageTypeDefOf.NegativeEvent);
+					Messages.Message(string.Format("WM.MessageCaravanPodsFleetCapacityTooLow".Translate(), missingMassCapacity.ToStringMass()), MessageTypeDefOf.RejectInput);
 				}
 			};
 		}

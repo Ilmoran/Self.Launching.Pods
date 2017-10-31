@@ -77,7 +77,7 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 						Building fuelingPortSource2 = __instance.transporters[i].Launchable.FuelingPortSource;
 						if (fuelingPortSource2 != null && !Command_LoadToTransporter.tmpFuelingPortGivers.Contains(fuelingPortSource2))
 						{
-							Messages.Message("MessageTransportersNotAdjacent".Translate(), fuelingPortSource2, MessageTypeDefOf.NeutralEvent);
+							Messages.Message("MessageTransportersNotAdjacent".Translate(), fuelingPortSource2, MessageTypeDefOf.RejectInput);
 							return;
 						}
 					}
@@ -89,7 +89,7 @@ namespace WM.SelfLaunchingPods.Detours.Command_LoadToTransporter
 				{
 					if (!__instance.transComp.Map.reachability.CanReach(__instance.transComp.parent.Position, __instance.transporters[j].parent, PathEndMode.Touch, TraverseParms.For(TraverseMode.PassDoors, Danger.Deadly, false)))
 					{
-						Messages.Message("MessageTransporterUnreachable".Translate(), __instance.transporters[j].parent, MessageTypeDefOf.NeutralEvent);
+						Messages.Message("MessageTransporterUnreachable".Translate(), __instance.transporters[j].parent, MessageTypeDefOf.RejectInput);
 						return;
 					}
 				}
