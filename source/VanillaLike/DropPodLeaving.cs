@@ -11,11 +11,6 @@ namespace WM.SelfLaunchingPods
 {
 	public class DropPodLeaving : Skyfaller, IActiveDropPod, IThingHolder
 	{
-		//=========== mod ============
-
-		public Thing landedThing;
-
-		// ============ /mod ============
 
 		public int groupID = -1;
 		public int destinationTile = -1;
@@ -24,18 +19,20 @@ namespace WM.SelfLaunchingPods
 		public bool attackOnArrival;
 		private bool alreadyLeft;
 		private static List<Thing> tmpActiveDropPods = new List<Thing>();
+		public Thing landedThing; // MOD
+		ActiveDropPodInfo podInfo;
 
 		public ActiveDropPodInfo Contents
 		{
-			get; internal set;
-			//get
-			//{
-			//	return ((ActiveDropPod)this.innerContainer[0]).Contents;
-			//}
-			//set
-			//{
-			//	((ActiveDropPod)this.innerContainer[0]).Contents = value;
-			//}
+			get
+			{
+				return podInfo;
+			}
+
+			internal set
+			{
+				podInfo = value;
+			}
 		}
 
 		public DropPodLeaving()
@@ -54,13 +51,8 @@ namespace WM.SelfLaunchingPods
 			Scribe_Values.Look<int>(ref this.ticksToImpact, "ticksToImpact", 0, false);
 			Scribe_Values.Look<float>(ref this.angle, "angle", 0f, false);
 			Scribe_Values.Look<float>(ref this.shrapnelDirection, "shrapnelDirection", 0f, false);
-		}
-
-		public override void PostMake()
-		{
-			base.PostMake();
-
-
+			Scribe_References.Look<Thing>(ref landedThing, "landedThing");
+			Scribe_Deep.Look<ActiveDropPodInfo>(ref podInfo, "podInfo");
 		}
 
 		protected override void LeaveMap()
@@ -88,14 +80,6 @@ namespace WM.SelfLaunchingPods
 					base.Map.lordManager.RemoveLord(lord);
 				}
 
-				//TravelingTransportPods travelingTransportPods = (TravelingTransportPods)WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.TravelingTransportPods);
-				//travelingTransportPods.Tile = base.Map.Tile;
-				//travelingTransportPods.SetFaction(Faction.OfPlayer);
-				//travelingTransportPods.destinationTile = this.destinationTile;
-				//travelingTransportPods.destinationCell = this.destinationCell;
-				//travelingTransportPods.arriveMode = this.arriveMode;
-				//travelingTransportPods.attackOnArrival = this.attackOnArrival;
-
 				DropPodLeaving.tmpActiveDropPods.Clear();
 				DropPodLeaving.tmpActiveDropPods.AddRange(base.Map.listerThings.ThingsInGroup(ThingRequestGroup.ActiveDropPod));
 
@@ -116,18 +100,6 @@ namespace WM.SelfLaunchingPods
 						item.Destroy(DestroyMode.Vanish);
 					}
 				}
-
-				//for (int i = 0; i < DropPodLeaving.tmpActiveDropPods.Count; i++)
-				//{
-				//	DropPodLeaving dropPodLeaving = DropPodLeaving.tmpActiveDropPods[i] as DropPodLeaving;
-				//	if (dropPodLeaving != null && dropPodLeaving.groupID == this.groupID)
-				//	{
-				//		dropPodLeaving.alreadyLeft = true;
-				//		travelingTransportPods.AddPod(dropPodLeaving.Contents, true);
-				//		dropPodLeaving.Contents = null;
-				//		dropPodLeaving.Destroy(DestroyMode.Vanish);
-				//	}
-				//}
 			}
 		}
 	}

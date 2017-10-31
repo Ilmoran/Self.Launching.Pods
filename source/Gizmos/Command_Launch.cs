@@ -105,7 +105,7 @@ namespace WM.SelfLaunchingPods
 															GenDraw.DrawWorldRadiusRing(ParentTile, MaxLaunchDistanceOneWay);
 															GenDraw.DrawWorldRadiusRing(ParentTile, MaxLaunchDistanceRoundTrip);
 														},
-														  delegate (GlobalTargetInfo target)
+														delegate (GlobalTargetInfo target)
 														{
 															if (!target.IsValid)
 															{
@@ -159,20 +159,17 @@ namespace WM.SelfLaunchingPods
 			}
 			else
 			{
-				Action<LocalTargetInfo> targeter;
-
 				if (mapParent.HasMap)
 				{
-					if (HideWorldAfterLaunch)
-						CameraJumper.TryHideWorld();
-
 					Current.Game.VisibleMap = mapParent.Map;
-					targeter = delegate (LocalTargetInfo localTarget)
+					CameraJumper.TryHideWorld();
+					Action<LocalTargetInfo> launchAction = delegate (LocalTargetInfo localTarget)
 					{
 						Launch(target.Tile, localTarget.Cell);
+						if (HideWorldAfterLaunch)
+							CameraJumper.TryHideWorld();
 					};
-
-					Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), targeter, null, null, Resources.LaunchCommandTex);
+					Find.Targeter.BeginTargeting(TargetingParameters.ForDropPodsDestination(), launchAction, null, null, Resources.LaunchCommandTex);
 				}
 				else
 				{
