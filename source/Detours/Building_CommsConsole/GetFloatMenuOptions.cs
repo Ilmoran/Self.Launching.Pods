@@ -13,7 +13,7 @@ namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 	{
 		static void Postfix(RimWorld.Building_CommsConsole __instance, ref IEnumerable<FloatMenuOption> __result, Pawn myPawn)
 		{
-			if (!__instance.CanUseCommsNow)
+			if (!__instance.CanUseCommsNow || myPawn.skills.GetSkill(SkillDefOf.Social).TotallyDisabled)
 				return;
 
 			var travelers = TradeUtils.GetRemoteTradeable();

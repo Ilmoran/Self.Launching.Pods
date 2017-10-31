@@ -19,7 +19,7 @@ namespace WM.SelfLaunchingPods
 
 		public static Pawn BestNegociator(IEnumerable<Pawn> pawns)
 		{
-			var pawns2 = pawns.Where((Pawn arg) => !arg.Downed && !arg.InMentalState);
+			var pawns2 = pawns.Where((Pawn arg) => !arg.Downed && !arg.InMentalState && !StatDefOf.TradePriceImprovement.Worker.IsDisabledFor(arg));
 
 			if (!pawns2.Any())
 				return (null);
