@@ -17,7 +17,7 @@ namespace WM.SelfLaunchingPods
 		private bool alreadyLeft;
 		private static List<Thing> tmpActiveDropPods = new List<Thing>();
 		public Thing landedThing; // MOD
-		ActiveDropPodInfo podInfo;
+		ActiveDropPodInfo podInfo; // MOD
 
 		public ActiveDropPodInfo Contents
 		{
@@ -25,11 +25,28 @@ namespace WM.SelfLaunchingPods
 			{
 				return podInfo;
 			}
-
 			internal set
 			{
 				podInfo = value;
 			}
+		}
+
+		IThingHolder IThingHolder.ParentHolder
+		{
+			get
+			{
+				return Contents.ParentHolder;
+			}
+		}
+
+		void IThingHolder.GetChildHolders(List<IThingHolder> outChildren)
+		{
+			podInfo.GetChildHolders(outChildren);
+		}
+
+		ThingOwner IThingHolder.GetDirectlyHeldThings()
+		{
+			return (podInfo.GetDirectlyHeldThings());
 		}
 
 		// RimWorld.Skyfaller

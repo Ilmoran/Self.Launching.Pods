@@ -1,13 +1,40 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace WM.SelfLaunchingPods
 {
-	public class DropPodIncoming : Skyfaller
+	public class DropPodIncoming : Skyfaller, IActiveDropPod, IThingHolder
 	{
 		public Thing landedThing;
 		public ActiveDropPodInfo podInfo;
+
+		ActiveDropPodInfo IActiveDropPod.Contents
+		{
+			get
+			{
+				return (podInfo);
+			}
+		}
+
+		IThingHolder IThingHolder.ParentHolder
+		{
+			get
+			{
+				return (podInfo.ParentHolder);
+			}
+		}
+
+		void IThingHolder.GetChildHolders(List<IThingHolder> outChildren)
+		{
+			podInfo.GetChildHolders(outChildren);
+		}
+
+		ThingOwner IThingHolder.GetDirectlyHeldThings()
+		{
+			return (podInfo.GetDirectlyHeldThings());
+		}
 
 		public override void ExposeData()
 		{
