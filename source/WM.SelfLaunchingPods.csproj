@@ -82,6 +82,7 @@
     <Folder Include="Utils\" />
     <Folder Include="UI\InjectedComps\" />
     <Folder Include="..\Mods\WM Self Launching Pods\Defs\UpdateFeatureDefs\" />
+    <Folder Include="Detours\CaravanUIUtility\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Program Files %28x86%29\Xamarin Studio\Defs\EmptyXmlFile.xml" />
@@ -151,7 +152,7 @@
     <Compile Include="WorldTraveler\WorldTraveler.cs" />
     <Compile Include="WorldTraveler\Damages.cs" />
     <Compile Include="WorldTraveler\Inventory.cs" />
-    <Compile Include="Detours\Dialog_LoadTransporters\Dialog_LoadTransporters.cs" />
+    <Compile Include="Detours\Dialog_LoadTransporters\AddPawnsToTransferables.cs" />
     <Compile Include="Gizmos\Command_Merge_Travelers_AllOnTile.cs" />
     <Compile Include="Gizmos\Command_Launch_FromWorld_AutoRefuel.cs" />
     <Compile Include="Research\PodResearchProjectDef.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Gizmos\Command_QuickBuyFuel.cs" />
     <Compile Include="Utils\TradeTweakUtils.cs" />
     <Compile Include="Gizmos\Command_Refuel.cs" />
+    <Compile Include="Detours\CaravanUIUtility\AddPawnsSections.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

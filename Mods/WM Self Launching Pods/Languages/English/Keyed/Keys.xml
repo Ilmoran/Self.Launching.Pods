@@ -55,6 +55,7 @@
 	<!-- ================ Dialogs ================ -->
 	
 	<WM.QuickBuyFuelGizmoDialog>Buy {0}/{1} {2} for {3}/{4} {5}</WM.QuickBuyFuelGizmoDialog>
+	<WM.RefugeeSection>Refugees</WM.RefugeeSection>
 	
 	<!-- ================ Pod ================ -->
 
