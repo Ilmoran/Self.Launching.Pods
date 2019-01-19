@@ -28,7 +28,7 @@ namespace WM.SelfLaunchingPods
 					TravelingPodsUtils.MergeTravelers(SingleSelectedTraveler, item);
 				}
 
-				SoundDefOf.TickHigh.PlayOneShotOnCamera();
+				RimWorld.SoundDefOf.Tick_High.PlayOneShotOnCamera();
 			};
 		}
 

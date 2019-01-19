@@ -122,7 +122,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (this.AllCarriedThings.Where((Thing arg) => arg.def == DefOf.Chemfuel)
+				return (this.AllCarriedThings.Where((Thing arg) => arg.def == ThingDefOf.Chemfuel)
 						.OrderByDescending((Thing arg) => arg.stackCount));
 			}
 		}

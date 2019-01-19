@@ -14,7 +14,7 @@ namespace WM.SelfLaunchingPods
 			action = delegate
 			{
 				var traveler = Find.WorldObjects.ObjectsAt(parent.Tile).FirstOrDefault(
-					(WorldObject arg) => arg.def == DefOf.WM_TravelingTransportPods);
+					(WorldObject arg) => arg.def == WorldObjectDefOf.WM_TravelingTransportPods);
 				var list = ThingsToLoad.ToList();
 
 				if (traveler == null)

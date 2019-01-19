@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
@@ -43,19 +44,15 @@ namespace WM.SelfLaunchingPods
 		IEnumerable<FloatMenuOption> GetRemoteTradingMenuOptions(Pawn myPawn, IEnumerable<WorldTraveler> travelers)
 		{
 			foreach (var item in travelers)
-			{
-				var option = new FloatMenuOption(MenuOptionPriority.High);
-
-				option.Label = item.remoteTrader.GetCallLabel();
-				option.action = delegate
-				{
-					var job = new Job(JobDefOf.UseCommsConsole, Parent);
-
-					job.commTarget = item.remoteTrader;
-					myPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-				};
-				yield return (option);
-			}
+            {
+                string label = item.remoteTrader.GetCallLabel();
+                Action action = delegate
+                {
+                    Parent.GiveUseCommsJob(myPawn, item.remoteTrader);
+                };
+                var option = new FloatMenuOption(label, action, MenuOptionPriority.High);
+                yield return (option);
+            }
 		}
 	}
 }

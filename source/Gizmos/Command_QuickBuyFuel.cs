@@ -22,9 +22,9 @@ namespace WM.SelfLaunchingPods
 				var bestNegociator = TradeUtils.BestNegociator(Parent.AllCarriedColonists);
 				var dummyCaravan = TradeTweakUtils.PrepareTrade(bestNegociator, Parent.LocalFactionBase, this.Parent, false);
 
-				TradeSession.SetupWith(Parent.LocalFactionBase, bestNegociator);
+				TradeSession.SetupWith(Parent.LocalFactionBase, bestNegociator, false);
 
-				var fuelTradeable = TradeSession.deal.AllTradeables.First((Tradeable arg) => arg.ThingDef == DefOf.Chemfuel);
+				var fuelTradeable = TradeSession.deal.AllTradeables.First((Tradeable arg) => arg.ThingDef == ThingDefOf.Chemfuel);
 				var presentFuel = TradeUtils.FuelAvailableAt(Parent.LocalFactionBase);
 				var colonyMoney = TradeSession.deal.SilverTradeable.CountHeldBy(Transactor.Colony);
 
@@ -37,7 +37,7 @@ namespace WM.SelfLaunchingPods
 				{
 					TradeSession.Close();
 					TradeTweakUtils.FinishTrade();
-					Messages.Message(string.Format("WM.MessageCannotQuickBuyNow".Translate(), DefOf.Chemfuel.label), MessageTypeDefOf.RejectInput);
+					Messages.Message(string.Format("WM.MessageCannotQuickBuyNow".Translate(), ThingDefOf.Chemfuel.label), MessageTypeDefOf.RejectInput);
 					return;
 				}
 
@@ -49,10 +49,10 @@ namespace WM.SelfLaunchingPods
 						return (string.Format("WM.QuickBuyFuelGizmoDialog".Translate(),
 											  n,
 											  presentFuel,
-											  DefOf.Chemfuel.label,
+											  ThingDefOf.Chemfuel.label,
 											  Mathf.Floor(n * fuelPrice),
 											  colonyMoney,
-											  DefOf.Silver.label));
+                                              ThingDefOf.Chemfuel.label));
 					};
 
 				Action<int> confirmAction =
@@ -67,7 +67,7 @@ namespace WM.SelfLaunchingPods
 							Log.Error("TryExecute() failed.");
 							return;
 						}
-						SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
+						RimWorld.SoundDefOf.ExecuteTrade.PlayOneShotOnCamera();
 					};
 
 				Action finalAction =
@@ -79,10 +79,10 @@ namespace WM.SelfLaunchingPods
 
 				var dialog = new Dialog_Slider_QuickBuyFuel(textGetter, 0, maxFuel, confirmAction, finalAction)
 				{
-					closeOnEscapeKey = true,
+                    closeOnCancel = true,
 					forcePause = true,
-					soundAppear = SoundDefOf.CommsWindow_Open,
-					soundClose = SoundDefOf.CommsWindow_Close
+					soundAppear = RimWorld.SoundDefOf.CommsWindow_Open,
+					soundClose = RimWorld.SoundDefOf.CommsWindow_Close
 				};
 
 				Find.WindowStack.Add(dialog);

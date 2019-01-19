@@ -7,7 +7,7 @@ using Verse;
 
 namespace WM.SelfLaunchingPods.Detours.CaravanUIUtility
 {
-	[HarmonyPatch(typeof(RimWorld.CaravanUIUtility), "AddPawnsSections")]
+	[HarmonyPatch(typeof(RimWorld.Planet.CaravanUIUtility), "AddPawnsSections")]
 	static class AddPawnsSections
 	{
 		public static void Postfix(TransferableOneWayWidget widget, List<TransferableOneWay> transferables)

@@ -22,7 +22,7 @@ namespace WM.SelfLaunchingPods
 
 		internal static WorldTraveler CreateWorldTraveler(int tile, IEnumerable<ActiveDropPodInfo> podsInfo, IEnumerable<Thing> podsLandedThings)
 		{
-			var hopper = (WorldTraveler)WorldObjectMaker.MakeWorldObject(DefOf.WM_TravelingTransportPods);
+			var hopper = (WorldTraveler)WorldObjectMaker.MakeWorldObject(WM.SelfLaunchingPods.WorldObjectDefOf.WM_TravelingTransportPods);
 
 			hopper.Tile = tile;
 			hopper.SetFaction(Faction.OfPlayer);
@@ -128,7 +128,7 @@ namespace WM.SelfLaunchingPods
 
 		internal static int RequiredPodsCountForMass(float mass)
 		{
-			return Mathf.CeilToInt((mass / ((CompProperties_Transporter)DefOf.WM_TransportPod.comps.Find((obj) => obj is CompProperties_Transporter)).massCapacity));
+			return Mathf.CeilToInt((mass / ((CompProperties_Transporter)ThingDefOf.WM_TransportPod.comps.Find((obj) => obj is CompProperties_Transporter)).massCapacity));
 		}
 	}
 }

@@ -13,12 +13,12 @@ namespace WM.SelfLaunchingPods
 		public static bool IsMyClass(object instance)
 		{
 			var t = instance as Thing;
-			return instance is CompSelfLaunchable || t != null && (t.TryGetComp<CompSelfLaunchable>() != null || t.def == DefOf.WM_TransportPod);
+			return instance is CompSelfLaunchable || t != null && (t.TryGetComp<CompSelfLaunchable>() != null || t.def == ThingDefOf.WM_TransportPod);
 		}
 
 		internal static List<IntVec3> FindLandingSpotsNear(Map map, IntVec3 intVec)
 		{
-			var launchers = FindBuildingsWithinRadius(map, intVec, ModController.LandingSpotMaxRange, DefOf.WM_LandingSpot);
+			var launchers = FindBuildingsWithinRadius(map, intVec, ModController.LandingSpotMaxRange, ThingDefOf.WM_LandingSpot);
 
 			return
 				(launchers
@@ -29,7 +29,7 @@ namespace WM.SelfLaunchingPods
 				})
 				 .Where((arg) =>
 						arg.cell.Standable(arg.map) &&
-						!arg.cell.GetThingList(map).Any((Thing arg2) => arg2.def == DefOf.WM_DropPodIncoming))
+						!arg.cell.GetThingList(map).Any((Thing arg2) => arg2.def == ThingDefOf.WM_DropPodIncoming))
 				.Select((arg) => arg.cell)
 				.Distinct().ToList());
 		}

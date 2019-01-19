@@ -184,7 +184,7 @@ namespace WM.SelfLaunchingPods
 		}
 
 		// RimWorld.CompLaunchable
-		internal void TryLaunch(GlobalTargetInfo target, PawnsArriveMode arriveMode, bool attackOnArrival)
+		internal void TryLaunch(GlobalTargetInfo target, PawnsArrivalModeDef arriveMode, bool attackOnArrival)
 		{
 			if (!this.parent.Spawned)
 			{
@@ -225,7 +225,7 @@ namespace WM.SelfLaunchingPods
 				//#if DEBUG
 				//				Log.Message("TryLaunch(): i = " + i);
 				//#endif
-				var dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(DefOf.WM_DropPodLeaving, null);
+				var dropPodLeaving = (DropPodLeaving)ThingMaker.MakeThing(ThingDefOf.WM_DropPodLeaving, null);
 
 				dropPodLeaving.groupID = groupID;
 				dropPodLeaving.destinationTile = target.Tile;

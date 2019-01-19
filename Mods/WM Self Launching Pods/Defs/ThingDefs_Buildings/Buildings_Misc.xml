@@ -17,7 +17,7 @@
 		<castEdgeShadows>false</castEdgeShadows>
 		<fillPercent>0.5</fillPercent>
 		<designationCategory>Misc</designationCategory>
-		<iconDrawScale>1</iconDrawScale>
+    <uiIconScale>1</uiIconScale>
 		<statBases>
 			<MaxHitPoints>250</MaxHitPoints>
 			<WorkToBuild>4000</WorkToBuild>
@@ -26,7 +26,7 @@
 		<costList>
 			<Steel>80</Steel>
 			<Plasteel>30</Plasteel>
-			<Component>2</Component>
+			<ComponentIndustrial>2</ComponentIndustrial>
 		</costList>
 		<comps>
 			<li Class="CompProperties_Transporter" />

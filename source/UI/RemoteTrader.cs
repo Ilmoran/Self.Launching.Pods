@@ -2,6 +2,7 @@ using System;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
+using Verse.AI;
 
 namespace WM.SelfLaunchingPods
 {
@@ -16,7 +17,7 @@ namespace WM.SelfLaunchingPods
 
 		public string GetCallLabel()
 		{
-			return (String.Format("WM.RemoteTradeWith".Translate(), LocalFactionBase.Name));
+			return (String.Format("WM.RemoteTradeWith".Translate(), LocalFactionBase.Label));
 		}
 
 		public string GetInfoText()
@@ -29,7 +30,26 @@ namespace WM.SelfLaunchingPods
 			TradeUtils.TradeFromTraveler(this.worldTraveler, negotiator);
 		}
 
-		public bool CanRemoteTradeNow
+        public Faction GetFaction()
+        {
+            throw new NotImplementedException();
+        }
+
+        public FloatMenuOption CommFloatMenuOption(Building_CommsConsole console, Pawn negotiator)
+        {
+            string label = GetCallLabel();
+            Action action = delegate
+            {
+                var job = new Job(JobDefOf.UseCommsConsole, console);
+
+                job.commTarget = this;
+                negotiator.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+            };
+            var option = new FloatMenuOption(label, action, MenuOptionPriority.High);
+            return (option);
+        }
+
+        public bool CanRemoteTradeNow
 		{
 			get
 			{
@@ -38,7 +58,7 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		FactionBase LocalFactionBase
+		SettlementBase LocalFactionBase
 		{
 			get
 			{

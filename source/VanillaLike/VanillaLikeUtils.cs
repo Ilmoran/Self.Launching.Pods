@@ -51,11 +51,11 @@ namespace WM.SelfLaunchingPods
 			for (int i = 0; i < thingList.Count; i++)
 			{
 				Thing thing = thingList[i];
-				if (thing is IActiveDropPod || thing.def.category == ThingCategory.Skyfaller)
+				if (thing is IActiveDropPod || thing is Skyfaller)
 				{
 					return false;
 				}
-				if (thing.def.category != ThingCategory.Plant && GenSpawn.SpawningWipes(ThingDefOf.ActiveDropPod, thing.def))
+				if (thing.def.category != ThingCategory.Plant && GenSpawn.SpawningWipes(RimWorld.ThingDefOf.ActiveDropPod, thing.def))
 				{
 					return false;
 				}

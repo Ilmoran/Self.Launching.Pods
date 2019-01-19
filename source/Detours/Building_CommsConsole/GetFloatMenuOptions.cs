@@ -5,7 +5,7 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 
-namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
+namespace WM.SelfLaunchingPods.Detours.Building_CommsConsole
 {
 	//TODO: discard and use comp instead.
 	[HarmonyPatch(typeof(RimWorld.Building_CommsConsole), "GetFloatMenuOptions")]
@@ -30,17 +30,7 @@ namespace WM.SelfLaunchingPods.Detour.Building_CommsConsole
 		{
 			foreach (var item in travelers)
 			{
-				var option = new FloatMenuOption(MenuOptionPriority.High);
-
-				option.Label = item.remoteTrader.GetCallLabel();
-				option.action = delegate
-				{
-					var job = new Job(JobDefOf.UseCommsConsole, __instance);
-
-					job.commTarget = item.remoteTrader;
-					myPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-				};
-				yield return (option);
+                yield return item.remoteTrader.CommFloatMenuOption(__instance, myPawn);
 			}
 		}
 	}

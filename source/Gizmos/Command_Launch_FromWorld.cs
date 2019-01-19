@@ -63,10 +63,10 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		internal override void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = 0, bool attackOnArrival = false)
+		internal override void Launch(int tile, IntVec3 cell, PawnsArrivalModeDef arriveMode, bool attackOnArrival = false)
 		{
 			parent.Launch(tile, cell, arriveMode, attackOnArrival);
-			SoundDefOf.DropPodLeaving.PlayOneShot(new TargetInfo());
+			SoundDefOf.DropPod_Leaving.PlayOneShot(new TargetInfo());
 			Find.WorldSelector.Select(this.parent);
 		}
 	}

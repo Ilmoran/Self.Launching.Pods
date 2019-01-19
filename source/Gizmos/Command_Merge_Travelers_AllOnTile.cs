@@ -38,7 +38,7 @@ namespace WM.SelfLaunchingPods
 				}
 
 				Find.WorldSelector.Select(SingleTraveler);
-				SoundDefOf.TickHigh.PlayOneShotOnCamera();
+				RimWorld.SoundDefOf.Tick_High.PlayOneShotOnCamera();
 			};
 		}
 

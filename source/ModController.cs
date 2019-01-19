@@ -23,9 +23,9 @@ namespace WM.SelfLaunchingPods
 		public override void DefsLoaded()
 		{
 			base.DefsLoaded();
-			DefOf.Caravan.comps.Add(new CaravanTranferCompProperties());
-			DefOf.CommsConsole.comps.Add(new CommsRemoteTradeCompProperties());
-			DefOf.FactionBase.comps.Add(new FactionBaseAvailableFuelCompProperties());
+			WorldObjectDefOf.Caravan.comps.Add(new CaravanTranferCompProperties());
+			ThingDefOf.CommsConsole.comps.Add(new CommsRemoteTradeCompProperties());
+            WorldObjectDefOf.Settlement.comps.Add(new FactionBaseAvailableFuelCompProperties());
 		}
 
 		internal static class Log

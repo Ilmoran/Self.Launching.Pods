@@ -38,7 +38,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				return (Utils.ThingsOfDefCount(this.AllCarriedThings, ThingDefOf.Component));
+				return (Utils.ThingsOfDefCount(this.AllCarriedThings, ThingDefOf.ComponentIndustrial));
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace WM.SelfLaunchingPods
 
 			if (ComponentsCountNeededToRepair > 0)
 			{
-				this.DiscardThingsOfDefCountOf(ThingDefOf.Component, ComponentsCountNeededToRepair);
+				this.DiscardThingsOfDefCountOf(ThingDefOf.ComponentIndustrial, ComponentsCountNeededToRepair);
 				foreach (ThingWithComps item in this.PodsAsThing)
 				{
 					item.BroadcastCompSignal(CompPlannedBreakdownable.RepairSignal);

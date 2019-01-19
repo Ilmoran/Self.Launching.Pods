@@ -12,7 +12,7 @@ namespace WM.SelfLaunchingPods
 		public int groupID = -1;
 		public int destinationTile = -1;
 		public IntVec3 destinationCell = IntVec3.Invalid;
-		public PawnsArriveMode arriveMode = PawnsArriveMode.Undecided;
+		public PawnsArrivalModeDef arriveMode;
 		public bool attackOnArrival;
 		private bool alreadyLeft;
 		private static List<Thing> tmpActiveDropPods = new List<Thing>();

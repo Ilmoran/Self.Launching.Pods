@@ -32,7 +32,7 @@ namespace WM.SelfLaunchingPods
 			return (true);
 		}
 
-		internal override void Launch(int tile, IntVec3 cell, PawnsArriveMode arriveMode = 0, bool attackOnArrival = false)
+		internal override void Launch(int tile, IntVec3 cell, PawnsArrivalModeDef arriveMode, bool attackOnArrival = false)
 		{
 			int distance = Find.WorldGrid.TraversalDistanceBetween(this.parent.Tile, tile);
 			float fuelNeedToRefuel = Math.Min(this.parent.MissingFuelLevel, this.parent.CarriedFuelLevel);

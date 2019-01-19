@@ -49,11 +49,11 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public FactionBase LocalFactionBase
+		public SettlementBase LocalFactionBase
 		{
 			get
 			{
-				return (Find.WorldObjects.FactionBaseAt(this.Tile));
+				return (Find.WorldObjects.SettlementBaseAt(this.Tile));
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace WM.SelfLaunchingPods
 		int departTile;
 		int destinationTile;
 		IntVec3 destinationCell;
-		PawnsArriveMode arriveMode;
+		PawnsArrivalModeDef arriveMode;
 		bool attackOnArrival;
 		internal readonly RemoteTrader remoteTrader;
 		IEnumerable<Gizmo> gizmos;
@@ -100,7 +100,7 @@ namespace WM.SelfLaunchingPods
 			Scribe_Values.Look<int>(ref departTile, "departTile");
 			Scribe_Values.Look<int>(ref destinationTile, "destinationTile");
 			Scribe_Values.Look<IntVec3>(ref destinationCell, "destinationCell");
-			Scribe_Values.Look<PawnsArriveMode>(ref arriveMode, "arriveMode");
+			Scribe_Defs.Look<PawnsArrivalModeDef>(ref arriveMode, "arriveMode");
 			Scribe_Values.Look<bool>(ref attackOnArrival, "attackOnArrival");
 			Scribe_Collections.Look<PodPair>(ref pods, "pods", LookMode.Deep);
 		}
@@ -143,7 +143,7 @@ namespace WM.SelfLaunchingPods
 			return (base.GetGizmos().Concat(gizmos));
 		}
 
-		public void Launch(int destinationTile, IntVec3 destinationCell, PawnsArriveMode arriveMode, bool attackOnArrival)
+		public void Launch(int destinationTile, IntVec3 destinationCell, PawnsArrivalModeDef arriveMode, bool attackOnArrival)
 		{
 			this.departTile = this.Tile;
 			this.destinationTile = destinationTile;
@@ -174,7 +174,9 @@ namespace WM.SelfLaunchingPods
 			}
 			else
 			{
-				if (mapParent != null && mapParent.TransportPodsCanLandAndGenerateMap && this.attackOnArrival)
+				if (mapParent != null && 
+                    //mapParent.TransportPodsCanLandAndGenerateMap && 
+                    this.attackOnArrival)
 				{
 					LongEventHandler.QueueLongEvent(delegate
 					{
@@ -182,7 +184,7 @@ namespace WM.SelfLaunchingPods
 						string extraMessagePart = null;
 						if (mapParent.Faction != null && !mapParent.Faction.HostileTo(Faction.OfPlayer))
 						{
-							mapParent.Faction.SetHostileTo(Faction.OfPlayer, true);
+							mapParent.Faction.TrySetNotHostileTo(Faction.OfPlayer, true);
 							extraMessagePart = "MessageTransportPodsArrived_BecameHostile".Translate(new object[]
 							{
 								mapParent.Faction.Name
@@ -201,7 +203,7 @@ namespace WM.SelfLaunchingPods
 			}
 		}
 
-		public void SpawnDropPodsInMap(Map map, IntVec3 destinationCell, PawnsArriveMode arriveMode, string extraMessagePart = null)
+		public void SpawnDropPodsInMap(Map map, IntVec3 destinationCell, PawnsArrivalModeDef arriveMode, string extraMessagePart = null)
 		{
 			//tmpFlagDroppedInMap = true;
 			TravelingPodsUtils.RemoveAllPawnsFromWorldPawns(AllCarriedPawns);
@@ -213,7 +215,7 @@ namespace WM.SelfLaunchingPods
 			{
 				intVec = destinationCell;
 			}
-			else if (arriveMode == PawnsArriveMode.CenterDrop)
+			else if (arriveMode == PawnsArrivalModeDefOf.CenterDrop)
 			{
 				if (!DropCellFinder.TryFindRaidDropCenterClose(out intVec, map))
 				{
@@ -222,7 +224,7 @@ namespace WM.SelfLaunchingPods
 			}
 			else
 			{
-				if (arriveMode != PawnsArriveMode.EdgeDrop && arriveMode != PawnsArriveMode.Undecided)
+				if (arriveMode != PawnsArrivalModeDefOf.EdgeDrop)
 				{
 					Log.Warning("Unsupported arrive mode " + arriveMode);
 				}

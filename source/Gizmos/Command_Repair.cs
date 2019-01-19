@@ -8,7 +8,7 @@ namespace WM.SelfLaunchingPods
 		public Command_Repair(WorldTraveler parent) : base(parent)
 		{
 			this.defaultLabel = "WM.RepairGizmo".Translate();
-			this.defaultDesc = string.Format("WM.RepairGizmoDesc".Translate(), this.Parent.ComponentsCountNeededToRepair, this.Parent.ComponentsCountAvailable, ThingDefOf.Component);
+			this.defaultDesc = string.Format("WM.RepairGizmoDesc".Translate(), this.Parent.ComponentsCountNeededToRepair, this.Parent.ComponentsCountAvailable, ThingDefOf.ComponentIndustrial);
 			this.icon = Resources.GizmoRepair;
 			this.action = delegate
 			{
@@ -24,7 +24,7 @@ namespace WM.SelfLaunchingPods
 					case RepairState.NoMaterials:
 						Messages.Message(string.Format("WM.MessageAtLeastComponentsNeeded".Translate(), 
 														this.Parent.ComponentsCountNeededToRepair, 
-														ThingDefOf.Component.label, 
+														ThingDefOf.ComponentIndustrial.label, 
 														this.Parent.ComponentsCountAvailable), 
 														MessageTypeDefOf.NegativeEvent);
 						break;
@@ -32,7 +32,7 @@ namespace WM.SelfLaunchingPods
 					case RepairState.Success:
 						Messages.Message(string.Format("WM.MessagePodsRepairedComponentsUsed".Translate(),
 														num,
-						                               	ThingDefOf.Component.label),
+						                               	ThingDefOf.ComponentIndustrial.label),
 						                 				MessageTypeDefOf.NeutralEvent);
 						break;
 				}

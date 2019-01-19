@@ -9,23 +9,24 @@ namespace WM.SelfLaunchingPods
 		public FactionBaseAvailableFuelCompProperties()
 		{
 			this.compClass = typeof(FactionBaseAvailableFuelComp);
-		}	}
+		}
+	}
 
 	public class FactionBaseAvailableFuelComp : WorldObjectComp
 	{
 		public override string CompInspectStringExtra()
 		{
-			var factionBase = this.parent as FactionBase;
+			var SettlementBase = this.parent as SettlementBase;
 
-			if (factionBase == null || factionBase.trader == null || !factionBase.trader.CanTradeNow)
+			if (SettlementBase == null || SettlementBase.trader == null || !SettlementBase.trader.CanTradeNow)
 				return "";
 
-			var fuelQt = TradeUtils.FuelAvailableAt((FactionBase)parent);
+			var fuelQt = TradeUtils.FuelAvailableAt((SettlementBase)parent);
 
 			if (fuelQt <= 0)
 				return "";
 
-			return (string.Format("WM.FactionBaseInspectStringFuelForSale".Translate(), fuelQt, DefOf.Chemfuel.label));
+			return (string.Format("WM.FactionBaseInspectStringFuelForSale".Translate(), fuelQt, ThingDefOf.Chemfuel.label));
 		}
 	}
 }

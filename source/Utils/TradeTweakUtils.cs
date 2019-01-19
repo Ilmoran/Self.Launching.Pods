@@ -10,17 +10,17 @@ namespace WM.SelfLaunchingPods
 		static ThingOwner tmpNegociatorContainer;
 		static ThingOwner tmpInventoryContainer;
 		static Pawn negotiator;
-		static FactionBase factionBase;
+		static SettlementBase settlementBase;
 		static WorldTraveler worldTraveler;
 		static bool usingTradeDialog;
 
-		public static Caravan PrepareTrade(Pawn arg_playerNegotiator, FactionBase arg_localFactionBase, WorldTraveler arg_worldTraveler, bool arg_usingTradeDialog = true)
+		public static Caravan PrepareTrade(Pawn arg_playerNegotiator, SettlementBase arg_settlementBase, WorldTraveler arg_worldTraveler, bool arg_usingTradeDialog = true)
 		{
 			respawnNegociatorAfterTrade = false;
 			tmpNegociatorContainer = null;
 
 			negotiator = arg_playerNegotiator;
-			factionBase = arg_localFactionBase;
+			settlementBase = arg_settlementBase;
 			worldTraveler = arg_worldTraveler;
 			usingTradeDialog = arg_usingTradeDialog;
 
@@ -40,7 +40,7 @@ namespace WM.SelfLaunchingPods
 
 			tmpInventoryContainer = new ThingOwner<Thing>();
 			negotiator.inventory.innerContainer.TryTransferAllToContainer(tmpInventoryContainer);
-			tmpDummyCaravan = CaravanMaker.MakeCaravan(new Pawn[] { negotiator }, negotiator.Faction, factionBase.Tile, true);
+			tmpDummyCaravan = CaravanMaker.MakeCaravan(new Pawn[] { negotiator }, negotiator.Faction, settlementBase.Tile, true);
 			TravelingPodsUtils.ToCaravan(tmpDummyCaravan, worldTraveler.AllCarriedThings);
 			Find.WorldObjects.Remove(tmpDummyCaravan);
 
@@ -56,7 +56,7 @@ namespace WM.SelfLaunchingPods
 			tmpInventoryContainer.ClearAndDestroyContents();
 			if (respawnNegociatorAfterTrade)
 			{
-				negotiator.SpawnSetup(Find.VisibleMap, false);
+				negotiator.SpawnSetup(Find.CurrentMap, false);
 			}
 			else if (tmpNegociatorContainer != null)
 			{

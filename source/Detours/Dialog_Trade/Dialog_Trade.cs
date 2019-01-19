@@ -24,7 +24,7 @@ namespace WM.SelfLaunchingPods.Detour.Dialog_Trade
 								 float mass;
 
 								 mass = arg.AnyThing.GetStatValue(StatDefOf.Mass) * arg.CountToTransfer;
-								 mass -= arg.CurTotalSilverCost * DefOf.Silver.BaseMass;
+								 mass -= arg.CurTotalSilverCostForDestination * ThingDefOf.Silver.BaseMass;
 								 if (arg.AnyThing is Pawn)
 									 mass += MassUtility.GearAndInventoryMass((Pawn)arg.AnyThing);
 

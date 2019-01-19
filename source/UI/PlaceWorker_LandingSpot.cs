@@ -11,12 +11,12 @@ namespace WM.SelfLaunchingPods
 			var buildings = map.thingGrid.ThingsAt(interactionCell)
 			                   .Where((Thing arg) => arg.def.passability == Traversability.Impassable || arg is Building);
 
-			if (buildings.Any() && buildings.Any((Thing arg) => arg.def != DefOf.WM_TransportPod))
+			if (buildings.Any() && buildings.Any((Thing arg) => arg.def != ThingDefOf.WM_TransportPod))
 			{
 				return (AcceptanceReport.WasRejected);
 			}
 
-			var allSpots = map.listerBuildings.AllBuildingsColonistOfDef(DefOf.WM_LandingSpot);
+			var allSpots = map.listerBuildings.AllBuildingsColonistOfDef(ThingDefOf.WM_LandingSpot);
 
 			if (allSpots.Any((Building arg) => arg.InteractionCell == interactionCell || arg.InteractionCell == loc))
 			{

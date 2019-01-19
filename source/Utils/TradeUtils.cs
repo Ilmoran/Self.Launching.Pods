@@ -37,13 +37,13 @@ namespace WM.SelfLaunchingPods
 			return (list.Where((WorldTraveler arg) => arg.remoteTrader.CanRemoteTradeNow));
 		}
 
-		public static int FuelAvailableAt(FactionBase factionBase)
+		public static int FuelAvailableAt(SettlementBase settlementBase)
 		{
-			if (factionBase.trader == null || !factionBase.trader.CanTradeNow)
+			if (settlementBase.trader == null || !settlementBase.trader.CanTradeNow)
 				return 0;
 
-			return (factionBase.trader.StockListForReading
-					.Where((Thing arg) => arg.def == DefOf.Chemfuel)
+			return (settlementBase.trader.StockListForReading
+					.Where((Thing arg) => arg.def == ThingDefOf.Chemfuel)
 					.Sum((Thing arg) => arg.stackCount));
 		}
 	}

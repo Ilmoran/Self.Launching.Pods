@@ -52,7 +52,7 @@ namespace WM.SelfLaunchingPods
 			{
 				previousMaxFuel = maxFuel;
 				buyableFuelByMoney = Mathf.FloorToInt(colonyMoney / fuelPrice);
-				buyableFuelByMass = Mathf.FloorToInt(freeMassCapacity / DefOf.Chemfuel.BaseMass);
+				buyableFuelByMass = Mathf.FloorToInt(freeMassCapacity / ThingDefOf.Chemfuel.BaseMass);
 				maxFuel = (new int[]
 				{
 					fuelForSale,
@@ -60,9 +60,23 @@ namespace WM.SelfLaunchingPods
 					buyableFuelByMass
 				}).Min();
 
-				freeMassCapacity += fuelPrice * (maxFuel - previousMaxFuel) * DefOf.Silver.BaseMass;
+				freeMassCapacity += fuelPrice * (maxFuel - previousMaxFuel) * ThingDefOf.Silver.BaseMass;
 			} while (previousMaxFuel < maxFuel);
 			return (maxFuel);
 		}
+
+        public static IEnumerable<TransferableImmutable> ToTransferableImmutables(this IEnumerable<Thing> things)
+        {
+            foreach (var group in things
+                                    .GroupBy(t => t.def)
+                                    .OrderByDescending(g => TransferableUIUtility.DefaultListOrderPriority(g.Key)))
+            {
+                var res = new TransferableImmutable()
+                {
+                    things = group.ToList(),
+                };
+                yield return res;
+            }
+        }
 	}
 }

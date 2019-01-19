@@ -9,7 +9,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				var t = DefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
+				var t = ThingDefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
 
 				return (t.fuelUsePerTile * TechUtils.FuelUseMultiplier);
 			}
@@ -19,7 +19,7 @@ namespace WM.SelfLaunchingPods
 		{
 			get
 			{
-				var t = DefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
+				var t = ThingDefOf.WM_TransportPod.comps.First((obj) => obj.GetType() == typeof(CompProperties_SelfLaunchable)) as CompProperties_SelfLaunchable;
 
 				return (t.fuelUsePerLaunch * TechUtils.FuelUseMultiplier);
 			}

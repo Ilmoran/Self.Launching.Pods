@@ -54,7 +54,7 @@ namespace WM.SelfLaunchingPods
 			MoteMaker.ThrowLightningGlow(base.Position.ToVector3Shifted(), base.Map, 2f);
 
 			this.landedThing.TryGetComp<CompSelfLaunchable>().podInfo = this.podInfo; // MOD
-			GenSpawn.Spawn(this.landedThing, base.Position, base.Map, base.Rotation, false); // MOD
+			GenSpawn.Spawn(this.landedThing, base.Position, base.Map, base.Rotation); // MOD
 			((ThingWithComps)this.landedThing).BroadcastCompSignal(CompPlannedBreakdownable.UseSignal); // MOD
 
 			base.Impact();
