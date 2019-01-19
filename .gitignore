@@ -1,0 +1,7 @@
+Todo
+todo
+deploy.cmd
+source/obj/*
+*.bak
+obj/
+.vs/
